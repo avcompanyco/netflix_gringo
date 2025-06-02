@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>netflixd</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproductor Personalizado</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ... (Tus estilos CSS completos de la respuesta anterior se mantienen aquí) ... */
+        :root {
+            --main-bg: #0A0A23; 
+            --primary-color: #F06292; 
+            --controls-bg: rgba(10, 10, 35, 0.75); 
+            --text-light: #FFFFFF;
+            --icon-color: #FFFFFF;
+            --icon-hover-color: var(--primary-color);
+            --slider-track-color: rgba(255, 255, 255, 0.3);
+            --slider-thumb-color: var(--primary-color);
+            --title-overlay-bg: rgba(10, 10, 35, 0.85);
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000000; 
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-light);
+        }
+
+        .player-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000; 
+        }
+
+        .player-container video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: contain; 
+        }
+
+        .title-overlay {
+            position: absolute;
+            top: 5%; 
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--title-overlay-bg);
+            color: var(--text-light);
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out; /* Añadido visibility */
+            z-index: 20;
+            pointer-events: none; 
+            visibility: hidden; /* Oculto por defecto */
+        }
+
+        .title-overlay.visible {
+            opacity: 1;
+            visibility: visible; /* Visible cuando tiene la clase */
+        }
+
+        .custom-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--controls-bg);
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+            z-index: 21; 
+        }
+
+        .player-container.controls-hidden .custom-controls {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .custom-controls button {
+            background: none;
+            border: none;
+            color: var(--icon-color);
+            font-size: 1.5rem; 
+            cursor: pointer;
+            padding: 5px;
+            line-height: 1;
+        }
+
+        .custom-controls button:hover {
+            color: var(--icon-hover-color);
+        }
+
+        .progress-bar-container {
+            flex-grow: 1;
+            height: 8px;
+            background-color: var(--slider-track-color);
+            border-radius: 4px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%; 
+            background-color: var(--primary-color);
+            border-radius: 4px;
+        }
+        
+        .time-display {
+            font-size: 0.9rem;
+            min-width: 90px; 
+            text-align: center;
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .volume-slider {
+            width: 80px;
+            height: 6px;
+            background-color: var(--slider-track-color);
+            border-radius: 3px;
+            -webkit-appearance: none; 
+            appearance: none;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 14px;
+            height: 14px;
+            background: var(--slider-thumb-color);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .volume-slider::-moz-range-thumb {
+            width: 14px;
+            height: 14px;
+            background: var(--slider-thumb-color);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="player-container" id="playerContainer">
+        <video id="customPlayer" preload="auto" poster="assets/img/video_poster_placeholder.jpg" autoplay>
+            <source src="video/lilo.mp4" type="video/mp4"> 
+            Tu navegador no soporta la etiqueta de video HTML5.
+        </video>
+
+        <div class="title-overlay" id="titleOverlay">
+            </div>
+
+        <div class="custom-controls" id="customControls">
+            <button id="playPauseBtn" title="Reproducir/Pausar">►</button>
+            <div class="progress-bar-container" id="progressBarContainer">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="time-display" id="timeDisplay">00:00 / 00:00</div>
+            <div class="volume-container">
+                <button id="volumeBtn" title="Silenciar/Sonido">🔊</button> <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.05" value="1"> </div>
+            <button id="fullscreenBtn" title="Pantalla Completa">⛶</button>
+        </div>
+    </div>
+
+    <script>
+        const playerContainer = document.getElementById('playerContainer');
+        const video = document.getElementById('customPlayer');
+        const titleOverlay = document.getElementById('titleOverlay');
+        const customControls = document.getElementById('customControls');
+        
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const progressBarContainer = document.getElementById('progressBarContainer');
+        const progressBar = document.getElementById('progressBar');
+        const timeDisplay = document.getElementById('timeDisplay');
+        const volumeBtn = document.getElementById('volumeBtn');
+        const volumeSlider = document.getElementById('volumeSlider');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        let titleTimeout; // Para manejar el timeout del título
+
+        // --- Lógica del Título Superpuesto ---
+        function showTitleOverlay() {
+            clearTimeout(titleTimeout); // Limpia cualquier timeout anterior
+            if (video.currentSrc || video.src) { // Verifica si hay una fuente de video
+                let videoTitle = "Lilo y Stitch | Tráiler Oficial"; // Título por defecto
+                
+                // Intenta obtener un título más específico
+                if (localStorage.getItem('videoTitlePlayer')) {
+                     videoTitle = localStorage.getItem('videoTitlePlayer');
+                } else if (video.title && video.title.trim() !== "") { // Usar video.title si existe y no está vacío
+                    videoTitle = video.title;
+                } else if (document.title && document.title !== "Reproductor Personalizado") { 
+                    videoTitle = document.title;
+                }
+                // Podrías incluso intentar extraer el nombre del archivo de video.src si es necesario como último recurso
+
+                titleOverlay.textContent = videoTitle;
+                titleOverlay.classList.add('visible');
+                
+                titleTimeout = setTimeout(() => {
+                    titleOverlay.classList.remove('visible');
+                }, 4000); // Se muestra por 4 segundos
+            }
+        }
+
+        // --- Lógica de Controles ---
+        function togglePlayPause() {
+            if (video.paused || video.ended) {
+                video.play().then(() => {
+                    // El video comenzó a reproducirse (o ya estaba reproduciéndose)
+                    updatePlayPauseIcon();
+                }).catch(error => {
+                    console.error("Error al intentar reproducir el video:", error);
+                    // El autoplay probablemente fue bloqueado. El usuario necesitará interactuar.
+                    updatePlayPauseIcon(); // Asegurar que el icono refleje el estado pausado.
+                });
+            } else {
+                video.pause();
+            }
+        }
+        playPauseBtn.addEventListener('click', togglePlayPause);
+        
+        function updatePlayPauseIcon() {
+            playPauseBtn.textContent = (video.paused || video.ended) ? '►' : '❚❚';
+        }
+
+        function updateVolumeUI() {
+            if (video.muted || video.volume === 0) {
+                volumeBtn.textContent = '🔇';
+                volumeSlider.value = 0;
+            } else {
+                volumeBtn.textContent = '🔊';
+                volumeSlider.value = video.volume;
+            }
+        }
+
+        video.addEventListener('play', () => {
+            updatePlayPauseIcon();
+            showControls(); // Muestra controles cuando empieza a reproducir
+            showTitleOverlay(); // Muestra el título cuando empieza a reproducir (o reanuda)
+        });
+        video.addEventListener('pause', updatePlayPauseIcon);
+        video.addEventListener('ended', updatePlayPauseIcon); 
+
+        video.addEventListener('loadedmetadata', () => {
+            updateProgress(); 
+            updatePlayPauseIcon(); 
+            updateVolumeUI(); 
+            // El título se mostrará con el primer evento 'play' o si ya está reproduciendo (autoplay)
+            if (video.playing || !video.paused || video.autoplay && !video.muted) { // Verifica si ya está sonando (por autoplay)
+                 showTitleOverlay();
+            }
+        });
+        video.addEventListener('timeupdate', updateProgress);
+
+        function updateProgress() {
+            const progressPercent = (video.currentTime / video.duration) * 100;
+            progressBar.style.width = `${progressPercent}%`;
+            timeDisplay.textContent = `${formatTime(video.currentTime)} / ${formatTime(video.duration || 0)}`;
+        }
+
+        progressBarContainer.addEventListener('click', (e) => {
+            const rect = progressBarContainer.getBoundingClientRect();
+            const clickPosition = e.clientX - rect.left;
+            const newTime = (clickPosition / rect.width) * video.duration;
+            video.currentTime = newTime;
+        });
+
+        function formatTime(timeInSeconds) {
+            const minutes = Math.floor(timeInSeconds / 60);
+            const seconds = Math.floor(timeInSeconds % 60);
+            return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function toggleMute() {
+            video.muted = !video.muted;
+            if (!video.muted && video.volume === 0) {
+                video.volume = 0.75; // Restaura a un volumen por defecto si estaba en 0 y se desmutea
+            }
+            updateVolumeUI();
+        }
+        volumeBtn.addEventListener('click', toggleMute);
+        video.addEventListener('volumechange', updateVolumeUI);
+
+        volumeSlider.addEventListener('input', (e) => {
+            video.volume = parseFloat(e.target.value);
+            video.muted = video.volume === 0;
+            // updateVolumeUI() se llamará por el evento 'volumechange'
+        });
+
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                playerContainer.requestFullscreen().catch(err => {
+                    console.warn(`Error al activar pantalla completa: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        document.addEventListener('fullscreenchange', () => {
+            fullscreenBtn.textContent = document.fullscreenElement ? '↙↗' : '⛶'; 
+        });
+
+        let controlsTimeout;
+        function showControls() {
+            customControls.style.opacity = '1';
+            customControls.style.pointerEvents = 'auto';
+            playerContainer.style.cursor = 'default';
+            clearTimeout(controlsTimeout);
+            if (!video.paused && !video.ended) { 
+                 controlsTimeout = setTimeout(() => {
+                    customControls.style.opacity = '0';
+                    customControls.style.pointerEvents = 'none';
+                    playerContainer.style.cursor = 'none';
+                }, 3000); 
+            }
+        }
+        
+        playerContainer.addEventListener('mousemove', showControls);
+        playerContainer.addEventListener('mouseleave', () => { 
+            if (!video.paused && !video.ended) {
+                 clearTimeout(controlsTimeout); 
+                 controlsTimeout = setTimeout(() => {
+                    customControls.style.opacity = '0';
+                    customControls.style.pointerEvents = 'none';
+                    playerContainer.style.cursor = 'none';
+                }, 500); 
+            }
+        });
+      
+        video.addEventListener('pause', () => { 
+            updatePlayPauseIcon();
+            clearTimeout(controlsTimeout); // No ocultar controles si está pausado
+            customControls.style.opacity = '1';
+            customControls.style.pointerEvents = 'auto';
+            playerContainer.style.cursor = 'default';
+        });
+        
+        // Estado inicial de UI
+        showControls();
+        updatePlayPauseIcon(); 
+        updateVolumeUI();    
+
+        // Intento de autoplay: el navegador decidirá.
+        // El evento 'play' (si tiene éxito) o 'loadedmetadata' mostrarán el título.
+        // Si el autoplay es bloqueado, el usuario necesitará hacer clic en play.
+        video.play().then(() => {
+            // Autoplay con sonido tuvo éxito (raro sin interacción previa)
+            console.log("Autoplay con sonido iniciado.");
+        }).catch(error => {
+            // Autoplay con sonido fue bloqueado. El video está pausado.
+            // El usuario necesitará iniciar la reproducción manualmente.
+            console.warn("Autoplay con sonido fue bloqueado por el navegador. El usuario debe iniciar la reproducción.", error);
+            updatePlayPauseIcon(); // Asegurar que el botón muestre 'play'
+        });
+
+    </script>
+</body>
+</html>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

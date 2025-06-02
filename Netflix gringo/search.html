@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>netflixd</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gradient-start: #F06292;
+            --gradient-end: #2196F3;
+            --main-bg: #0A0A23;
+            --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--main-bg);
+            color: white;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .app-wrapper {
+            padding-bottom: 80px;
+        }
+
+        /* Header and Search Bar */
+        .header {
+            position: sticky;
+            top: 0;
+            background-color: var(--main-bg);
+            padding: 1rem;
+            z-index: 100;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 1.5rem;
+            display: block;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .search-bar {
+            width: 100%;
+            background: rgba(47, 47, 79, 0.7);
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s var(--transition-bezier);
+        }
+
+        .search-bar:focus {
+            background: rgba(47, 47, 79, 0.9);
+            outline: none;
+        }
+
+        .search-bar::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Main Content */
+        .content {
+            padding: 0 1rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin: 2rem 0;
+        }
+
+        /* Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-card {
+            position: relative;
+            aspect-ratio: 1/1;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            background: rgba(47, 47, 79, 0.3);
+            transition: transform 0.3s var(--transition-bezier);
+        }
+
+        .category-card:hover {
+            transform: scale(1.02);
+        }
+
+        .category-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .category-card:hover .category-image {
+            opacity: 1;
+        }
+
+        .category-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.1));
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+
+        .category-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* Search Results */
+        .search-results {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .search-results.active {
+            display: grid;
+        }
+
+        .movie-card {
+            aspect-ratio: 2/3;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--main-bg);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-size: 0.8rem;
+            gap: 4px;
+            transition: all 0.3s var(--transition-bezier);
+        }
+
+        .nav-item.active {
+            color: var(--gradient-start);
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Desktop Styles */
+        @media (min-width: 1200px) {
+            .app-wrapper {
+                max-width: 1600px;
+                margin: 0 auto;
+            }
+
+            .header {
+                padding: 2rem 4rem;
+            }
+
+            .search-container {
+                max-width: 100%;
+                padding: 0 10%;
+            }
+
+            .content {
+                padding: 0 4rem;
+            }
+
+            .page-title {
+                font-size: 2.5rem;
+                margin: 3rem 0;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 2rem;
+            }
+
+            .category-title {
+                font-size: 1.5rem;
+            }
+
+            .search-results {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Header -->
+        <header class="header">
+            <img src="assets/img/logo.png" alt="Logo" class="logo-icon">
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Search by title, genre...">
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="content">
+            <h1 class="page-title">Explore</h1>
+
+            <!-- Categories Grid -->
+            <div class="categories-grid">
+                <div class="category-card">
+                    <img src="assets/img/action.png" alt="Action & Adventure" class="category-image">
+                    <div class="category-overlay">
+                        <h2 class="category-title">Action & Adventure</h2>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <img src="assets/img/comedy.png" alt="Comedy" class="category-image">
+                    <div class="category-overlay">
+                        <h2 class="category-title">Comedy</h2>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <img src="assets/img/drama.png" alt="Drama" class="category-image">
+                    <div class="category-overlay">
+                        <h2 class="category-title">Drama</h2>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <img src="assets/img/horror.png" alt="Horror" class="category-image">
+                    <div class="category-overlay">
+                        <h2 class="category-title">Horror</h2>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Results -->
+            <div class="search-results">
+                <!-- Results will be populated dynamically -->
+            </div>
+        </main>
+
+       <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="dashboard.html" class="nav-item">
+                <img src="assets/img/home.svg" alt="Home" class="nav-icon">
+                <span>Home</span>
+            </a>
+            <a href="search.html" class="nav-item active">
+                <img src="assets/img/search.svg" alt="Explore" class="nav-icon">
+                <span>Explore</span>
+            </a>
+            <a href="my_content.html" class="nav-item">
+                <img src="assets/img/clip.svg" alt="Clips" class="nav-icon">
+                <span>Channel</span>
+            </a>
+            <a href="upload.html" class="nav-item">
+                <img src="assets/img/upload.svg" alt="Upload" class="nav-icon">
+                <span>Upload</span>
+            </a>
+            <a href="my_account.html" class="nav-item">
+                <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon" style="border-radius: 50%;">
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        const searchBar = document.querySelector('.search-bar');
+        const categoriesGrid = document.querySelector('.categories-grid');
+        const searchResults = document.querySelector('.search-results');
+        const pageTitle = document.querySelector('.page-title');
+
+        searchBar.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.trim().toLowerCase();
+            
+            if (searchTerm.length > 0) {
+                categoriesGrid.style.display = 'none';
+                searchResults.classList.add('active');
+                pageTitle.textContent = 'Search Results';
+            } else {
+                categoriesGrid.style.display = 'grid';
+                searchResults.classList.remove('active');
+                pageTitle.textContent = 'Explore';
+            }
+        });
+    </script>
+</body>
+</html>
+
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

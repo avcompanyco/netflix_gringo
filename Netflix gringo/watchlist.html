@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>netflixd</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watchlist</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+:root {
+    --gradient-start: #F06292;
+    --gradient-end: #2196F3;
+    --main-bg: #0A0A23;
+    --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--main-bg);
+    color: white;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.app-wrapper {
+    padding-bottom: 80px;
+}
+
+/* Header */
+.header {
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.logo-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 2rem;
+}
+
+.page-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: left;
+    padding: 0 1rem;
+}
+
+/* Movie Categories */
+.category-section {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding: 0;
+    overflow: visible;
+}
+
+.category-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+}
+
+.movies-row {
+    position: relative;
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding: 1rem;
+    margin: 0;
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    cursor: grab;
+    user-select: none;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.movies-row::-webkit-scrollbar {
+    display: none;
+}
+
+.movies-row.grabbing {
+    cursor: grabbing;
+}
+
+.movie-card {
+    flex: 0 0 auto;
+    width: 110px;
+    aspect-ratio: 2/3;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s var(--transition-bezier);
+    scroll-snap-align: start;
+    position: relative;
+}
+
+.movie-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Navigation Arrows */
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: rgba(128, 128, 128, 0.3);
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    border: none;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.slider-arrow::after {
+    content: '›';
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.slider-arrow.prev::after {
+    content: '‹';
+}
+
+.slider-arrow:hover {
+    background: rgba(128, 128, 128, 0.5);
+}
+
+.slider-arrow.prev {
+    left: -20px;
+}
+
+.slider-arrow.next {
+    right: -20px;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--main-bg);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    z-index: 1000;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    font-size: 0.8rem;
+    gap: 4px;
+    transition: all 0.3s var(--transition-bezier);
+}
+
+.nav-item.active {
+    color: var(--gradient-start);
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Desktop Styles */
+@media (min-width: 1200px) {
+    .app-wrapper {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 0 3rem 80px;
+    }
+
+    .header {
+        padding: 2rem 0;
+    }
+
+    .page-title {
+        font-size: 2.5rem;
+        padding: 0 20px;
+    }
+
+    .category-section {
+        padding: 0 20px;
+        margin-bottom: 3rem;
+    }
+
+    .category-title {
+        padding: 0;
+    }
+
+    .movies-row {
+        padding: 2rem 0;
+    }
+
+    .movie-card {
+        width: 180px;
+    }
+
+    .movie-card:hover {
+        transform: scale(1.2);
+        z-index: 20;
+    }
+
+    .movie-card:hover ~ .movie-card {
+        transform: translateX(30px);
+    }
+
+    .slider-arrow {
+        display: flex;
+    }
+}
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Header -->
+        <header class="header">
+            <img src="assets/img/logo.png" alt="Logo" class="logo-icon">
+        </header>
+
+        <h1 class="page-title">Watchlist</h1>
+
+        <!-- Comedy Section -->
+        <section class="category-section">
+            <h2 class="category-title">Comedy</h2>
+            <div class="movies-row">
+                <div class="movie-card">
+                    <img src="assets/img/cartelera1.png" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera2.png" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera3.jpg" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera4.jpeg" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera5.jpg" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera6.jpg" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera5.jpg" alt="Movie">
+                </div>
+            </div>
+            <button class="slider-arrow prev" aria-label="Previous"></button>
+            <button class="slider-arrow next" aria-label="Next"></button>
+        </section>
+
+        <!-- Action Section -->
+        <section class="category-section">
+            <h2 class="category-title">Action</h2>
+            <div class="movies-row">
+                <div class="movie-card">
+                    <img src="assets/img/cartelera5.jpg" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera6.jpg" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera1.png" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera2.png" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera3.jpg" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera4.jpeg" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera5.jpg" alt="Movie">
+                </div>
+            </div>
+            <button class="slider-arrow prev" aria-label="Previous"></button>
+            <button class="slider-arrow next" aria-label="Next"></button>
+        </section>
+
+        <!-- Horror Section -->
+        <section class="category-section">
+            <h2 class="category-title">Horror</h2>
+            <div class="movies-row">
+                <div class="movie-card">
+                    <img src="assets/img/cartelera3.jpg" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera4.jpeg" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera5.jpg" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera6.jpg" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera1.png" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera2.png" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera5.jpg" alt="Movie">
+                </div>
+            </div>
+            <button class="slider-arrow prev" aria-label="Previous"></button>
+            <button class="slider-arrow next" aria-label="Next"></button>
+        </section>
+
+        <!-- Drama Section -->
+        <section class="category-section">
+            <h2 class="category-title">Drama</h2>
+            <div class="movies-row">
+                <div class="movie-card">
+                    <img src="assets/img/cartelera1.png" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera2.png" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera3.jpg" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera4.jpeg" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera5.jpg" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera6.jpg" alt="Movie">
+                </div>
+                <div class="movie-card">
+                    <img src="assets/img/cartelera5.jpg" alt="Movie">
+                </div>
+            </div>
+            <button class="slider-arrow prev" aria-label="Previous"></button>
+            <button class="slider-arrow next" aria-label="Next"></button>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <img src="assets/img/home.svg" alt="Home" class="nav-icon">
+                <span>Home</span>
+            </a>
+            <a href="search.html" class="nav-item">
+                <img src="assets/img/search.svg" alt="Explore" class="nav-icon">
+                <span>Explore</span>
+            </a>
+            <a href="#" class="nav-item">
+                <img src="assets/img/clip.svg" alt="Clips" class="nav-icon">
+                <span>Clips</span>
+            </a>
+            <a href="#" class="nav-item">
+                <img src="assets/img/upload.svg" alt="Upload" class="nav-icon">
+                <span>Upload</span>
+            </a>
+            <a href="#" class="nav-item">
+                <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon" style="border-radius: 50%;">
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        document.querySelectorAll('.category-section').forEach(section => {
+            const moviesRow = section.querySelector('.movies-row');
+            const prevBtn = section.querySelector('.slider-arrow.prev');
+            const nextBtn = section.querySelector('.slider-arrow.next');
+
+            if (prevBtn && nextBtn) {
+                prevBtn.addEventListener('click', () => {
+                    moviesRow.scrollBy({
+                        left: -moviesRow.offsetWidth * 0.75,
+                        behavior: 'smooth'
+                    });
+                });
+
+                nextBtn.addEventListener('click', () => {
+                    moviesRow.scrollBy({
+                        left: moviesRow.offsetWidth * 0.75,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>netflixd</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- TUS ESTILOS CSS COMPLETOS VAN AQUÍ (sin cambios) --- */
+        :root {
+            --main-bg: #0A0A23;
+            --primary-color: #F06292;
+            --input-bg: #E8E8E8;
+            --text-dark: #1A1B1E;
+            --text-light: #FFFFFF;
+            --error-color: #ff6b6b; /* A red for errors */
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--main-bg);
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 4vh; /* A little space at the top */
+            box-sizing: border-box;
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 420px; 
+            padding: 1rem 1.5rem; 
+            box-sizing: border-box;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .logo-icon {
+            width: 64px; 
+            height: 64px;
+            margin-bottom: 1rem;
+        }
+
+        .page-title-login {
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        .form-group-custom {
+            margin-bottom: 1.75rem;
+        }
+
+        .form-label-custom {
+            font-size: 1.1rem; 
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            display: block;
+        }
+
+        .form-control-custom { 
+            background: var(--input-bg);
+            border: 1px solid transparent; 
+            color: var(--text-dark);
+            padding: 0.9rem 1rem; 
+            border-radius: 10px;
+            font-size: 1rem;
+            width: 100%; 
+            box-sizing: border-box;
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .form-control-custom::placeholder {
+            color: #555; 
+            font-weight: 400;
+        }
+
+        .form-control-custom:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(240, 98, 146, 0.3); 
+        }
+        
+        .form-control-custom:invalid {
+            border-color: var(--error-color);
+        }
+        .form-control-custom:invalid:focus {
+             box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.3);
+        }
+
+        .login-btn-custom {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 100%; 
+            padding: 0.9rem;
+            border-radius: 10px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .login-btn-custom:hover {
+            background-color: #d84373; 
+            transform: translateY(-2px); 
+        }
+        .login-btn-custom:active {
+            transform: translateY(0px);
+        }
+
+        .form-error-message {
+            color: var(--error-color);
+            font-size: 0.9rem;
+            text-align: center;
+            margin-top: 1.5rem;
+            min-height: 1.2em; 
+        }
+    </style>
+</head>
+<body>
+    <div class="login-wrapper">
+        <header class="login-header">
+            <img src="assets/img/logo.png" alt="Platform Logo" class="logo-icon">
+            <h1 class="page-title-login">Admin Access</h1>
+        </header>
+
+        <form id="adminLoginForm" action="#" method="POST"> 
+            <div class="form-group-custom">
+                <label for="adminUsername" class="form-label-custom">Username or Email</label>
+                <input type="text" class="form-control-custom" id="adminUsername" name="username" placeholder="Enter your username or email" required autocomplete="username">
+            </div>
+
+            <div class="form-group-custom">
+                <label for="adminPassword" class="form-label-custom">Password</label>
+                <input type="password" class="form-control-custom" id="adminPassword" name="password" placeholder="Enter your password" required autocomplete="current-password">
+            </div>
+            
+            <button type="submit" class="login-btn-custom">Login</button>
+            
+            <div id="formErrorMessage" class="form-error-message">
+                </div>
+        </form>
+    </div>
+
+    <script>
+        const adminLoginForm = document.getElementById('adminLoginForm');
+        const formErrorMessage = document.getElementById('formErrorMessage');
+
+        if (adminLoginForm) {
+            adminLoginForm.addEventListener('submit', function(event) {
+                // Prevenimos el envío normal del formulario
+                event.preventDefault(); 
+
+                if (formErrorMessage) {
+                    formErrorMessage.textContent = '';
+                }
+
+                // Aquí normalmente harías una validación de los campos
+                // y luego una llamada AJAX a tu backend para autenticar.
+                // Como ejemplo, simularemos un login exitoso y redirigiremos.
+
+                // Simulación de validación (puedes hacerla más robusta)
+                const username = document.getElementById('adminUsername').value;
+                const password = document.getElementById('adminPassword').value;
+
+                if (username.trim() === '' || password.trim() === '') {
+                    if (formErrorMessage) {
+                        formErrorMessage.textContent = 'Please enter both username and password.';
+                    }
+                    return; // Detiene si los campos están vacíos
+                }
+                
+                // Si la validación (o la autenticación simulada) es exitosa:
+                console.log('Simulating successful login...');
+                window.location.href = 'admin_dashboard.html'; 
+            });
+        }
+    </script>
+</body>
+</html>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

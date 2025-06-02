@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>netflixd</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-bg: #0A0A23;
+            --primary-color: #F06292;
+            --secondary-color: #2196F3;
+            --card-bg: #E6E6E6;
+            --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1);
+            --container-padding: 1.5rem;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--main-bg);
+            color: white;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .app-wrapper {
+            padding-bottom: 80px;
+            max-width: 480px;
+            margin: 0 auto;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+
+        .header {
+            padding: 1rem 0;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .info-card {
+            background-color: var(--card-bg);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            color: black;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .info-text {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        .manage-button {
+            position: absolute;
+            bottom: -1.25rem;
+            right: 1.25rem;
+            background-color: white;
+            border: none;
+            border-radius: 1.5rem;
+            padding: 0.625rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s var(--transition-bezier);
+            text-decoration: none; /* quitar subrayado de enlaces */
+            color: inherit; /* usar el mismo color del texto */
+            display: inline-block; /* necesario para aplicar padding correctamente */
+            text-align: center;
+        }
+
+        .manage-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--main-bg);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-size: 0.8rem;
+            gap: 4px;
+            transition: all 0.3s var(--transition-bezier);
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .nav-icon.profile {
+            border-radius: 50%;
+        }
+
+        @media (min-width: 768px) {
+            .app-wrapper {
+                max-width: 600px;
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .page-title {
+                text-align: center;
+                margin-bottom: 3rem;
+            }
+
+            .section-title {
+                text-align: center;
+                margin-bottom: 1.5rem;
+            }
+
+            .info-card {
+                padding: 1.75rem;
+                margin-bottom: 3.5rem;
+            }
+
+            .info-text {
+                font-size: 1.1rem;
+            }
+
+            .manage-button {
+                padding: 0.75rem 2rem;
+                font-size: 0.9rem;
+                bottom: -1.5rem;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .app-wrapper {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .page-title {
+                font-size: 1.75rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .info-text {
+                font-size: 1.1rem;
+            }
+
+            .manage-button {
+                padding: 0.5rem 1.25rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <header class="header">
+            <img src="assets/img/logo.png" alt="Logo" class="logo-icon">
+        </header>
+
+        <h1 class="page-title">My Account</h1>
+
+        <section>
+            <h2 class="section-title">User</h2>
+            <div class="info-card">
+                <p class="info-text">Email: mark@movie.com</p>
+                <p class="info-text">Password: *****</p>
+                <a href="manage_user.html" class="manage-button">Manage</a>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">Subcription</h2>
+            <div class="info-card">
+                <p class="info-text">Plan: Golden</p>
+                <p class="info-text">Next payment: 2/June/2025</p>
+                <a href="manage_subs.html" class="manage-button">Manage</a>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="dashboard.html" class="nav-item">
+                <img src="assets/img/home.svg" alt="Home" class="nav-icon">
+                <span>Home</span>
+            </a>
+            <a href="search.html" class="nav-item">
+                <img src="assets/img/search.svg" alt="Explore" class="nav-icon">
+                <span>Explore</span>
+            </a>
+            <a href="my_content.html" class="nav-item">
+                <img src="assets/img/clip.svg" alt="Clips" class="nav-icon">
+                <span>Channel</span>
+            </a>
+            <a href="upload.html" class="nav-item">
+                <img src="assets/img/upload.svg" alt="Upload" class="nav-icon">
+                <span>Upload</span>
+            </a>
+            <a href="my_account.html" class="nav-item active">
+                <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon" style="border-radius: 50%;">
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+</body>
+</html>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>netflixd</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The girls - Movie Detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+   <style>
+:root {
+    --main-bg: #0A0A23;
+    --primary-color: #F06292;
+    --secondary-color: #2196F3;
+    --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1);
+    --container-padding: 2rem;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--main-bg);
+    color: white;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.app-wrapper {
+    padding-bottom: 80px;
+}
+
+.header {
+    padding: 0.75rem 0;
+    text-align: center;
+}
+
+.logo-icon {
+    width: 48px;
+    height: 48px;
+}
+
+.movie-banner {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background: url('assets/img/fondo_comedy.jpg') no-repeat center center;
+    background-size: cover;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 3rem;
+}
+
+.movie-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 1.5rem;
+    padding-left: var(--container-padding);
+}
+
+.header-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(10, 10, 35, 0.3), var(--main-bg));
+}
+            
+.play-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    width: fit-content;
+    position: relative;
+    z-index: 2;
+    margin-left: var(--container-padding);
+    transition: transform 0.3s var(--transition-bezier);
+}
+
+.play-button:hover {
+    transform: scale(1.1);
+}
+
+.content-section {
+    margin-top: 2rem;
+}
+
+.section-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: left;
+    padding-left: var(--container-padding);
+}
+
+.standalone-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: left;
+    padding-left: var(--container-padding);
+    margin-top: 3rem;
+}
+
+.description {
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+}
+
+.trailer-button {
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 20px;
+    padding: 0.5rem 2rem;
+    cursor: pointer;
+    margin-left: var(--container-padding);
+    transition: transform 0.3s var(--transition-bezier);
+}
+
+.trailer-button:hover {
+    transform: scale(1.1);
+}
+
+.movies-section {
+    position: relative;
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+    overflow: visible;
+}
+
+.movies-row {
+    position: relative;
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding: 1rem;
+    margin: -1rem;
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    cursor: grab;
+    user-select: none;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.movies-row::-webkit-scrollbar {
+    display: none;
+}
+
+.movies-row.grabbing {
+    cursor: grabbing;
+}
+
+.movie-card {
+    flex: 0 0 auto;
+    width: 110px;
+    aspect-ratio: 2/3;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s var(--transition-bezier);
+    scroll-snap-align: start;
+    position: relative;
+}
+
+.movie-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: rgba(128, 128, 128, 0.3);
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    border: none;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.slider-arrow::after {
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+.slider-arrow:hover {
+    background: rgba(128, 128, 128, 0.5);
+}
+
+.slider-arrow.prev {
+    left: -50px;
+}
+
+.slider-arrow.next {
+    right: -50px;
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--main-bg);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    z-index: 1000;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    font-size: 0.8rem;
+    gap: 4px;
+    transition: all 0.3s var(--transition-bezier);
+}
+
+.nav-item.active {
+    color: var(--primary-color);
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.nav-icon.profile {
+    border-radius: 50%;
+}
+
+@media (min-width: 1200px) {
+    :root {
+        --container-padding: 4rem;
+    }
+
+    .app-wrapper {
+        max-width: 100%;
+        margin: 0;
+        padding: 0 0 80px;
+    }
+
+    .header {
+        padding: 1.5rem 0;
+    }
+
+    .movie-banner {
+        height: 400px;
+        width: 100%;
+    }
+
+    .movies-section {
+        padding: 0;
+        margin: 0 60px;
+        margin-bottom: 3rem;
+    }
+
+    .movies-row {
+        padding: 2rem;
+        margin: -2rem;
+    }
+
+    .movie-card {
+        width: 180px;
+        transition: all 0.3s ease;
+        transform-origin: center center;
+    }
+
+    .movies-row:hover .movie-card {
+        transform-origin: center left;
+    }
+
+    .movie-card:hover {
+        transform: scale(1.2);
+        z-index: 20;
+    }
+
+    .movie-card:hover ~ .movie-card {
+        transform: translateX(30px);
+    }
+
+    .movies-row .movie-card:first-child {
+        transform-origin: left center;
+    }
+
+    .movies-row .movie-card:last-child {
+        transform-origin: right center;
+    }
+
+    .slider-arrow {
+        display: flex;
+    }
+
+    .section-title {
+        margin: 2rem 0;
+    }
+
+    .standalone-title {
+        margin: 3rem 0 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --container-padding: 1.5rem;
+    }
+
+    .movie-banner {
+        height: 200px;
+    }
+
+    .movie-title {
+        font-size: 2rem;
+    }
+
+    .section-title {
+        margin: 1.5rem 0;
+        font-size: 1.5rem;
+    }
+
+    .standalone-title {
+        font-size: 1.5rem;
+    }
+}
+            
+</style>        
+        
+</head>
+<body>
+    <div class="app-wrapper">
+        <header class="header">
+            <img src="assets/img/logo.png" alt="Logo" class="logo-icon">
+        </header>
+
+        <div class="movie-banner">
+            <div class="header-gradient"></div>
+            <h1 class="movie-title">The girls</h1>
+            <button class="play-button" onclick="window.location.href='player.html';">Play movie</button>
+        </div>
+
+        <section class="content-section">
+            <h2 class="section-title">Description</h2>
+            <p class="description">
+                In this animated film, the sweet Snow White is a princess with spectacular beauty, which provokes the jealousy of her stepmother.
+            </p>
+            <button class="trailer-button" onclick="window.location.href='player.html';">Trailer</button>
+        </section>
+
+        <h2 class="standalone-title">Suggested</h2>
+        <div class="movies-section">
+            <div class="movies-row" data-slider="suggested">
+                <div class="movie-card"><img src="assets/img/cartelera1.png" alt="Movie"></div>
+                <div class="movie-card"><img src="assets/img/cartelera2.png" alt="Movie"></div>
+                <div class="movie-card"><img src="assets/img/cartelera3.jpg" alt="Movie"></div>
+                <div class="movie-card"><img src="assets/img/cartelera4.jpeg" alt="Movie"></div>
+                <div class="movie-card"><img src="assets/img/cartelera5.jpg" alt="Movie"></div>
+                <div class="movie-card"><img src="assets/img/cartelera6.jpg" alt="Movie"></div>
+                <div class="movie-card"><img src="assets/img/cartelera1.png" alt="Movie"></div>
+                <div class="movie-card"><img src="assets/img/cartelera2.png" alt="Movie"></div>
+                <div class="movie-card"><img src="assets/img/cartelera3.jpg" alt="Movie"></div>
+                <div class="movie-card"><img src="assets/img/cartelera4.jpeg" alt="Movie"></div>
+                <div class="movie-card"><img src="assets/img/cartelera5.jpg" alt="Movie"></div>
+                <div class="movie-card"><img src="assets/img/cartelera6.jpg" alt="Movie"></div>
+            </div>
+            <button class="slider-arrow prev">←</button>
+            <button class="slider-arrow next">→</button>
+        </div>
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <img src="assets/img/home.svg" alt="Home" class="nav-icon">
+                <span>Home</span>
+            </a>
+            <a href="search.html" class="nav-item">
+                <img src="assets/img/search.svg" alt="Explore" class="nav-icon">
+                <span>Explore</span>
+            </a>
+            <a href="my_content.html" class="nav-item">
+                <img src="assets/img/clip.svg" alt="Clips" class="nav-icon">
+                <span>Channel</span>
+            </a>
+            <a href="upload.html" class="nav-item">
+                <img src="assets/img/upload.svg" alt="Upload" class="nav-icon">
+                <span>Upload</span>
+            </a>
+            <a href="my_account.html" class="nav-item">
+                <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon" style="border-radius: 50%;">
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        function initializeMovieRowScroll() {
+            const movieRows = document.querySelectorAll('.movies-row');
+            const isMobile = window.innerWidth < 1200;
+            
+            movieRows.forEach(row => {
+                if (isMobile) {
+                    let isScrolling = false;
+                    let startX;
+                    let scrollLeft;
+function startDragging(e) {
+                        isScrolling = true;
+                        row.classList.add('grabbing');
+                        startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+                        scrollLeft = row.scrollLeft;
+                        row.style.scrollBehavior = 'auto';
+                    }
+
+                    function stopDragging() {
+                        isScrolling = false;
+                        row.classList.remove('grabbing');
+                        row.style.scrollBehavior = 'smooth';
+                    }
+
+                    function move(e) {
+                        if (!isScrolling) return;
+                        e.preventDefault();
+                        const x = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+                        const distance = x - startX;
+                        row.scrollLeft = scrollLeft - distance;
+                    }
+
+                    row.addEventListener('touchstart', startDragging, { passive: true });
+                    row.addEventListener('touchend', stopDragging);
+                    row.addEventListener('touchmove', move, { passive: false });
+                    row.addEventListener('mousedown', startDragging);
+                    row.addEventListener('mouseup', stopDragging);
+                    row.addEventListener('mouseleave', stopDragging);
+                    row.addEventListener('mousemove', move);
+                } else {
+                    const prevButton = row.parentElement.querySelector('.prev');
+                    const nextButton = row.parentElement.querySelector('.next');
+
+                    prevButton.addEventListener('click', () => {
+                        row.scrollBy({
+                            left: -row.offsetWidth + 100,
+                            behavior: 'smooth'
+                        });
+                    });
+
+                    nextButton.addEventListener('click', () => {
+                        row.scrollBy({
+                            left: row.offsetWidth - 100,
+                            behavior: 'smooth'
+                        });
+                    });
+
+                    row.addEventListener('scroll', () => {
+                        prevButton.style.opacity = row.scrollLeft <= 0 ? '0' : '1';
+                        nextButton.style.opacity = 
+                            Math.ceil(row.scrollLeft + row.clientWidth) >= row.scrollWidth ? '0' : '1';
+                    });
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeMovieRowScroll();
+        });
+    </script>
+</body>
+</html>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

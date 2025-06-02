@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>netflixd</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage User</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-bg: #0A0A23;
+            --primary-color: #F06292;
+            --input-bg: #E8E8E8; /* Fondo claro para inputs como en upload.html */
+            --text-dark: #1A1B1E; /* Texto oscuro para inputs como en upload.html */
+            --text-light: #FFFFFF; /* Texto blanco general */
+            --secondary-action-bg: #6c757d; /* Gris para botón de cancelar */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--main-bg);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .app-wrapper {
+            max-width: 600px; /* Coincide con upload.html */
+            margin: 0 auto;
+            padding: 0 1.5rem; 
+        }
+
+        .header {
+            padding: 2rem 0; /* Coincide con upload.html */
+            text-align: center;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem; /* Coincide con upload.html */
+        }
+
+        .page-title {
+            font-size: 2.5rem; /* Coincide con upload.html */
+            font-weight: 700;
+            margin-bottom: 2.5rem; /* Un poco más de espacio antes del formulario */
+            color: var(--text-light);
+        }
+
+        /* Estilo de etiqueta de formulario de upload.html */
+        .form-label-custom {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem; /* Ajustado ligeramente */
+            color: var(--text-light);
+            display: block; /* Asegurar que ocupe su propia línea */
+        }
+
+        /* Estilo de control de formulario de upload.html */
+        .form-control-custom {
+            background: var(--input-bg);
+            border: none;
+            color: var(--text-dark);
+            padding: 1rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            width: 100%;
+            box-sizing: border-box; /* Para que el padding no afecte el width */
+        }
+
+        .form-control-custom::placeholder {
+            color: rgba(0, 0, 0, 0.4); /* Placeholder más sutil */
+            font-weight: 400;
+        }
+        
+        .form-control-custom:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        .form-group-custom {
+            margin-bottom: 1.75rem; /* Espacio entre grupos de formulario */
+        }
+        
+        .form-text-sm { /* Para texto de ayuda pequeño */
+            font-size: 0.85em;
+            color: #ccc; /* Color gris claro para el texto de ayuda */
+            display: block;
+            margin-top: 0.3rem;
+            font-weight: 400;
+        }
+
+        /* Botones de acción */
+        .action-btn {
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 0.85rem; /* Padding consistente */
+            border-radius: 15px; /* Mismo border-radius que inputs */
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none; /* Para si se usa <a> */
+            display: block; /* Para que <a> ocupe el ancho */
+            text-align: center;
+        }
+        .action-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.01); /* Sutil hover effect */
+        }
+
+        .save-btn-custom {
+            background: var(--primary-color);
+            margin-top: 2.5rem; /* Espacio antes del botón de guardar */
+            margin-bottom: 1rem; /* Espacio entre guardar y cancelar */
+        }
+
+        .cancel-btn-custom {
+            background: var(--secondary-action-bg);
+            margin-bottom: 7rem; /* Gran margen inferior como en upload.html para el último botón */
+        }
+
+
+        /* Bottom Navigation - Exactamente igual que en upload.html */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--main-bg);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.8rem;
+            gap: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Específico para el ícono de perfil redondeado */
+        .nav-item .profile-icon {
+            border-radius: 50%;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <header class="header">
+            <img src="assets/img/logo.png" alt="Logo" class="logo-icon">
+            <h1 class="page-title">Manage User</h1>
+        </header>
+
+        <form id="manageUserForm">
+            <div class="form-group-custom">
+                <label for="userName" class="form-label-custom">Name</label>
+                <input type="text" class="form-control-custom" id="userName" name="name" placeholder="Enter your name" value="Mark Movie" required>
+            </div>
+
+            <div class="form-group-custom">
+                <label for="userEmail" class="form-label-custom">Email</label>
+                <input type="email" class="form-control-custom" id="userEmail" name="email" placeholder="Enter your email" value="mark@movie.com" required>
+            </div>
+
+            <div class="form-group-custom">
+                <label for="userPassword" class="form-label-custom">New Password</label>
+                <input type="password" class="form-control-custom" id="userPassword" name="password" placeholder="Enter new password (optional)">
+                <small class="form-text-sm">Leave blank to keep your current password.</small>
+            </div>
+            
+            <div class="form-group-custom">
+                <label for="confirmPassword" class="form-label-custom">Confirm New Password</label>
+                <input type="password" class="form-control-custom" id="confirmPassword" name="confirmPassword" placeholder="Confirm new password">
+            </div>
+
+            <button type="submit" class="action-btn save-btn-custom">Save Changes</button>
+            <a href="my_account.html" class="action-btn cancel-btn-custom">Cancel</a>
+        </form>
+
+        <nav class="bottom-nav">
+            <a href="dashboard.html" class="nav-item"> <img src="assets/img/home.svg" alt="Home" class="nav-icon">
+                <span>Home</span>
+            </a>
+            <a href="search.html" class="nav-item"> <img src="assets/img/search.svg" alt="Explore" class="nav-icon">
+                <span>Explore</span>
+            </a>
+            <a href="my_content.html" class="nav-item"> <img src="assets/img/clip.svg" alt="Clips" class="nav-icon">
+                <span>Channel</span>
+            </a>
+            <a href="upload.html" class="nav-item"> <img src="assets/img/upload.svg" alt="Upload" class="nav-icon">
+                <span>Upload</span>
+            </a>
+            <a href="my_account.html" class="nav-item active"> <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon profile-icon">
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        const form = document.getElementById('manageUserForm');
+        const passwordInput = document.getElementById('userPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+
+        form.addEventListener('submit', function(event) {
+            if (passwordInput.value !== "" && passwordInput.value !== confirmPasswordInput.value) {
+                event.preventDefault(); 
+                alert("New passwords do not match. Please try again.");
+                confirmPasswordInput.focus();
+            }
+            // Aquí iría la lógica para enviar los datos del formulario al servidor.
+            // Por ejemplo:
+            // event.preventDefault(); // Para evitar el envío tradicional si usas AJAX
+            // const formData = new FormData(form);
+            // fetch('/api/user/update', { method: 'POST', body: formData })
+            //   .then(response => response.json())
+            //   .then(data => console.log(data))
+            //   .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

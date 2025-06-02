@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>netflixd</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-bg: #0A0A23;
+            --primary-color: #F06292;
+            --input-bg: #E8E8E8;
+            --text-dark: #1A1B1E;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--main-bg);
+            color: white;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .app-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 1.5rem; 
+        }
+
+        .header {
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        .toggle-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: flex-start;
+        }
+
+        .toggle-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0.75rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-btn.active {
+            background: var(--primary-color);
+        }
+
+        .upload-section {
+            background: var(--input-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+        }
+
+        .upload-section p {
+            color: var(--text-dark);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .form-label {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .form-control {
+            background: var(--input-bg);
+            border: none;
+            color: var(--text-dark);
+            padding: 1rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
+        }
+
+        .form-control::placeholder {
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Ajustes de .bottom-nav para que coincida con el tamaño del dashboard */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--main-bg);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-size: 0.8rem;
+            gap: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .nav-item:last-child .nav-icon {
+            border-radius: 50%;
+        }
+
+        .save-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            /* Ajustado el margen inferior para que no se quede pegado al bottom-nav */
+            margin: 2rem 0 7rem 0; 
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .save-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <header class="header">
+            <img src="assets/img/logo.png" alt="Logo" class="logo-icon">
+            <h1 class="page-title">Upload</h1>
+        </header>
+
+        <div class="toggle-container">
+            <button class="toggle-btn active" data-form="movie">Movie</button>
+            <button class="toggle-btn" data-form="serie">Serie</button>
+        </div>
+
+        <form id="movieForm">
+            <div class="upload-section">
+                <img src="assets/img/upload_video.svg" alt="Upload" class="upload-icon">
+                <p>Upload your movie</p>
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="form-label">Title</label>
+                <input type="text" class="form-control" placeholder="Title" value="Super cars 3 - the change is now">
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="form-label">Description</label>
+                <textarea class="form-control" placeholder="Description" rows="3">This cars are awesome, but now will be ...</textarea>
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="form-label">Category</label>
+                <input type="text" class="form-control" placeholder="Category" value="Fantasy">
+            </div>
+
+            <button type="submit" class="save-btn">Save</button>
+        </form>
+
+        <form id="serieForm" style="display: none;">
+            <div class="upload-section">
+                <img src="assets/img/upload_video.svg" alt="Upload" class="upload-icon">
+                <p>Upload your episode</p>
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="form-label">Serie</label>
+                <input type="text" class="form-control" placeholder="Serie" value="Pablo Escobar">
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="form-label">Season</label>
+                <input type="text" class="form-control" placeholder="Season" value="Season 1">
+            </div>
+
+            <div class="form-group mb-4">
+                <label class="form-label">Episode</label>
+                <input type="text" class="form-control" placeholder="Episode" value="Episode 1 - Meeting Pablo Escobar">
+            </div>
+
+            <button type="submit" class="save-btn">Save</button>
+        </form>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="dashboard.html" class="nav-item">
+                <img src="assets/img/home.svg" alt="Home" class="nav-icon">
+                <span>Home</span>
+            </a>
+            <a href="search.html" class="nav-item">
+                <img src="assets/img/search.svg" alt="Explore" class="nav-icon">
+                <span>Explore</span>
+            </a>
+            <a href="my_content.html" class="nav-item">
+                <img src="assets/img/clip.svg" alt="Clips" class="nav-icon">
+                <span>Channel</span>
+            </a>
+            <a href="upload.html" class="nav-item active">
+                <img src="assets/img/upload.svg" alt="Upload" class="nav-icon">
+                <span>Upload</span>
+            </a>
+            <a href="my_account.html" class="nav-item">
+                <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon" style="border-radius: 50%;">
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        const toggleBtns = document.querySelectorAll('.toggle-btn');
+        const movieForm = document.getElementById('movieForm');
+        const serieForm = document.getElementById('serieForm');
+
+        toggleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                toggleBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                if (btn.dataset.form === 'movie') {
+                    movieForm.style.display = 'block';
+                    serieForm.style.display = 'none';
+                } else {
+                    movieForm.style.display = 'none';
+                    serieForm.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

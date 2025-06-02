@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>netflixd</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+        
+<style>
+:root {
+    --gradient-start: #F06292;
+    --gradient-end: #2196F3;
+    --main-bg: #0A0A23;
+    --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--main-bg);
+    color: white;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.app-wrapper {
+    padding-bottom: 80px;
+}
+
+/* Header */
+.header {
+    padding: 0.75rem 0;
+    text-align: center;
+}
+
+.logo-icon {
+    width: 48px;
+    height: 48px;
+}
+
+/* Main Carousel */
+.carousel-container {
+    padding: 0 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.carousel-wrapper {
+    position: relative;
+    border-radius: 24px;
+    padding: 2px;
+    background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+    overflow: hidden;
+}
+
+.carousel-content {
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    background: var(--main-bg);
+    aspect-ratio: 1/1;
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s var(--transition-bezier);
+}
+
+.mobile-image {
+    display: block;
+}
+
+.desktop-image {
+    display: none;
+}
+
+.slide-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 30px;
+    padding: 4px;
+    display: flex;
+    gap: 4px;
+    z-index: 10;
+}
+
+.indicator-pill {
+    display: flex;
+    gap: 4px;
+}
+
+.indicator-number {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.7);
+    font-weight: 500;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s var(--transition-bezier);
+}
+
+.indicator-number.active {
+    background: var(--gradient-start);
+    color: white;
+    font-size: 1.2rem;
+}
+
+/* Now Playing */
+.now-playing {
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+}
+
+.channel-tag {
+    color: var(--gradient-start);
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.movie-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.list-button {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    border-radius: 20px;
+    color: white;
+    padding: 0.75rem 2rem;
+    font-size: 0.9rem;
+    transition: all 0.3s var(--transition-bezier);
+}
+
+.list-button:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.05);
+}
+
+/* Movie Sections */
+.movies-section {
+    position: relative;
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+    overflow: visible;
+}
+
+.section-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.movies-row {
+    position: relative;
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding: 1rem;
+    margin: -1rem;
+    scroll-snap-type: x mandatory;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    cursor: grab;
+    user-select: none;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.movies-row::-webkit-scrollbar {
+    display: none;
+}
+
+.movies-row.grabbing {
+    cursor: grabbing;
+}
+
+.movie-card {
+    flex: 0 0 auto;
+    width: 110px;
+    aspect-ratio: 2/3;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s var(--transition-bezier);
+    scroll-snap-align: start;
+    position: relative;
+    /* Para que el enlace ocupe toda la tarjeta si es necesario */
+    display: block; 
+    text-decoration: none; /* Quita el subrayado del enlace */
+}
+.movie-card a { /* Asegura que el enlace ocupe el espacio de la imagen */
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.movie-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Navigation Arrows */
+.slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: rgba(128, 128, 128, 0.3);
+    border-radius: 50%;
+    display: none; /* Se muestra por JS en desktop */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    border: none;
+    color: white;
+    transition: all 0.2s ease;
+    opacity: 0; /* Inicia oculto, se muestra con JS */
+}
+
+.slider-arrow::after {
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1;
+}
+
+/* .slider-arrow.prev::after { } -- No es necesario si usas innerHTML */
+
+.slider-arrow:hover {
+    background: rgba(128, 128, 128, 0.5);
+}
+
+.slider-arrow.prev {
+    left: -50px; /* Ajustado para que se vea bien con el nuevo margen de movies-section */
+}
+
+.slider-arrow.next {
+    right: -50px; /* Ajustado */
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--main-bg);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    z-index: 1000;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    font-size: 0.8rem;
+    gap: 4px;
+    transition: all 0.3s var(--transition-bezier);
+}
+
+.nav-item.active {
+    color: var(--gradient-start);
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Desktop Styles */
+@media (min-width: 1200px) {
+    .app-wrapper {
+        max-width: 1600px;
+        margin: 0 auto;
+        padding: 0 4rem 80px;
+    }
+
+    .header {
+        padding: 1.5rem 0;
+    }
+
+    .carousel-container {
+        padding: 0;
+    }
+
+    .carousel-content {
+        aspect-ratio: 21/9;
+    }
+
+    .mobile-image {
+        display: none;
+    }
+
+    .desktop-image {
+        display: block;
+    }
+
+    .movies-section {
+        padding: 0; /* Quitamos padding para que las flechas queden fuera */
+        margin: 0 60px; /* Margen para centrar y dar espacio a las flechas */
+        margin-bottom: 3rem;
+    }
+
+    .movies-row {
+        padding: 2rem;
+        margin: -2rem;
+    }
+
+    .movie-card {
+        width: 180px;
+        transition: all 0.3s ease;
+        transform-origin: center center;
+    }
+
+    .movies-row:hover .movie-card {
+        transform-origin: center left; /* Ajustado para la animación */
+    }
+
+    .movie-card:hover {
+        transform: scale(1.2);
+        z-index: 20;
+    }
+
+    .movie-card:hover ~ .movie-card {
+        transform: translateX(30px); /* Ajustado el valor si es necesario */
+    }
+
+    .movies-row .movie-card:first-child {
+        transform-origin: left center;
+    }
+
+    .movies-row .movie-card:last-child {
+        transform-origin: right center;
+    }
+
+    .movie-title {
+        font-size: 2.5rem;
+        max-width: 800px;
+    }
+
+    .slider-arrow {
+        display: flex; /* Se muestran en desktop */
+    }
+}
+</style>
+        
+</head>
+<body>
+    <div class="app-wrapper">
+        <header class="header">
+            <img src="assets/img/logo.png" alt="Logo" class="logo-icon">
+        </header>
+
+        <div class="carousel-container">
+            <div class="carousel-wrapper">
+                <div class="swiper main-swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="carousel-content">
+                                <img src="assets/img/beast.jpg" alt="Movie 1" class="carousel-image mobile-image">
+                                <img src="assets/img/beast.jpg" alt="Movie 1" class="carousel-image desktop-image">
+                                </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="carousel-content">
+                                <img src="assets/img/westcol.jpg" alt="Movie 2" class="carousel-image mobile-image">
+                                <img src="assets/img/westcol.jpg" alt="Movie 2" class="carousel-image desktop-image">
+                                </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="carousel-content">
+                                <img src="assets/img/ibai.webp" alt="Movie 3" class="carousel-image mobile-image">
+                                <img src="assets/img/ibai.webp" alt="Movie 3" class="carousel-image desktop-image">
+                                </div>
+                        </div>
+                    </div>
+                    <div class="slide-indicators">
+                        <div class="indicator-pill">
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="now-playing">
+            <div class="channel-tag">CHANNEL</div>
+            <h1 class="movie-title">Spider-Man: Across the Spider-Verse</h1>
+            <button class="list-button">Follow</button>
+        </div>
+
+        <div style="padding-top: 30px;" class="movies-section">
+            <h2 class="section-title">Channels</h2>
+            <div class="movies-row" data-slider="featured">
+                </div>
+        </div>
+
+        <div class="movies-section">
+            <h2 class="section-title">Action & Adventure</h2>
+            <div class="movies-row" data-slider="action">
+                </div>
+        </div>
+
+        <div class="movies-section">
+            <h2 class="section-title">Comedy</h2>
+            <div class="movies-row" data-slider="comedy">
+                </div>
+        </div>
+
+        <div class="movies-section">
+            <h2 class="section-title">Horror</h2>
+            <div class="movies-row" data-slider="horror">
+                </div>
+        </div>
+
+        <nav class="bottom-nav">
+            <a href="dashboard.html" class="nav-item active">
+                <img src="assets/img/home.svg" alt="Home" class="nav-icon">
+                <span>Home</span>
+            </a>
+            <a href="search.html" class="nav-item">
+                <img src="assets/img/search.svg" alt="Explore" class="nav-icon">
+                <span>Explore</span>
+            </a>
+            <a href="my_content.html" class="nav-item">
+                <img src="assets/img/clip.svg" alt="Clips" class="nav-icon">
+                <span>Channel</span>
+            </a>
+            <a href="upload.html" class="nav-item">
+                <img src="assets/img/upload.svg" alt="Upload" class="nav-icon">
+                <span>Upload</span>
+            </a>
+            <a href="my_account.html" class="nav-item">
+                <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon" style="border-radius: 50%;">
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+        
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script>
+        // Datos de películas para el slider principal
+        const movies = [
+            {
+                title: "Free Money in Miami",
+                channel: "Mr Beast",
+                mobileImage: "assets/img/beast.jpg", // Rutas completas
+                desktopImage: "assets/img/beast.jpg"
+            },
+            {
+                title: "Arcangel Visit my New House",
+                channel: "Westcol",
+                mobileImage: "assets/img/westcol.jpg",
+                desktopImage: "assets/img/westcol.jpg"
+            },
+            {
+                title: "My Best Follower",
+                channel: "Ibai",
+                mobileImage: "assets/img/ibai.webp",
+                desktopImage: "assets/img/ibai.webp"
+            }
+        ];
+
+        // Inicializar Swiper Principal
+        const mainSwiper = new Swiper('.main-swiper', {
+            loop: true,
+            effect: 'fade', // Efecto de desvanecimiento
+            fadeEffect: {
+                crossFade: true // Importante para el efecto fade
+            },
+            speed: 800, // Velocidad de la transición
+            autoplay: {
+                delay: 4000, // Tiempo entre slides
+                disableOnInteraction: false, // No detener autoplay en interacción manual
+            },
+            pagination: { // Usar la paginación de Swiper para los indicadores
+                el: '.slide-indicators .indicator-pill', // Contenedor de los puntos/números
+                clickable: true,
+                bulletClass: 'indicator-number', // Clase para cada "bullet"
+                bulletActiveClass: 'active',    // Clase para el "bullet" activo
+                renderBullet: function (index, className) {
+                    // className ya incluye 'indicator-number' y 'active' si corresponde
+                    return '<div class="' + className + '">' + (index + 1) + '</div>';
+                }
+            },
+            on: {
+                slideChange: function () {
+                    updateMovieInfo(this.realIndex); // Usar realIndex para loop mode
+                }
+            }
+        });
+
+        // Actualizar información de la película y los indicadores personalizados si los mantienes aparte
+        function updateMovieInfo(index) {
+            const movie = movies[index];
+            document.querySelector('.channel-tag').textContent = movie.channel;
+            document.querySelector('.movie-title').textContent = movie.title;
+            
+            // Si no usas la paginación de Swiper para los indicadores, actualízalos manualmente:
+            // document.querySelectorAll('.indicator-number').forEach((el, i) => {
+            //    el.classList.toggle('active', i === index);
+            // });
+        }
+         // Llama a updateMovieInfo para la primera slide al cargar
+        updateMovieInfo(mainSwiper.realIndex);
+
+
+        // Función para generar las filas de películas
+        function generateMovieRows() {
+            const movieRows = document.querySelectorAll('.movies-row');
+            const posters = [
+                'cartelera1.png', 'cartelera2.png', 'cartelera3.jpg',
+                'cartelera4.jpeg', 'cartelera5.jpg', 'cartelera6.jpg'
+            ];
+
+            movieRows.forEach(row => {
+                // Repetir 4 veces para tener 24 películas (ajusta según necesites)
+                for (let i = 0; i < 4; i++) {
+                    posters.forEach((poster, posterIndex) => {
+                        const card = document.createElement('div');
+                        card.className = 'movie-card';
+
+                        const link = document.createElement('a');
+                        // En el futuro, podrías hacer esto más dinámico:
+                        // link.href = `movie.html?movie_id=${encodeURIComponent(poster.split('.')[0])}_${i}_${posterIndex}`;
+                        link.href = 'movie.html'; 
+
+                        const img = document.createElement('img');
+                        img.src = `assets/img/${poster}`;
+                        // Para un alt más descriptivo, necesitarías los títulos reales
+                        img.alt = `Movie Poster ${poster.split('.')[0]}`; 
+
+                        link.appendChild(img);
+                        card.appendChild(link);
+                        
+                        row.appendChild(card);
+                    });
+                }
+            });
+        }
+
+        // Implementar scroll con momentum para las filas de películas
+        function initializeMovieRowScroll() {
+            const movieRows = document.querySelectorAll('.movies-row');
+            
+            movieRows.forEach(row => {
+                const isDesktop = window.innerWidth >= 1200; // Definir si es desktop
+
+                if (!isDesktop) { // Lógica para móvil (scroll táctil)
+                    let isScrolling = false; // Debería ser isDragging para claridad
+                    let startX;
+                    let scrollLeftStart; // Renombrado para claridad
+
+                    function startDragging(e) {
+                        isScrolling = true;
+                        startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+                        scrollLeftStart = row.scrollLeft;
+                        row.classList.add('grabbing'); // Añade clase para feedback visual
+                        row.style.scrollBehavior = 'auto'; // Desactiva scroll suave durante el arrastre
+                    }
+
+                    function stopDragging() {
+                        if (!isScrolling) return;
+                        isScrolling = false;
+                        row.classList.remove('grabbing');
+                        row.style.scrollBehavior = 'smooth'; // Reactiva scroll suave
+                    }
+
+                    function move(e) {
+                        if (!isScrolling) return;
+                        e.preventDefault(); // Prevenir scroll de página en táctil
+                        
+                        const x = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+                        const distance = x - startX;
+                        row.scrollLeft = scrollLeftStart - distance;
+                    }
+
+                    row.addEventListener('touchstart', startDragging, { passive: true });
+                    row.addEventListener('touchend', stopDragging);
+                    row.addEventListener('touchleave', stopDragging); // Para cuando el dedo sale del área
+                    row.addEventListener('touchmove', move, { passive: false });
+
+                    // También para mouse en móvil si se quiere (puede ser redundante o conflictivo con táctil)
+                    // row.addEventListener('mousedown', startDragging);
+                    // row.addEventListener('mouseup', stopDragging);
+                    // row.addEventListener('mouseleave', stopDragging);
+                    // row.addEventListener('mousemove', move);
+
+                } else { // Lógica para desktop (flechas)
+                    const parentSection = row.parentElement; // Las flechas deben estar en el contenedor de la sección
+                    
+                    // Evitar añadir flechas múltiples veces si la función se llama de nuevo
+                    if (parentSection.querySelector('.slider-arrow.prev')) return;
+
+                    const prevButton = document.createElement('button');
+                    const nextButton = document.createElement('button');
+                    
+                    prevButton.className = 'slider-arrow prev';
+                    nextButton.className = 'slider-arrow next';
+                    prevButton.innerHTML = '&#x2190;'; // Flecha izquierda Unicode
+                    nextButton.innerHTML = '&#x2192;'; // Flecha derecha Unicode
+                    
+                    parentSection.appendChild(prevButton);
+                    parentSection.appendChild(nextButton);
+                    
+                    function updateArrowVisibility() {
+                        // Pequeño umbral para evitar problemas de precisión con decimales
+                        const scrollThreshold = 5; 
+                        prevButton.style.opacity = row.scrollLeft <= scrollThreshold ? '0.3' : '1'; // Menos opacidad si está al inicio
+                        prevButton.style.pointerEvents = row.scrollLeft <= scrollThreshold ? 'none' : 'auto';
+
+                        nextButton.style.opacity = 
+                            Math.ceil(row.scrollLeft + row.clientWidth) >= (row.scrollWidth - scrollThreshold) ? '0.3' : '1';
+                        nextButton.style.pointerEvents = 
+                            Math.ceil(row.scrollLeft + row.clientWidth) >= (row.scrollWidth - scrollThreshold) ? 'none' : 'auto';
+                    }
+                    
+                    // Scroll suave con las flechas
+                    prevButton.addEventListener('click', () => {
+                        row.scrollBy({
+                            left: -row.offsetWidth * 0.7, // Scroll un poco menos del ancho visible
+                            behavior: 'smooth'
+                        });
+                    });
+
+                    nextButton.addEventListener('click', () => {
+                        row.scrollBy({
+                            left: row.offsetWidth * 0.7,
+                            behavior: 'smooth'
+                        });
+                    });
+
+                    // Mostrar/ocultar flechas según la posición del scroll
+                    row.addEventListener('scroll', updateArrowVisibility);
+                    // Llamada inicial para establecer el estado correcto de las flechas
+                    updateArrowVisibility(); 
+                }
+            });
+        }
+
+        // Inicializar todo cuando el documento esté listo
+        document.addEventListener('DOMContentLoaded', () => {
+            generateMovieRows();
+            initializeMovieRowScroll();
+            
+            // El manejo de clics en los indicadores ahora lo hace Swiper a través de la configuración 'pagination'
+            // Si mantienes indicadores manuales, esta sería la lógica:
+            // document.querySelectorAll('.slide-indicators .indicator-number').forEach((el) => {
+            //     el.addEventListener('click', (e) => {
+            //         const slideToIndex = parseInt(e.target.dataset.slideTo);
+            //         if (!isNaN(slideToIndex)) {
+            //            mainSwiper.slideToLoop(slideToIndex); // Usar slideToLoop para loop mode
+            //         }
+            //     });
+            // });
+        });
+
+        // Re-inicializar el scroll de las filas si cambia el tamaño de la ventana (para cambiar entre móvil/desktop)
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                // Podrías necesitar limpiar flechas antiguas antes de re-inicializar
+                document.querySelectorAll('.slider-arrow').forEach(arrow => arrow.remove());
+                initializeMovieRowScroll();
+            }, 250);
+        });
+
+    </script>
+</body>
+</html>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

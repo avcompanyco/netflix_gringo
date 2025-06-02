@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>netflixd</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body><!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Subscription</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-bg: #0A0A23;
+            --primary-color: #F06292;
+            --input-bg: #E8E8E8;
+            --text-dark: #1A1B1E;
+            --text-light: #FFFFFF;
+            --secondary-action-bg: #6c757d;
+            --destructive-action-bg: #dc3545; /* Rojo para acciones destructivas */
+            --border-light: rgba(255,255,255,0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--main-bg);
+            color: var(--text-light);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .app-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 1.5rem; 
+        }
+
+        .header {
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem; /* Ajustado */
+            color: var(--text-light);
+        }
+        
+        .subscription-page-section {
+            margin-bottom: 3rem; /* Espacio entre secciones principales */
+            padding-top: 1.5rem;
+        }
+        .subscription-page-section:first-of-type {
+            padding-top: 0; /* Sin padding superior para la primera sección */
+        }
+
+        .section-title-custom {
+            font-size: 1.75rem; /* Título para cada sección (Plan, Pago, etc.) */
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .current-info-display {
+            font-size: 1rem;
+            color: #e0e0e0; /* Ligeramente más brillante que el texto de ayuda */
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        .current-info-display strong {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        /* Estilos para selección de Plan */
+        .plan-selector-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-btn {
+            flex-grow: 1;
+            background: var(--input-bg);
+            border: 2px solid var(--input-bg);
+            color: var(--text-dark);
+            padding: 0.85rem 1rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .plan-btn.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 0 10px rgba(240, 98, 146, 0.3);
+        }
+        .plan-btn:not(.active):hover {
+            background-color: #d8d8d8; /* Un poco más oscuro al pasar el ratón */
+            border-color: #d8d8d8;
+        }
+
+
+        /* Estilo de etiqueta de formulario (reusado y ajustado) */
+        .form-label-custom {
+            font-size: 1.1rem; /* Más pequeño para etiquetas de campos específicos */
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            display: block;
+        }
+
+        .form-control-custom {
+            background: var(--input-bg);
+            border: none;
+            color: var(--text-dark);
+            padding: 0.9rem 1rem; /* Ajustado */
+            border-radius: 15px;
+            font-size: 1rem; /* Ajustado */
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-control-custom::placeholder {
+            color: rgba(0, 0, 0, 0.4);
+            font-weight: 400;
+        }
+        .form-control-custom:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+        
+        .form-group-custom {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-row-flex {
+            display: flex;
+            gap: 1rem;
+        }
+        .form-row-flex > div {
+            flex-grow: 1;
+        }
+        
+        .info-text-sm {
+            font-size: 0.9rem;
+            color: #b0b0b0;
+            display: block;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Botones de Acción (reusados y con variantes) */
+        .action-btn {
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 0.85rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-bottom: 1rem; /* Margen base entre botones */
+        }
+        .action-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.01);
+        }
+
+        .save-btn-custom {
+            background: var(--primary-color);
+        }
+
+        .destructive-btn-custom {
+            background: var(--destructive-action-bg);
+        }
+        .destructive-btn-custom:hover {
+            background: #c82333; /* Rojo más oscuro */
+        }
+        
+        /* Ajuste para el último botón en la página */
+        .app-wrapper > section:last-of-type .action-btn:last-of-type,
+        .app-wrapper > form:last-of-type .action-btn:last-of-type { /* si el botón está en un form al final */
+            margin-bottom: 7rem; 
+        }
+
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--main-bg);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid var(--border-light);
+            z-index: 1000;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.8rem;
+            gap: 4px;
+            transition: all 0.3s ease;
+        }
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+        }
+        .nav-item .profile-icon {
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrapper">
+        <header class="header">
+            <img src="assets/img/logo.png" alt="Logo" class="logo-icon"> <h1 class="page-title">Manage Subscription</h1>
+        </header>
+
+        <section class="subscription-page-section">
+            <h2 class="section-title-custom">Your Plan</h2>
+            <p class="current-info-display">Current Plan: <strong id="currentPlanNameDisplay">Golden</strong></p>
+            
+            <div class="plan-selector-container">
+                <button class="plan-btn active" data-plan="golden" id="btnPlanGolden">Golden Plan</button>
+                <button class="plan-btn" data-plan="silver" id="btnPlanSilver">Silver Plan</button>
+            </div>
+            <button type="button" id="updatePlanButton" class="action-btn save-btn-custom">Update Plan</button>
+        </section>
+
+        <section class="subscription-page-section">
+            <h2 class="section-title-custom">Payment Method</h2>
+            <div id="currentPaymentMethodDisplay" class="current-info-display">
+                Card: <strong>Visa ending in 1234</strong><br>
+                Expires: <strong>12/2026</strong>
+            </div>
+
+            <form id="paymentMethodForm">
+                <div class="form-group-custom">
+                    <label for="cardName" class="form-label-custom">Name on Card</label>
+                    <input type="text" class="form-control-custom" id="cardName" placeholder="Full name as it appears on card">
+                </div>
+                <div class="form-group-custom">
+                    <label for="cardNumber" class="form-label-custom">Card Number</label>
+                    <input type="text" class="form-control-custom" id="cardNumber" placeholder="•••• •••• •••• ••••">
+                </div>
+                <div class="form-row-flex">
+                    <div class="form-group-custom">
+                        <label for="cardExpiry" class="form-label-custom">Expiry Date</label>
+                        <input type="text" class="form-control-custom" id="cardExpiry" placeholder="MM/YY">
+                    </div>
+                    <div class="form-group-custom">
+                        <label for="cardCVV" class="form-label-custom">CVV</label>
+                        <input type="text" class="form-control-custom" id="cardCVV" placeholder="•••">
+                    </div>
+                </div>
+                <button type="submit" class="action-btn save-btn-custom">Update Payment Method</button>
+            </form>
+        </section>
+
+        <section class="subscription-page-section">
+            <h2 class="section-title-custom">Cancel Subscription</h2>
+            <p class="info-text-sm">
+                If you cancel, you'll retain access to your current plan's benefits until the end of your billing period. 
+                Your subscription will not auto-renew.
+            </p>
+            <button type="button" id="cancelSubscriptionButton" class="action-btn destructive-btn-custom">Cancel Subscription</button>
+        </section>
+
+
+        <nav class="bottom-nav">
+            <a href="dashboard.html" class="nav-item">
+                <img src="assets/img/home.svg" alt="Home" class="nav-icon">
+                <span>Home</span>
+            </a>
+            <a href="search.html" class="nav-item">
+                <img src="assets/img/search.svg" alt="Explore" class="nav-icon">
+                <span>Explore</span>
+            </a>
+            <a href="my_content.html" class="nav-item">
+                <img src="assets/img/clip.svg" alt="Clips" class="nav-icon">
+                <span>Channel</span>
+            </a>
+            <a href="upload.html" class="nav-item">
+                <img src="assets/img/upload.svg" alt="Upload" class="nav-icon">
+                <span>Upload</span>
+            </a>
+            <a href="my_account.html" class="nav-item active"> <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon profile-icon">
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Lógica para selección de plan
+            const planButtons = document.querySelectorAll('.plan-btn');
+            const currentPlanNameDisplay = document.getElementById('currentPlanNameDisplay'); // Asume que tienes un plan actual
+            let selectedPlan = currentPlanNameDisplay ? currentPlanNameDisplay.textContent.toLowerCase() : 'golden'; // o leer de data-*
+
+            planButtons.forEach(button => {
+                if (button.dataset.plan === selectedPlan) {
+                    button.classList.add('active');
+                } else {
+                    button.classList.remove('active');
+                }
+
+                button.addEventListener('click', function () {
+                    planButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    selectedPlan = this.dataset.plan;
+                    console.log('Selected plan:', selectedPlan);
+                });
+            });
+
+            const updatePlanButton = document.getElementById('updatePlanButton');
+            if (updatePlanButton) {
+                updatePlanButton.addEventListener('click', function() {
+                    // Lógica para actualizar el plan
+                    alert('Updating plan to: ' + selectedPlan + ' (Implement backend call)');
+                });
+            }
+
+            // Lógica para el formulario de método de pago
+            const paymentForm = document.getElementById('paymentMethodForm');
+            if (paymentForm) {
+                paymentForm.addEventListener('submit', function (event) {
+                    event.preventDefault();
+                    // Lógica para enviar datos de la tarjeta
+                    alert('Payment method update submitted (Implement backend call)');
+                    // Por ejemplo:
+                    // const cardName = document.getElementById('cardName').value;
+                    // console.log('Card Name:', cardName);
+                });
+            }
+
+            // Lógica para cancelar suscripción
+            const cancelSubscriptionButton = document.getElementById('cancelSubscriptionButton');
+            if (cancelSubscriptionButton) {
+                cancelSubscriptionButton.addEventListener('click', function () {
+                    if (confirm('Are you sure you want to cancel your subscription? This action cannot be undone immediately.')) {
+                        // Lógica para cancelar la suscripción
+                        alert('Subscription cancellation process initiated (Implement backend call)');
+                    }
+                });
+            }
+            
+            // Simulación de carga de datos (esto debería venir del backend)
+            function loadSubscriptionData() {
+                const userPlan = "Golden"; // Simulado
+                const userCard = { type: "Visa", last4: "1234", expiry: "12/2026"}; // Simulado
+
+                if (currentPlanNameDisplay) {
+                    currentPlanNameDisplay.textContent = userPlan;
+                }
+                planButtons.forEach(button => {
+                    if (button.dataset.plan.toLowerCase() === userPlan.toLowerCase()) {
+                        button.classList.add('active');
+                    } else {
+                        button.classList.remove('active');
+                    }
+                });
+
+                const paymentDisplay = document.getElementById('currentPaymentMethodDisplay');
+                if (paymentDisplay) {
+                     paymentDisplay.innerHTML = `Card: <strong>${userCard.type} ending in ${userCard.last4}</strong><br>Expires: <strong>${userCard.expiry}</strong>`;
+                }
+            }
+            loadSubscriptionData(); // Llamar para cargar datos simulados
+
+        });
+    </script>
+</body>
+</html>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

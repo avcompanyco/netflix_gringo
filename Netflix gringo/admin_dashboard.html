@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>netflixd</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Polished</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --main-bg: #0A0A23;
+            --sidebar-bg: #0F122E; 
+            --content-area-bg: #0A0A23; 
+            --primary-color: #F06292; 
+            --primary-color-hover: #D84373; 
+            --secondary-color: #2196F3; 
+            --secondary-color-hover: #1976D2;
+            --input-bg: #E8E8E8; 
+            --text-dark-on-light-bg: #1A1B1E;
+            --text-light: #FFFFFF;
+            --text-headings: #f0f6fc; 
+            --text-muted: #aeb8c4; 
+            --border-color: #2c2c4c; 
+            --error-color: #ff6b6b; 
+            --error-color-hover: #e04848;
+            --warning-color: #FFB74D; 
+            --warning-color-hover: #FFA726;
+            --success-color: #4CAF50;
+            --info-color: #64B5F6; 
+            --info-color-hover: #42A5F5;
+
+            --section-bg: rgba(20, 22, 46, 0.5); 
+            --table-header-bg: rgba(30, 33, 63, 0.7);
+            --table-row-hover-bg: rgba(240, 98, 146, 0.08); 
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
+            --shadow-md: 0 5px 15px rgba(0,0,0,0.3);
+            --border-radius-sm: 6px; 
+            --border-radius-md: 10px;
+        }
+
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--main-bg);
+            color: var(--text-light);
+            font-size: 15px; 
+            line-height: 1.65; 
+            box-sizing: border-box;
+        }
+        *, *:before, *:after { box-sizing: inherit; }
+
+        .admin-page-container { display: flex; min-height: 100vh; }
+
+        .admin-sidebar {
+            width: 250px; background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex; flex-direction: column; position: fixed;
+            left: 0; top: 0; bottom: 0; z-index: 1000;
+            box-shadow: 3px 0 10px rgba(0,0,0,0.25);
+        }
+        .sidebar-header {
+            padding: 1.25rem 1.5rem; text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+        }
+        .sidebar-header .logo-icon { width: 36px; height: 36px; }
+        .sidebar-header h2 { font-size: 1.15rem; color: var(--text-headings); margin: 0; font-weight: 600; }
+
+        .admin-nav ul { list-style: none; padding: 0; margin: 0; flex-grow: 1; }
+        .admin-nav li a {
+            display: flex; align-items: center; padding: 0.9rem 1.5rem; 
+            color: var(--text-muted); text-decoration: none; font-weight: 500;
+            font-size: 0.95rem; transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+        .admin-nav li a .nav-icon-svg { width: 18px; height: 18px; margin-right: 1rem; fill: currentColor; }
+        .admin-nav li a:hover { background-color: var(--table-row-hover-bg); color: var(--primary-color); }
+        .admin-nav li a.active {
+            background-color: var(--table-row-hover-bg); color: var(--primary-color);
+            border-left-color: var(--primary-color); font-weight: 600;
+        }
+
+        .admin-main-content-wrapper { flex-grow: 1; margin-left: 250px; display: flex; flex-direction: column; background-color: var(--content-area-bg); }
+        
+        .admin-top-bar {
+            display: flex; justify-content: flex-end; align-items: center;
+            padding: 0 1.5rem; background-color: var(--sidebar-bg);
+            border-bottom: 1px solid var(--border-color); min-height: 60px;
+            box-shadow: var(--shadow-sm); position: sticky; top: 0; z-index: 999;
+        }
+        .user-profile-dropdown { position: relative; }
+        .user-profile-dropdown .profile-trigger {
+            background: none; border: none; color: var(--text-light); cursor: pointer;
+            padding: 0.5rem; display: flex; align-items: center; border-radius: var(--border-radius-sm);
+        }
+        .user-profile-dropdown .profile-trigger:hover { background-color: rgba(255,255,255,0.05); }
+        .user-profile-dropdown .profile-trigger .user-avatar {
+            width: 32px; height: 32px; border-radius: 50%; background-color: var(--primary-color);
+            margin-right: 0.5rem; display: flex; align-items: center; justify-content: center; font-weight: 600; color:white;
+        }
+        .user-profile-dropdown .dropdown-menu {
+            display: none; position: absolute; top: calc(100% + 8px); right: 0;
+            background-color: var(--sidebar-bg); border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm); box-shadow: var(--shadow-md);
+            min-width: 180px; z-index: 1001; list-style: none; padding: 0.5rem 0;
+        }
+        .user-profile-dropdown .dropdown-menu.active { display: block; }
+        .user-profile-dropdown .dropdown-menu li a {
+            display: block; padding: 0.6rem 1rem; color: var(--text-muted);
+            text-decoration: none; font-size: 0.9rem;
+        }
+        .user-profile-dropdown .dropdown-menu li a:hover { background-color: var(--table-row-hover-bg); color: var(--primary-color); }
+        .user-profile-dropdown .dropdown-menu .divider { height: 1px; background-color: var(--border-color); margin: 0.5rem 0; }
+
+        .admin-main-content { flex-grow: 1; padding: 2rem; overflow-y: auto; } 
+        .content-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; } 
+        .content-header .page-module-title { font-size: 2rem; font-weight: 600; color: var(--text-headings); margin: 0; } 
+        .action-button { 
+            background-color: var(--primary-color); color: white; padding: 0.7rem 1.4rem; 
+            border-radius: var(--border-radius-sm); text-decoration: none; font-weight: 500;
+            font-size: 0.95rem; transition: background-color 0.2s ease, transform 0.2s ease; border: none; cursor: pointer;
+        }
+        .action-button:hover { background-color: var(--primary-color-hover); transform: translateY(-1px); }
+        .action-button.secondary { background-color: var(--secondary-color); }
+        .action-button.secondary:hover { background-color: var(--secondary-color-hover); }
+
+        .dashboard-module { display: none; }
+        .dashboard-module.active { display: block; animation: fadeInPlatform 0.4s ease-out; }
+        @keyframes fadeInPlatform { from { opacity: 0; } to { opacity: 1; } }
+
+        .stats-overview { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2.5rem; }
+        .stat-card { background-color: var(--section-bg); padding: 1.5rem; border-radius: var(--border-radius-md); border-left: 4px solid var(--primary-color); box-shadow: var(--shadow-sm); }
+        .stat-card h3 { font-size: 0.9rem; color: var(--text-muted); margin:0 0 0.4rem 0; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+        .stat-card .stat-value { font-size: 2rem; font-weight: 700; color: var(--text-headings); margin:0; }
+
+        .table-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+        .search-bar input[type="search"] {
+            padding: 0.75rem 1rem; border-radius: var(--border-radius-sm); background-color: var(--input-bg);
+            border: 1px solid var(--input-bg); color: var(--text-dark-on-light-bg); min-width: 300px; font-size: 0.95rem; 
+        }
+        .search-bar input[type="search"]::placeholder { color: #777; }
+        .search-bar input[type="search"]:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 0 3px rgba(240,98,146,0.3); }
+        
+        .admin-table-wrapper { overflow-x: auto; background-color: var(--section-bg); border-radius:var(--border-radius-md); padding: 0.5rem; box-shadow: var(--shadow-sm); }
+        .admin-table { width: 100%; border-collapse: separate; border-spacing: 0; color: var(--text-light); font-size: 0.95rem; }
+        .admin-table th, .admin-table td { padding: 1rem 1.1rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border-color); }
+        .admin-table th { background-color: var(--table-header-bg); font-weight: 600; white-space: nowrap; color: var(--text-headings); font-size: 1rem; }
+        .admin-table tr:last-child td { border-bottom: none; }
+        .admin-table tr:hover { background-color: var(--table-row-hover-bg); }
+        
+        /* ESTILOS MEJORADOS PARA BOTONES DE ACCIÓN EN TABLA Y TARJETAS */
+        .action-buttons { /* Contenedor de botones en tablas y tarjetas */
+            display: flex;
+            align-items: center;
+            gap: 0.6rem; 
+            white-space: nowrap; 
+        }
+        .action-buttons button, 
+        .action-buttons a,
+        .plan-card-actions button { /* Aplicar a botones de plan también */
+            font-size: 0.825rem; /* Unificado y ligeramente ajustado */
+            padding: 0.45rem 0.85rem; /* Unificado */
+            border-radius: var(--border-radius-sm);
+            border: 1px solid transparent;
+            font-weight: 500;
+            text-align: center;
+            min-width: 65px; 
+            cursor: pointer;
+            text-decoration: none;
+            color: white; /* Texto blanco por defecto para la mayoría */
+            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+        .action-buttons button:hover, 
+        .action-buttons a:hover,
+        .plan-card-actions button:hover {
+            transform: translateY(-1px); /* Efecto hover sutil */
+        }
+        
+        .action-btn-view, .action-btn-monitor { background-color: var(--info-color); border-color:var(--info-color); }
+        .action-btn-view:hover, .action-btn-monitor:hover { background-color: var(--info-color-hover); }
+
+        .action-btn-edit { background-color: var(--secondary-color); border-color:var(--secondary-color); }
+        .action-btn-edit:hover { background-color: var(--secondary-color-hover); }
+        
+        .action-btn-end, .action-btn-archive, .action-btn-cancel-item { background-color: var(--warning-color); border-color:var(--warning-color); color: #222; /* Texto oscuro para naranja */ }
+        .action-btn-end:hover, .action-btn-archive:hover, .action-btn-cancel-item:hover { background-color: var(--warning-color-hover); }
+
+        .action-btn-delete { background-color: var(--error-color); border-color:var(--error-color); }
+        .action-btn-delete:hover { background-color: var(--error-color-hover); }
+
+        .pagination-controls { display: flex; justify-content: flex-end; align-items: center; margin-top: 1.5rem; gap: 0.5rem; }
+        .pagination-controls button, .pagination-controls span {
+            padding: 0.5rem 0.9rem; border: 1px solid var(--border-color); background-color: var(--section-bg);
+            color: var(--text-muted); border-radius: var(--border-radius-sm); cursor: pointer; font-size:0.9rem; 
+        }
+        .pagination-controls button:hover:not(:disabled) { background-color: var(--table-row-hover-bg); color: var(--primary-color); border-color: var(--primary-color); }
+        .pagination-controls button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .pagination-controls span.current-page { background-color: var(--primary-color); color: white; font-weight: 600; border-color: var(--primary-color); }
+
+        .modal {
+            display: none; position: fixed; z-index: 1001; left: 0; top: 0;
+            width: 100%; height: 100%; overflow: auto; background-color: rgba(10, 10, 35, 0.8);
+            align-items: center; justify-content: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background-color: var(--sidebar-bg); color: var(--text-light);
+            padding: 2rem; border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md); width: 90%; max-width: 600px;
+            box-shadow: var(--shadow-md); position: relative; animation: slideInModalPlatform 0.3s ease-out;
+        }
+        @keyframes slideInModalPlatform { from { opacity:0; transform: scale(0.95) translateY(-20px); } to { opacity:1; transform: scale(1) translateY(0); } }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border-color); }
+        .modal-title { font-size: 1.5rem; font-weight: 600; margin:0; color: var(--text-headings); }
+        .close-modal-btn { background:none; border:none; font-size: 1.8rem; color:var(--text-muted); cursor:pointer; line-height: 1;}
+        .close-modal-btn:hover { color: var(--text-light); }
+
+        .form-group-custom { margin-bottom: 1.25rem; }
+        .form-label-custom { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.4rem; color: var(--text-muted); display: block; }
+        .form-control-custom { 
+            background: var(--input-bg); border: 1px solid var(--input-bg); 
+            color: var(--text-dark-on-light-bg);
+            padding: 0.8rem 1rem; border-radius: var(--border-radius-sm); font-size: 0.95rem; width: 100%;
+            box-sizing: border-box; transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        .form-control-custom::placeholder { color: #6c757d; } 
+        .form-control-custom:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(240, 98, 146, 0.3); }
+        .form-checkbox-group { display: flex; align-items: center; gap: 0.5rem; margin-top:0.5rem; }
+        .form-checkbox-group input[type="checkbox"] { width: auto; margin-right:0.25rem; accent-color: var(--primary-color); transform: scale(1.1); }
+        .form-checkbox-group label { font-size: 0.95rem; color: var(--text-muted); margin-bottom:0; font-weight: 400; }
+        
+        .modal-actions { margin-top: 2rem; display: flex; justify-content: flex-end; gap: 1rem; }
+        .modal-actions .action-button.cancel { background-color: #4a4a58; }
+        .modal-actions .action-button.cancel:hover { background-color: #606070; }
+
+        .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .plan-card {
+            background-color: var(--section-bg); padding: 1.5rem;
+            border-radius: var(--border-radius-md); border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-sm); display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .plan-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .plan-card-title { font-size: 1.3rem; font-weight: 600; color: var(--text-headings); margin:0; }
+        /* .plan-card-actions button se estiliza con los estilos generales de .action-buttons */
+        .plan-card-details { list-style: none; padding: 0; margin:0 0 1rem 0; font-size: 0.9rem; color: var(--text-muted); flex-grow: 1; }
+        .plan-card-details li { margin-bottom: 0.6rem; display:flex; align-items:flex-start; }
+        .plan-card-details li svg { width:16px; height:16px; fill:var(--primary-color); margin-right:8px; margin-top:3px; flex-shrink:0; }
+        .plan-card-details li strong { color: var(--text-light); font-weight: 500; }
+
+    </style>
+</head>
+<body>
+    <div class="admin-page-container">
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <img src="assets/img/logo.png" alt="Platform Logo" class="logo-icon">
+                <h2>Admin Panel</h2>
+            </div>
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="#" class="nav-link active" data-module="dashboardOverview"><svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>Dashboard</a></li>
+                    <li><a href="#" class="nav-link" data-module="users"><svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>Users</a></li>
+                    <li><a href="#" class="nav-link" data-module="content"><svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>Content</a></li>
+                    <li><a href="#" class="nav-link" data-module="plans"><svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm-1 14H5c-.55 0-1-.45-1-1V9h16v8c0 .55-.45 1-1 1zm1-10H4V6h16v2z"/></svg>Plans</a></li>
+                    <li><a href="#" class="nav-link" data-module="liveStreams"><svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M6.38 6L8 10H4L3 6h3.38zM2 4v16h20V4H2zm18 14H4V8h16v10zM10 14H8v-2h2v2zm0-3H8V9h2v2zm4 3h-2v-2h2v2zm0-3h-2V9h2v2zm4 3h-2v-2h2v2zm0-3h-2V9h2v2zM9.38 6L11 10h- астрон4L6 6h3.38zM15.38 6L17 10h-4L12 6h3.38z"/></svg>Live Streams</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="admin-main-content-wrapper">
+            <header class="admin-top-bar">
+                <div class="user-profile-dropdown" id="userProfileDropdown">
+                    <button class="profile-trigger" aria-label="User Menu">
+                        <span class="user-avatar">A</span>
+                        <span>Admin</span> 
+                        <svg style="width:16px; height:16px; margin-left:8px; fill:currentColor;" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>
+                    </button>
+                    <ul class="dropdown-menu" id="profileDropdownMenu">
+                        <li><a href="#" id="adminProfileLink">My Profile</a></li>
+                        <li><a href="#" id="adminSettingsLink">Account Settings</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#" id="adminLogoutLink">Logout</a></li>
+                    </ul>
+                </div>
+            </header>
+
+            <main class="admin-main-content">
+                <section class="dashboard-module active" id="dashboardOverview">
+                    <div class="content-header"><h1 class="page-module-title">Dashboard Overview</h1></div>
+                    <div class="stats-overview">
+                        <div class="stat-card"><h3>Total Users</h3><p class="stat-value">1,482</p></div>
+                        <div class="stat-card"><h3>Uploaded Content</h3><p class="stat-value">7,230</p></div>
+                        <div class="stat-card"><h3>Active Subs</h3><p class="stat-value">1,150</p></div>
+                        <div class="stat-card"><h3>Live Now</h3><p class="stat-value">8</p></div>
+                    </div>
+                </section>
+
+                <section class="dashboard-module" id="users">
+                    <div class="content-header">
+                        <h1 class="page-module-title">Manage Users</h1>
+                        <button class="action-button" onclick="alert('Open Add User Form/Modal')">+ Add User</button>
+                    </div>
+                    <div class="table-controls">
+                        <div class="search-bar"><input type="search" id="userSearchInput" placeholder="Search by ID, Name, Email..."></div>
+                        <div class="filter-options">
+                            <select id="userPlanFilter"><option value="">All Plans</option><option value="golden">Golden</option><option value="silver">Silver</option></select>
+                            <select id="userStatusFilter"><option value="">All Statuses</option><option value="active">Active</option><option value="suspended">Suspended</option></select>
+                        </div>
+                    </div>
+                    <div class="admin-table-wrapper">
+                        <table class="admin-table" id="usersTable">
+                            <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Plan</th><th>Joined</th><th>Status</th><th>Actions</th></tr></thead>
+                            <tbody>
+                                <tr><td>USR001</td><td>Elena Rodriguez</td><td>elena.r@example.com</td><td>Golden</td><td>2024-01-10</td><td>Active</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-delete">Delete</button></td></tr>
+                                <tr><td>USR002</td><td>Marcus Chen</td><td>m.chen@example.dev</td><td>Silver</td><td>2024-02-05</td><td>Active</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-delete">Delete</button></td></tr>
+                                <tr><td>USR003</td><td>Aisha Khan</td><td>a.khan@example.io</td><td>Golden</td><td>2023-12-15</td><td>Suspended</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-delete">Delete</button></td></tr>
+                                <tr><td>USR004</td><td>John "Big J" Doe</td><td>big.j@example.net</td><td>Silver</td><td>2024-03-20</td><td>Active</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-delete">Delete</button></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-controls"><button id="usersPrevPage" disabled>&laquo; Prev</button><span id="usersPageInfo">Page <span class="current-page">1</span> of 25</span><button id="usersNextPage">Next &raquo;</button></div>
+                </section>
+
+                <section class="dashboard-module" id="content">
+                    <div class="content-header"><h1 class="page-module-title">Manage Content</h1><button class="action-button" onclick="alert('Open Add Content Form/Modal')">+ Add Content</button></div>
+                     <div class="table-controls">
+                         <div class="search-bar"><input type="search" id="contentSearchInput" placeholder="Search by Title, ID, Uploader..."></div>
+                        <div class="filter-options">
+                            <select><option value="">All Types</option><option value="movie">Movie</option><option value="serie_episode">Serie Episode</option><option value="live_recording">Live Recording</option></select>
+                            <select><option value="">All Statuses</option><option value="published">Published</option><option value="pending">Pending Review</option><option value="draft">Draft</option><option value="rejected">Rejected</option></select>
+                        </div>
+                    </div>
+                     <div class="admin-table-wrapper">
+                        <table class="admin-table" id="contentTable">
+                            <thead><tr><th>ID</th><th>Title</th><th>Type</th><th>Uploader</th><th>Upload Date</th><th>Status</th><th>Actions</th></tr></thead>
+                            <tbody>
+                                <tr><td>VID071</td><td>Cyber City Nights</td><td>Movie</td><td>USR001 (Elena)</td><td>2024-05-01</td><td>Published</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-delete">Delete</button></td></tr>
+                                <tr><td>SER003E05</td><td>Chronicles - S01E05: The Awakening</td><td>Serie Episode</td><td>USR002 (Marcus)</td><td>2024-04-22</td><td>Published</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-delete">Delete</button></td></tr>
+                                <tr><td>MOV012</td><td>Ocean's Whisper</td><td>Movie</td><td>USR004 (John)</td><td>2024-05-10</td><td>Pending Review</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-delete">Delete</button></td></tr>
+                                <tr><td>LIVREC005</td><td>DevTalk Q&A - May</td><td>Live Recording</td><td>Platform Team</td><td>2024-05-15</td><td>Processing</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-delete">Delete</button></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-controls"><button disabled>&laquo; Prev</button><span>Page <span class="current-page">1</span> of 15</span><button>Next &raquo;</button></div>
+                </section>
+
+                <section class="dashboard-module" id="plans">
+                    <div class="content-header">
+                        <h1 class="page-module-title">Subscription Plans</h1>
+                        <button class="action-button" id="addNewPlanBtn">+ Add New Plan</button>
+                    </div>
+                    <div class="plans-grid" id="plansGridContainer">
+                        </div>
+                </section>
+
+                <section class="dashboard-module" id="liveStreams">
+                     <div class="content-header"><h1 class="page-module-title">Manage Live Streams</h1><button class="action-button" onclick="alert('Open Schedule Live Stream Form/Modal')">+ Schedule Stream</button></div>
+                     <div class="table-controls">
+                         <div class="search-bar"><input type="search" id="liveSearchInput" placeholder="Search by Title, ID, Broadcaster..."></div>
+                        <div class="filter-options">
+                            <select><option value="">All Statuses</option><option value="live">Live</option><option value="scheduled">Scheduled</option><option value="ended">Ended</option><option value="upcoming">Upcoming</option></select>
+                        </div>
+                    </div>
+                    <div class="admin-table-wrapper">
+                        <table class="admin-table" id="liveStreamsTable">
+                            <thead><tr><th>ID</th><th>Title</th><th>Broadcaster</th><th>Status</th><th>Viewers</th><th>Time (UTC)</th><th>Actions</th></tr></thead>
+                            <tbody>
+                                <tr><td>LIVE001</td><td>Weekly Platform Q&A</td><td>USR001 (Elena)</td><td><span style="color:var(--success-color); font-weight:bold;">● Live</span></td><td>150</td><td>Started: 20:30</td><td class="action-buttons"><button class="action-btn-monitor">Monitor</button><button class="action-btn-end">End</button><button class="action-btn-archive">Archive</button></td></tr>
+                                <tr><td>LIVE002</td><td>Exclusive Movie Premiere</td><td>Platform Team</td><td><span style="color:var(--secondary-color);">Scheduled</span></td><td>0</td><td>Tomorrow, 14:00</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-cancel-item">Cancel</button></td></tr>
+                                <tr><td>LIVE003</td><td>Indie Game Showcase</td><td>USR004 (John)</td><td><span style="color:var(--text-muted);">Ended</span></td><td>87 (Peak)</td><td>Ended: 2h ago</td><td class="action-buttons"><button class="action-btn-view">View Rec</button><button class="action-btn-delete">Delete Rec</button></td></tr>
+                                 <tr><td>LIVE004</td><td>Artist Spotlight: Live Painting</td><td>USR002 (Marcus)</td><td><span style="color:var(--warning-color);">Upcoming</span></td><td>0</td><td>May 25, 10:00</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-cancel-item">Cancel</button></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-controls"><button disabled>&laquo; Prev</button><span>Page <span class="current-page">1</span> of 3</span><button>Next &raquo;</button></div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <div id="planModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="planModalTitle">Add New Plan</h2>
+                <button class="close-modal-btn" id="closePlanModal" aria-label="Close">&times;</button>
+            </div>
+            <form id="planForm">
+                <input type="hidden" id="planEditId" value="">
+                <div class="form-group-custom">
+                    <label for="planName" class="form-label-custom">Plan Name:</label>
+                    <input type="text" id="planName" class="form-control-custom" required>
+                </div>
+                <div class="form-group-custom">
+                    <label for="planPrice" class="form-label-custom">Price (e.g., 9.99):</label>
+                    <input type="number" id="planPrice" class="form-control-custom" step="0.01" min="0" required placeholder="0.00">
+                </div>
+                <div class="form-group-custom">
+                    <label for="planBillingInterval" class="form-label-custom">Billing Interval:</label>
+                    <select id="planBillingInterval" class="form-control-custom">
+                        <option value="month">Monthly</option><option value="year">Yearly</option><option value="week">Weekly</option>
+                    </select>
+                </div>
+                <div class="form-group-custom">
+                    <label for="planDescription" class="form-label-custom">Description (optional):</label>
+                    <textarea id="planDescription" class="form-control-custom" rows="3" placeholder="Brief description of the plan"></textarea>
+                </div>
+                <div class="form-group-custom">
+                    <label for="planUploadLimit" class="form-label-custom">Content Upload Limit:</label>
+                    <input type="number" id="planUploadLimit" class="form-control-custom" min="0" value="0" placeholder="Number of uploads">
+                    <div class="form-checkbox-group"><input type="checkbox" id="planUploadUnlimited" onchange="toggleLimitInput('planUploadLimit', this.checked, 0)"><label for="planUploadUnlimited">Unlimited Uploads</label></div>
+                </div>
+                <div class="form-group-custom">
+                    <label for="planLiveLimit" class="form-label-custom">Live Stream Limit:</label>
+                    <input type="number" id="planLiveLimit" class="form-control-custom" min="0" value="0" placeholder="Number of live streams">
+                     <div class="form-checkbox-group"><input type="checkbox" id="planLiveUnlimited" onchange="toggleLimitInput('planLiveLimit', this.checked, 0)"><label for="planLiveUnlimited">Unlimited Live Streams</label></div>
+                </div>
+                <div class="form-group-custom">
+                    <label for="planTrialDays" class="form-label-custom">Trial Period (days, 0 for no trial):</label>
+                    <input type="number" id="planTrialDays" class="form-control-custom" min="0" value="0" placeholder="e.g., 7">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="action-button cancel" id="cancelPlanForm">Cancel</button>
+                    <button type="submit" class="action-button" id="savePlanBtn">Save Plan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const navLinks = document.querySelectorAll('.admin-nav .nav-link');
+    const modules = document.querySelectorAll('.dashboard-module');
+    const userProfileDropdown = document.getElementById('userProfileDropdown');
+    const profileDropdownMenu = document.getElementById('profileDropdownMenu');
+    const adminLogoutLink = document.getElementById('adminLogoutLink');
+
+    // --- Module Navigation ---
+    function showModule(moduleId) {
+        modules.forEach(module => module.classList.remove('active'));
+        const targetModule = document.getElementById(moduleId);
+        if (targetModule) {
+            targetModule.classList.add('active');
+        } else {
+            // Fallback to dashboard if module not found
+            document.getElementById('dashboardOverview')?.classList.add('active');
+            moduleId = 'dashboardOverview';
+        }
+        navLinks.forEach(link => {
+            link.classList.toggle('active', link.dataset.module === moduleId);
+        });
+        localStorage.setItem('adminActiveModule', moduleId);
+    }
+
+    const lastActiveModule = localStorage.getItem('adminActiveModule');
+    showModule(lastActiveModule || 'dashboardOverview');
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function (event) {
+            event.preventDefault();
+            showModule(this.dataset.module);
+        });
+    });
+
+    // --- User Profile Dropdown ---
+    if (userProfileDropdown) {
+        const profileTrigger = userProfileDropdown.querySelector('.profile-trigger');
+        profileTrigger.addEventListener('click', function (event) {
+            event.stopPropagation(); 
+            profileDropdownMenu.classList.toggle('active');
+        });
+        document.addEventListener('click', function (event) {
+            if (profileDropdownMenu && profileDropdownMenu.classList.contains('active') && !userProfileDropdown.contains(event.target)) {
+                profileDropdownMenu.classList.remove('active');
+            }
+        });
+    }
+    if (adminLogoutLink) {
+        adminLogoutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            // alert('Logout Action Triggered! Redirecting...'); // Para depuración
+            window.location.href = 'login_admin.html'; // Redirección a login_admin.html
+        });
+    }
+
+    // --- Subscription Plan Modal & Management (JS sin cambios funcionales significativos) ---
+    const planModal = document.getElementById('planModal');
+    const addNewPlanBtn = document.getElementById('addNewPlanBtn');
+    const closePlanModalBtn = document.getElementById('closePlanModal');
+    const cancelPlanFormBtn = document.getElementById('cancelPlanForm');
+    const planForm = document.getElementById('planForm');
+    const planModalTitle = document.getElementById('planModalTitle');
+    const planEditIdInput = document.getElementById('planEditId'); 
+
+    let currentPlans = [
+        { id: 'golden', name: "Golden Access", price: 19.99, billingInterval: "month", description: "Access to all premium content and features.", uploadLimit: 0, uploadUnlimited: true, liveLimit: 0, liveUnlimited: true, trialDays: 0 },
+        { id: 'silver', name: "Silver Starter", price: 9.99, billingInterval: "month", description: "Great for getting started.", uploadLimit: 30, uploadUnlimited: false, liveLimit: 5, liveUnlimited: false, trialDays: 7 }
+    ];
+
+    function renderPlanCards() {
+        const container = document.getElementById('plansGridContainer');
+        if (!container) return;
+        container.innerHTML = ''; 
+        currentPlans.forEach(plan => {
+            // Añadida la clase 'small-action-button' a los botones de las tarjetas de plan
+            const card = `
+                <div class="plan-card" data-plan-id="${plan.id}">
+                    <div class="plan-card-header">
+                        <h3 class="plan-card-title">${plan.name}</h3>
+                        <div class="plan-card-actions action-buttons">
+                            <button class="action-btn-edit" onclick="openPlanModal('edit', '${plan.id}')">Edit</button>
+                            <button class="action-btn-delete" onclick="deletePlan('${plan.id}')">Delete</button>
+                        </div>
+                    </div>
+                    <ul class="plan-card-details">
+                        <li><svg viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M4 2a2 2 0 00-2 2v1.28C2 4.57 2.45 4 3.5 4h9c1.05 0 1.5.57 1.5 1.28V6A2 2 0 0012 4H4zm10.287 1.97a.75.75 0 00-1.061 0L12 5.204 9.774 3.97a.75.75 0 00-1.061 1.06L11.939 8l-3.226 3.03a.75.75 0 101.06 1.06L12 9.796l2.226 1.234a.75.75 0 10.752-1.348L12.752 8l2.534-2.286a.75.75 0 000-1.061zM3.5 5A1.5 1.5 0 002 6.5v6A1.5 1.5 0 003.5 14h9a1.5 1.5 0 001.5-1.5v-6A1.5 1.5 0 0012.5 5h-9z"></path></svg><strong>Price:</strong> $${plan.price}/${plan.billingInterval}</li>
+                        <li><svg viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M8.539.94a1.75 1.75 0 00-1.078 0L1.7 4.096A1.75 1.75 0 00.5 5.672v4.706c0 .77.493 1.448 1.2 1.675l5.76 1.921a1.75 1.75 0 001.08 0l5.76-1.921c.707-.227 1.2-.905 1.2-1.675V5.672a1.75 1.75 0 00-1.2-1.576L8.54.94zM8 1.758a.25.25 0 01.154 0l5.76 1.921A.25.25 0 0114.25 3.9V8h-3.75V4.25H8.25V8H4.5V3.9c0-.097.06-.185.136-.221L10 1.758H8zm-.75 8.5V14H4.5v-3.75h2.75zM8.25 14v-3.75H11.5V14H8.25z"></path></svg><strong>Uploads:</strong> ${plan.uploadUnlimited ? 'Unlimited' : plan.uploadLimit}</li>
+                        <li><svg viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M11.13 2.724a.75.75 0 01.048 1.06l-3.5 4.5a.75.75 0 01-1.126-.074L4.022 4.83a.75.75 0 111.132-.98L7.5 6.747l3.015-3.876a.75.75 0 011.06-.048zM0 3.75C0 2.784.784 2 1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0114.25 14H1.75A1.75 1.75 0 010 12.25v-8.5zM1.75 3.5a.25.25 0 00-.25.25v8.5c0 .138.112.25.25.25h12.5a.25.25 0 00.25-.25v-8.5a.25.25 0 00-.25-.25H1.75z"></path></svg><strong>Live Streams:</strong> ${plan.liveUnlimited ? 'Unlimited' : plan.liveLimit}</li>
+                        ${plan.trialDays > 0 ? `<li><svg viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M8 16A8 8 0 108 0a8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5H8.75V3z"></path></svg><strong>Trial:</strong> ${plan.trialDays} days</li>` : ''}
+                        ${plan.description ? `<li><svg viewBox="0 0 16 16" width="16" height="16"><path fill-rule="evenodd" d="M0 3.75A.75.75 0 01.75 3h14.5a.75.75 0 010 1.5H.75A.75.75 0 010 3.75zM0 8a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H.75A.75.75 0 010 8zm.75 3.5a.75.75 0 000 1.5h14.5a.75.75 0 000-1.5H.75z"></path></svg>${plan.description}</li>` : ''}
+                    </ul>
+                </div>`;
+            container.insertAdjacentHTML('beforeend', card);
+        });
+    }
+    
+    window.toggleLimitInput = function(inputId, isChecked, unlimitedValue = 0) {
+        const inputElement = document.getElementById(inputId);
+        if (isChecked) {
+            inputElement.value = unlimitedValue; 
+            inputElement.disabled = true;
+        } else {
+            inputElement.disabled = false;
+        }
+    }
+
+    window.openPlanModal = function(mode = 'add', planId = null) {
+        // (Lógica del modal sin cambios funcionales)
+        planForm.reset(); 
+        planEditIdInput.value = ''; 
+        ['planUploadUnlimited', 'planLiveUnlimited'].forEach(id => {
+            document.getElementById(id).checked = false;
+            toggleLimitInput(id.replace('Unlimited','Limit'), false);
+        });
+
+        if (mode === 'edit' && planId) {
+            const plan = currentPlans.find(p => p.id === planId);
+            if (plan) {
+                planModalTitle.textContent = 'Edit Plan: ' + plan.name;
+                planEditIdInput.value = plan.id;
+                document.getElementById('planName').value = plan.name;
+                document.getElementById('planPrice').value = plan.price;
+                document.getElementById('planBillingInterval').value = plan.billingInterval || 'month';
+                document.getElementById('planDescription').value = plan.description || '';
+                document.getElementById('planTrialDays').value = plan.trialDays || 0;
+                
+                document.getElementById('planUploadLimit').value = plan.uploadUnlimited ? 0 : plan.uploadLimit;
+                document.getElementById('planUploadUnlimited').checked = plan.uploadUnlimited;
+                toggleLimitInput('planUploadLimit', plan.uploadUnlimited, 0);
+
+                document.getElementById('planLiveLimit').value = plan.liveUnlimited ? 0 : plan.liveLimit;
+                document.getElementById('planLiveUnlimited').checked = plan.liveUnlimited;
+                toggleLimitInput('planLiveLimit', plan.liveUnlimited, 0);
+            } else { alert('Plan not found.'); return; }
+        } else {
+            planModalTitle.textContent = 'Add New Subscription Plan';
+        }
+        planModal.classList.add('active');
+    }
+
+    function closePlanModal() { planModal.classList.remove('active'); }
+
+    if(addNewPlanBtn) addNewPlanBtn.addEventListener('click', () => openPlanModal('add'));
+    if(closePlanModalBtn) closePlanModalBtn.addEventListener('click', closePlanModal);
+    if(cancelPlanFormBtn) cancelPlanFormBtn.addEventListener('click', closePlanModal);
+    planModal.addEventListener('click', (e) => { if (e.target === planModal) closePlanModal(); });
+
+    planForm.addEventListener('submit', function(event) {
+        // (Lógica del submit del form de plan sin cambios funcionales)
+        event.preventDefault();
+        const planId = planEditIdInput.value;
+        const isUploadUnlimited = document.getElementById('planUploadUnlimited').checked;
+        const isLiveUnlimited = document.getElementById('planLiveUnlimited').checked;
+
+        const planData = {
+            id: planId || 'plan_' + Date.now().toString(36) + Math.random().toString(36).substr(2),
+            name: document.getElementById('planName').value.trim(),
+            price: parseFloat(document.getElementById('planPrice').value),
+            billingInterval: document.getElementById('planBillingInterval').value,
+            description: document.getElementById('planDescription').value.trim(),
+            uploadLimit: isUploadUnlimited ? 0 : parseInt(document.getElementById('planUploadLimit').value) || 0,
+            uploadUnlimited: isUploadUnlimited,
+            liveLimit: isLiveUnlimited ? 0 : parseInt(document.getElementById('planLiveLimit').value) || 0,
+            liveUnlimited: isLiveUnlimited,
+            trialDays: parseInt(document.getElementById('planTrialDays').value) || 0,
+        };
+
+        if (!planData.name || isNaN(planData.price)) {
+            alert("Plan Name and Price are required."); return;
+        }
+
+        if (planId) { 
+            const index = currentPlans.findIndex(p => p.id === planId);
+            if (index > -1) currentPlans[index] = planData;
+            alert(`Plan "${planData.name}" updated! (Simulated)`);
+        } else { 
+            currentPlans.push(planData);
+            alert(`Plan "${planData.name}" added! (Simulated)`);
+        }
+        renderPlanCards();
+        closePlanModal();
+    });
+
+    window.deletePlan = function(planId) {
+        // (Lógica de deletePlan sin cambios funcionales)
+        const plan = currentPlans.find(p => p.id === planId);
+        if (confirm(`Are you sure you want to delete the plan "${plan ? plan.name : planId}"?`)) {
+            currentPlans = currentPlans.filter(p => p.id !== planId);
+            alert(`Plan deleted! (Simulated)`);
+            renderPlanCards();
+        }
+    }
+    
+    renderPlanCards(); // Initial render
+
+    // --- Client-Side Search Simulation ---
+    function setupTableSearch(inputId, tableId, searchCellsIndices) {
+        const searchInput = document.getElementById(inputId);
+        const table = document.getElementById(tableId);
+        if (!searchInput || !table) return;
+        const tableBody = table.getElementsByTagName('tbody')[0];
+        if (!tableBody) return;
+        const rows = tableBody.getElementsByTagName('tr');
+
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase().trim();
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                let match = false;
+                if (searchTerm === "") {
+                    match = true; // Show all if search is empty
+                } else {
+                    for (const cellIndex of searchCellsIndices) {
+                        const cell = row.getElementsByTagName('td')[cellIndex];
+                        if (cell) {
+                            if (cell.textContent.toLowerCase().includes(searchTerm)) {
+                                match = true;
+                                break; 
+                            }
+                        }
+                    }
+                }
+                row.style.display = match ? '' : 'none';
+            }
+        });
+    }
+
+    // Setup search for each table
+    // Parámetros: ID del input de búsqueda, ID de la tabla, array de índices de celdas (td) a buscar
+    setupTableSearch('userSearchInput', 'usersTable', [0, 1, 2]); // Search by ID, Name, Email
+    setupTableSearch('contentSearchInput', 'contentTable', [0, 1, 3]); // Search by ID, Title, Uploader
+    setupTableSearch('liveSearchInput', 'liveStreamsTable', [0, 1, 2]); // Search by ID, Title, Broadcaster
+
+});
+</script>
+</body>
+</html>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
