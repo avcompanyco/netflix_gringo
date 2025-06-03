@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>User Channel</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/user_channel_page.css">
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- Profile Header -->
+        <header class="profile-header" id="channel-header-banner">
+            <div class="profile-header-content">
+                <div class="profile-header-main">
+                    <img src="assets/img/Tomas.avif" alt="Channel Profile Picture" id="channel-profile-picture">
+                    <h1 id="channel-user-name">Channel Owner</h1>
+                </div>
+                <div class="profile-header-actions">
+                    <button id="subscribeBtn">Subscribe</button>
+                    <!-- No "View as Others" or "Edit Profile" buttons -->
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content-area">
+            <!-- Tab Navigation -->
+            <nav class="tabs-nav">
+                <span class="tab-link active" data-tab="movies">Movies</span>
+                <span class="tab-link" data-tab="series">Series</span>
+                <span class="tab-link" data-tab="streams">Streams</span>
+                <span class="tab-link" data-tab="about">About</span>
+            </nav>
+
+            <!-- Tab Content -->
+            <section id="movies-content" class="tab-content active">
+                <h2 class="section-title">Channel Movies</h2>
+                <div id="channel-movies-container">
+                    <!-- Movies will be rendered here by JavaScript -->
+                </div>
+            </section>
+
+            <section id="series-content" class="tab-content">
+                <h2 class="section-title">Channel Series</h2>
+                <div id="channel-series-container">
+                    <!-- Series will be rendered here by JavaScript -->
+                </div>
+            </section>
+
+            <section id="streams-content" class="tab-content">
+                <h2 class="section-title">Channel Streams</h2>
+                <div id="channel-streams-container">
+                    <!-- Streams will be rendered here by JavaScript -->
+                </div>
+            </section>
+
+            <section id="about-content" class="tab-content">
+                <h2 class="section-title">About This Channel</h2>
+                <p>Welcome to the channel! More information about the channel owner and content can go here.</p>
+                <!-- Placeholder content for channel's about section -->
+            </section>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="dashboard.html" class="nav-item">
+                <img src="assets/img/home.svg" alt="Home" class="nav-icon">
+                <span>Home</span>
+            </a>
+            <a href="search.html" class="nav-item">
+                <img src="assets/img/search.svg" alt="Explore" class="nav-icon">
+                <span>Explore</span>
+            </a>
+            <a href="my_content.html" class="nav-item"> <!-- This might be dynamic or link to current user's content -->
+                <img src="assets/img/clip.svg" alt="Clips" class="nav-icon">
+                <span>My Channel</span>
+            </a>
+            <a href="upload.html" class="nav-item">
+                <img src="assets/img/upload.svg" alt="Upload" class="nav-icon">
+                <span>Upload</span>
+            </a>
+            <a href="my_account.html" class="nav-item">
+                <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon" style="border-radius: 50%;">
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/user_channel_page.js" defer></script>
+    <script>
+        // Tab switching logic (similar to my_content.html but can be simplified if no other JS needed here)
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabLinks = document.querySelectorAll('.tab-link');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const tabName = link.getAttribute('data-tab');
+
+                    tabLinks.forEach(item => item.classList.remove('active'));
+                    tabContents.forEach(item => item.classList.remove('active'));
+
+                    link.classList.add('active');
+                    document.getElementById(tabName + '-content').classList.add('active');
+                });
+            });
+            // initChannelPage() is called by user_channel_page.js itself after DOMContentLoaded
+        });
+    </script>
+</body>
+</html>

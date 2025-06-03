@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Streaming - Live</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/streaming_page.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="streaming-container">
+        <header class="streaming-header">
+            <h1>Live Streaming</h1>
+            <a href="upload.html" class="back-link">&laquo; Back to Upload</a>
+        </header>
+
+        <div class="main-content-area">
+            <div class="video-area">
+                <video id="localVideoStream" autoplay muted playsinline></video>
+                <div id="videoPlaceholder" class="video-placeholder-overlay">
+                    <p>Your camera feed will appear here when you start the stream.</p>
+                    <p>Click "Start Stream" below.</p>
+                </div>
+            </div>
+
+            <div class="stream-controls">
+                <button id="startStreamBtn" class="control-btn start">Start Stream</button>
+                <button id="stopStreamBtn" class="control-btn stop" disabled>Stop Stream</button>
+                <button id="toggleMicBtn" class="control-btn mic" disabled>Mute Mic</button>
+                <button id="toggleCamBtn" class="control-btn cam" disabled>Disable Cam</button>
+            </div>
+        </div>
+
+        <aside class="chat-area">
+            <h3>Live Chat</h3>
+            <div id="chatMessages" class="chat-messages-display">
+                <!-- Chat messages will appear here -->
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatMessageInput" placeholder="Type your message...">
+                <button id="sendChatMessageBtn">Send</button>
+            </div>
+        </aside>
+    </div>
+
+    <script src="assets/js/streaming_page.js" defer></script>
+</body>
+</html>

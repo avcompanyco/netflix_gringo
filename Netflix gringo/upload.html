@@ -2,26 +2,19 @@
 <html data-bs-theme="light" lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>netflixd</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-</head>
-
-<body><!DOCTYPE html>
-<html lang="es">
-<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Upload Content</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --main-bg: #0A0A23;
             --primary-color: #F06292;
+            --secondary-color: #2196F3; /* Added for streaming button */
             --input-bg: #E8E8E8;
             --text-dark: #1A1B1E;
+            --card-bg: #1C1C3A; /* For series sections */
         }
 
         body {
@@ -31,98 +24,170 @@
             margin: 0;
             padding: 0;
             min-height: 100vh;
+            padding-bottom: 80px; /* For bottom nav */
         }
 
         .app-wrapper {
-            max-width: 600px;
+            max-width: 700px; /* Slightly wider for more complex forms */
             margin: 0 auto;
             padding: 0 1.5rem; 
         }
 
         .header {
-            padding: 2rem 0;
+            padding: 1.5rem 0; /* Adjusted padding */
             text-align: center;
         }
 
         .logo-icon {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 1rem;
+            width: 40px; /* Adjusted size */
+            height: 40px;
+            margin-bottom: 0.5rem;
         }
 
         .page-title {
-            font-size: 2.5rem;
+            font-size: 2rem; /* Adjusted size */
             font-weight: 700;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .toggle-container {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            justify-content: flex-start;
+            gap: 0.5rem; /* Reduced gap */
+            margin-bottom: 1.5rem;
+            justify-content: center; /* Centered */
+            flex-wrap: wrap; /* Allow wrapping on small screens */
         }
 
         .toggle-btn {
             background: transparent;
-            border: none;
-            color: white;
-            padding: 0.75rem 2.5rem;
-            border-radius: 50px;
-            font-size: 1.25rem;
-            font-weight: 600;
+            border: 1px solid var(--primary-color); /* Added border for non-active */
+            color: var(--primary-color);
+            padding: 0.6rem 1.2rem; /* Adjusted padding */
+            border-radius: 25px; /* Adjusted radius */
+            font-size: 1rem; /* Adjusted font size */
+            font-weight: 500; /* Adjusted font weight */
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .toggle-btn.active {
             background: var(--primary-color);
+            color: white;
         }
 
-        .upload-section {
-            background: var(--input-bg);
-            border-radius: 15px;
-            padding: 2rem;
+        /* General form styling */
+        .form-section {
+            background-color: rgba(255,255,255,0.05); /* Subtle background for forms */
+            padding: 1.5rem;
+            border-radius: 10px;
             margin-bottom: 2rem;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
         }
-
-        .upload-icon {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 1rem;
-        }
-
-        .upload-section p {
-            color: var(--text-dark);
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 0;
+        
+        .form-group {
+            margin-bottom: 1.25rem; /* Consistent spacing */
         }
 
         .form-label {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: white;
+            font-size: 1rem; /* Adjusted size */
+            font-weight: 500; /* Adjusted weight */
+            margin-bottom: 0.5rem; /* Spacing between label and input */
+            color: #ccc; /* Lighter label color */
+            display: block; /* Ensure it takes full width */
         }
 
         .form-control {
             background: var(--input-bg);
-            border: none;
+            border: 1px solid #ddd; /* Subtle border */
             color: var(--text-dark);
-            padding: 1rem;
-            border-radius: 15px;
-            font-size: 1.1rem;
+            padding: 0.75rem 1rem; /* Adjusted padding */
+            border-radius: 8px; /* Adjusted radius */
+            font-size: 1rem; /* Adjusted font size */
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .form-control[type="file"] {
+            padding: 0.5rem 1rem;
         }
 
         .form-control::placeholder {
-            color: rgba(0, 0, 0, 0.5);
+            color: #777; /* Darker placeholder */
+        }
+        
+        textarea.form-control {
+            min-height: 100px;
         }
 
-        /* Ajustes de .bottom-nav para que coincida con el tamaño del dashboard */
+        /* Specific for upload placeholder */
+        .upload-placeholder-section { /* Renamed from .upload-section */
+            background: var(--input-bg);
+            border-radius: 10px; /* Matched form control */
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border: 2px dashed var(--primary-color); /* Dashed border */
+            cursor: default; /* No cursor pointer needed if not clickable */
+        }
+
+        .upload-icon {
+            width: 40px; /* Adjusted size */
+            height: 40px;
+            margin-bottom: 0.75rem;
+            opacity: 0.7;
+        }
+
+        .upload-placeholder-section p {
+            color: var(--text-dark);
+            font-size: 1.1rem; /* Adjusted size */
+            font-weight: 500;
+            margin: 0;
+        }
+
+
+        /* Series dynamic sections */
+        .season-block, .episode-block {
+            background-color: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .season-block h4, .episode-block h5 {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--primary-color);
+        }
+        .season-block button, .episode-block button {
+            margin-top: 0.5rem;
+        }
+        
+        /* Start Streaming Section */
+        #streamSection {
+            background-color: var(--secondary-color);
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            margin-bottom: 2rem; /* Same as other form sections */
+        }
+        #streamSection:hover {
+            transform: translateY(-5px);
+        }
+        #streamSection .upload-icon { /* Re-use upload icon style if desired */
+            width: 50px;
+            height: 50px;
+            margin-bottom: 1rem;
+            filter: brightness(0) invert(1); /* Make it white */
+        }
+        #streamSection p {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+
+        /* Bottom Nav */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -170,78 +235,120 @@
             font-size: 1.1rem;
             font-weight: 600;
             /* Ajustado el margen inferior para que no se quede pegado al bottom-nav */
-            margin: 2rem 0 7rem 0; 
+            margin: 1.5rem 0; /* Adjusted margin, no need for huge bottom margin if body has padding */
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .save-btn:hover {
-            opacity: 0.9;
-            transform: scale(1.02);
+            opacity: 0.8;
+            /* transform: scale(1.02); */ /* Removed scale for consistency with other buttons */
         }
+        .btn-secondary { /* For less prominent actions like Add Season/Episode */
+            background-color: var(--secondary-color);
+        }
+        .btn-secondary:hover {
+            opacity: 0.8;
+        }
+
     </style>
 </head>
 <body>
     <div class="app-wrapper">
         <header class="header">
             <img src="assets/img/logo.png" alt="Logo" class="logo-icon">
-            <h1 class="page-title">Upload</h1>
+            <h1 class="page-title">Upload Content</h1>
         </header>
 
         <div class="toggle-container">
             <button class="toggle-btn active" data-form="movie">Movie</button>
-            <button class="toggle-btn" data-form="serie">Serie</button>
+            <button class="toggle-btn" data-form="serie">Series</button>
+            <button class="toggle-btn" data-form="stream">Start Streaming</button>
         </div>
 
-        <form id="movieForm">
-            <div class="upload-section">
-                <img src="assets/img/upload_video.svg" alt="Upload" class="upload-icon">
-                <p>Upload your movie</p>
+        <!-- Movie Upload Form -->
+        <form id="movieForm" class="form-section">
+            <div class="upload-placeholder-section">
+                <img src="assets/img/upload_video.svg" alt="Upload Movie" class="upload-icon">
+                <p>Movie Details</p>
             </div>
-
-            <div class="form-group mb-4">
-                <label class="form-label">Title</label>
-                <input type="text" class="form-control" placeholder="Title" value="Super cars 3 - the change is now">
+            <div class="form-group">
+                <label for="movieTitle" class="form-label">Title</label>
+                <input type="text" id="movieTitle" class="form-control" placeholder="Enter movie title" required>
             </div>
-
-            <div class="form-group mb-4">
-                <label class="form-label">Description</label>
-                <textarea class="form-control" placeholder="Description" rows="3">This cars are awesome, but now will be ...</textarea>
+            <div class="form-group">
+                <label for="movieDescription" class="form-label">Description</label>
+                <textarea id="movieDescription" class="form-control" placeholder="Enter movie description" rows="3" required></textarea>
             </div>
-
-            <div class="form-group mb-4">
-                <label class="form-label">Category</label>
-                <input type="text" class="form-control" placeholder="Category" value="Fantasy">
+            <div class="form-group">
+                <label for="movieGenre" class="form-label">Genre/Category</label>
+                <input type="text" id="movieGenre" class="form-control" placeholder="e.g., Action, Comedy, Fantasy" required>
             </div>
-
-            <button type="submit" class="save-btn">Save</button>
+            <div class="form-group">
+                <label for="movieThumbnail" class="form-label">Thumbnail</label>
+                <input type="file" id="movieThumbnail" class="form-control" accept="image/*" required>
+            </div>
+            <div class="form-group">
+                <label for="movieVideoFile" class="form-label">Video File</label>
+                <input type="file" id="movieVideoFile" class="form-control" accept="video/*" required>
+            </div>
+            <div class="form-group">
+                <label for="movieCast" class="form-label">Cast (comma-separated)</label>
+                <input type="text" id="movieCast" class="form-control" placeholder="e.g., Actor 1, Actress 2">
+            </div>
+            <div class="form-group">
+                <label for="movieDirector" class="form-label">Director</label>
+                <input type="text" id="movieDirector" class="form-control" placeholder="Director's Name">
+            </div>
+            <div class="form-group">
+                <label for="movieReleaseDate" class="form-label">Release Date</label>
+                <input type="date" id="movieReleaseDate" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="movieMaturityRating" class="form-label">Maturity Rating</label>
+                <input type="text" id="movieMaturityRating" class="form-control" placeholder="e.g., PG, PG-13, R">
+            </div>
+            <button type="submit" id="saveMovieBtn" class="save-btn">Save Movie</button>
         </form>
 
-        <form id="serieForm" style="display: none;">
-            <div class="upload-section">
-                <img src="assets/img/upload_video.svg" alt="Upload" class="upload-icon">
-                <p>Upload your episode</p>
+        <!-- Series Upload Form -->
+        <form id="serieForm" class="form-section" style="display: none;">
+            <div class="upload-placeholder-section">
+                <img src="assets/img/upload_video.svg" alt="Upload Series" class="upload-icon">
+                <p>Series Details</p>
             </div>
-
-            <div class="form-group mb-4">
-                <label class="form-label">Serie</label>
-                <input type="text" class="form-control" placeholder="Serie" value="Pablo Escobar">
+            <div class="form-group">
+                <label for="seriesTitle" class="form-label">Series Title</label>
+                <input type="text" id="seriesTitle" class="form-control" placeholder="Enter series title" required>
             </div>
-
-            <div class="form-group mb-4">
-                <label class="form-label">Season</label>
-                <input type="text" class="form-control" placeholder="Season" value="Season 1">
+            <div class="form-group">
+                <label for="seriesDescription" class="form-label">Series Description</label>
+                <textarea id="seriesDescription" class="form-control" placeholder="Enter series description" rows="3" required></textarea>
             </div>
-
-            <div class="form-group mb-4">
-                <label class="form-label">Episode</label>
-                <input type="text" class="form-control" placeholder="Episode" value="Episode 1 - Meeting Pablo Escobar">
+            <div class="form-group">
+                <label for="seriesGenre" class="form-label">Series Genre/Category</label>
+                <input type="text" id="seriesGenre" class="form-control" placeholder="e.g., Drama, Sci-Fi" required>
             </div>
-
-            <button type="submit" class="save-btn">Save</button>
+            <div class="form-group">
+                <label for="seriesThumbnail" class="form-label">Overall Series Thumbnail</label>
+                <input type="file" id="seriesThumbnail" class="form-control" accept="image/*" required>
+            </div>
+            <button type="button" id="saveSeriesBtn" class="save-btn btn-secondary">Save Series & Add Seasons</button>
+            
+            <div id="seasons-container" style="margin-top: 1.5rem;">
+                <!-- Seasons and episodes will be added here dynamically -->
+            </div>
+            <button type="button" id="addSeasonBtn" class="save-btn" style="margin-top:1rem; display: none;">Add New Season</button>
+             <!-- A general save for all series changes might be complex, for now, episodes save individually -->
         </form>
 
-        <!-- Bottom Navigation -->
+        <!-- Start Streaming Section -->
+        <div id="streamSection" style="display: none;" onclick="window.location.href='streaming.html'">
+            <img src="assets/img/upload.svg" alt="Start Streaming" class="upload-icon"> <!-- Using existing upload icon -->
+            <p>Go Live Now!</p>
+        </div>
+
+        <!-- Bottom Navigation (remains the same) -->
         <nav class="bottom-nav">
             <a href="dashboard.html" class="nav-item">
                 <img src="assets/img/home.svg" alt="Home" class="nav-icon">
@@ -270,28 +377,126 @@
         const toggleBtns = document.querySelectorAll('.toggle-btn');
         const movieForm = document.getElementById('movieForm');
         const serieForm = document.getElementById('serieForm');
+        const streamSection = document.getElementById('streamSection');
+        
+        const saveMovieBtn = document.getElementById('saveMovieBtn');
+        const saveSeriesBtn = document.getElementById('saveSeriesBtn');
+        const addSeasonBtn = document.getElementById('addSeasonBtn');
+        const seasonsContainer = document.getElementById('seasons-container');
+        let seasonCounter = 0;
 
         toggleBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 toggleBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
 
+                movieForm.style.display = 'none';
+                serieForm.style.display = 'none';
+                streamSection.style.display = 'none';
+
                 if (btn.dataset.form === 'movie') {
                     movieForm.style.display = 'block';
-                    serieForm.style.display = 'none';
-                } else {
-                    movieForm.style.display = 'none';
+                } else if (btn.dataset.form === 'serie') {
                     serieForm.style.display = 'block';
+                } else if (btn.dataset.form === 'stream') {
+                    streamSection.style.display = 'block';
                 }
             });
         });
+
+        if(saveMovieBtn) {
+            saveMovieBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                // Basic validation check example
+                if (document.getElementById('movieTitle').checkValidity()) {
+                    alert('Movie "Save" clicked! Data would be processed here.');
+                } else {
+                    alert('Please fill all required movie fields.');
+                }
+            });
+        }
+
+        if(saveSeriesBtn) {
+            saveSeriesBtn.addEventListener('click', function(event) {
+                event.preventDefault();
+                 if (document.getElementById('seriesTitle').checkValidity()) {
+                    alert('Series details saved (conceptually)! Now you can add seasons and episodes.');
+                    addSeasonBtn.style.display = 'block'; // Show "Add New Season" button
+                    // Optionally disable series detail fields here
+                } else {
+                    alert('Please fill all required series details.');
+                }
+            });
+        }
+        
+        if(addSeasonBtn) {
+            addSeasonBtn.addEventListener('click', function() {
+                seasonCounter++;
+                const seasonId = `season-${seasonCounter}`;
+                const newSeasonBlock = document.createElement('div');
+                newSeasonBlock.classList.add('season-block');
+                newSeasonBlock.id = seasonId;
+                newSeasonBlock.innerHTML = `
+                    <h4>Season ${seasonCounter}</h4>
+                    <div class="form-group">
+                        <label for="${seasonId}-title" class="form-label">Season Title (Optional)</label>
+                        <input type="text" id="${seasonId}-title" class="form-control" placeholder="e.g., The Beginning">
+                    </div>
+                    <!-- Episodes for this season will go here -->
+                    <div id="episodes-${seasonId}" class="episodes-container"></div>
+                    <button type="button" class="save-btn btn-secondary add-episode-btn" data-season-container="episodes-${seasonId}" data-season-number="${seasonCounter}">Add Episode to Season ${seasonCounter}</button>
+                `;
+                seasonsContainer.appendChild(newSeasonBlock);
+
+                // Add event listener for the new "Add Episode" button
+                newSeasonBlock.querySelector('.add-episode-btn').addEventListener('click', function(e){
+                    addEpisode(e.target.dataset.seasonContainer, e.target.dataset.seasonNumber);
+                });
+            });
+        }
+
+        function addEpisode(seasonEpisodesContainerId, seasonNumber) {
+            const episodesContainer = document.getElementById(seasonEpisodesContainerId);
+            if (!episodesContainer) return;
+
+            const episodeCounter = episodesContainer.children.length + 1;
+            const episodeId = `s${seasonNumber}e${episodeCounter}`;
+            const newEpisodeBlock = document.createElement('div');
+            newEpisodeBlock.classList.add('episode-block');
+            newEpisodeBlock.innerHTML = `
+                <h5>Episode ${episodeCounter}</h5>
+                <div class="form-group">
+                    <label for="${episodeId}-title" class="form-label">Episode Title</label>
+                    <input type="text" id="${episodeId}-title" class="form-control" placeholder="Episode title" required>
+                </div>
+                <div class="form-group">
+                    <label for="${episodeId}-description" class="form-label">Episode Description</label>
+                    <textarea id="${episodeId}-description" class="form-control" rows="2" placeholder="Episode description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="${episodeId}-thumbnail" class="form-label">Episode Thumbnail</label>
+                    <input type="file" id="${episodeId}-thumbnail" class="form-control" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label for="${episodeId}-video" class="form-label">Episode Video File</label>
+                    <input type="file" id="${episodeId}-video" class="form-control" accept="video/*" required>
+                </div>
+                <button type="button" class="save-btn save-episode-btn" data-episode-id="${episodeId}">Save Episode ${episodeCounter}</button>
+            `;
+            episodesContainer.appendChild(newEpisodeBlock);
+
+            newEpisodeBlock.querySelector('.save-episode-btn').addEventListener('click', function(e){
+                event.preventDefault();
+                const currentEpisodeId = e.target.dataset.episodeId;
+                if (document.getElementById(`${currentEpisodeId}-title`).checkValidity() && document.getElementById(`${currentEpisodeId}-video`).checkValidity()) {
+                    alert(`Episode ${episodeCounter} (ID: ${currentEpisodeId}) "Save" clicked! Data for this episode would be processed.`);
+                } else {
+                     alert(`Please fill all required fields for Episode ${episodeCounter}.`);
+                }
+            });
+        }
+
     </script>
-</body>
-</html>
-
-
-
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
-
 </html>

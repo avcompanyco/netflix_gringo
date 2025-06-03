@@ -2,23 +2,16 @@
 <html data-bs-theme="light" lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>netflixd</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-</head>
-
-<body><!DOCTYPE html>
-<html lang="es">
-<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>My Content</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --main-bg: #0A0A23;
+            --header-banner-height: 200px;
+            --profile-pic-size: 100px;
             --primary-color: #F06292;
             --secondary-color: #2196F3;
             --card-bg: #E6E6E6;
@@ -37,97 +30,195 @@
         }
 
         .app-wrapper {
-            padding-bottom: 80px;
-            max-width: 480px;
+            padding-bottom: 80px; /* For bottom nav */
+            /* max-width: 480px; */ /* Allow full width for banner */
             margin: 0 auto;
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
+            /* padding-left: 1.5rem; */ /* Handled by inner containers */
+            /* padding-right: 1.5rem; */
+        }
+        .main-content-area { /* New class for padding below header */
+            padding-left: var(--container-padding);
+            padding-right: var(--container-padding);
+            max-width: 600px; /* Or your preferred content width */
+            margin: 0 auto;
         }
 
-        .header {
-            padding: 1rem 0;
-            text-align: center;
+
+        /* New Header Styles */
+        .profile-header {
+            position: relative;
+            height: var(--header-banner-height);
+            background-size: cover;
+            background-position: center;
+            margin-bottom: calc(var(--profile-pic-size) / 2 + 1rem); /* Space for profile pic overlap and below */
+        }
+
+        .profile-header-content {
+            position: absolute;
+            bottom: calc(-1 * var(--profile-pic-size) / 2); /* Overlap bottom */
+            left: var(--container-padding);
+            right: var(--container-padding);
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+            /* background: rgba(0,0,0,0.3); To make text more readable on busy banners */
+            /* padding-bottom: 10px; */
+        }
+        
+        .profile-header-main {
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+            flex-grow: 1;
+        }
+
+
+        #profile-picture {
+            width: var(--profile-pic-size);
+            height: var(--profile-pic-size);
+            border-radius: 50%;
+            border: 3px solid var(--main-bg); /* Or white, depending on look */
+            object-fit: cover;
+        }
+
+        #user-name {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: white; /* Ensure visibility */
+            margin-bottom: calc(var(--profile-pic-size) / 10); /* Align with bottom of pic */
+        }
+        
+        .profile-header-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: calc(var(--profile-pic-size) / 10); /* Align with user name */
+        }
+
+        .profile-header-actions button {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .profile-header-actions button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        #subscribe-btn-header { /* Specific style if needed */
+             background-color: var(--primary-color);
+             border: none;
+        }
+
+
+        /* Tab Navigation Styles */
+        .tabs-nav {
+            display: flex;
+            justify-content: space-around; /* Or 'flex-start' if you prefer */
+            background-color: transparent; /* Or a subtle bg */
+            padding: 0.5rem 0;
             margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
-        .logo-icon {
-            width: 48px;
-            height: 48px;
+        .tab-link {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            color: #aaa; /* Inactive tab color */
+            font-weight: 500;
+            transition: color 0.3s, border-bottom 0.3s;
+            border-bottom: 2px solid transparent;
+            text-align: center;
         }
 
-        .page-title {
+        .tab-link.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .tab-content {
+            display: none; /* Hidden by default */
+        }
+
+        .tab-content.active {
+            display: block; /* Shown when active */
+        }
+        
+        /* Card Styles for dynamic content */
+        /* Reusing .content-card idea, but with specific classes for each type */
+        .movie-card, .series-card, .stream-card {
+            background-color: var(--card-bg);
+            border-radius: 1rem; /* Slightly less than original .content-card */
+            padding: 1rem;
+            color: black;
+            margin-bottom: 1.5rem;
+            /* display: flex; align-items: center; gap: 1rem; */ /* Removed for more flexible inner layout */
+        }
+
+        .movie-card img, .series-card img, .stream-card img {
+            width: 100%; /* Full width for card */
+            max-height: 180px; /* Or desired height */
+            object-fit: cover;
+            border-radius: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .movie-card h3, .series-card h3, .stream-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .movie-card p, .series-card p, .stream-card p {
+            font-size: 0.9rem;
+            color: #555;
+            margin-bottom: 0.25rem;
+        }
+        .live-badge {
+            background-color: red;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 0.5rem;
+        }
+
+        /* Buttons within dynamic cards */
+        .movie-card button, .series-card button, .stream-card button {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            margin-right: 0.5rem;
+            transition: background-color 0.3s;
+        }
+        .movie-card button:hover, .series-card button:hover, .stream-card button:hover {
+            opacity: 0.8;
+        }
+        .movie-card .delete-btn, .series-card .delete-btn {
+            background-color: var(--delete-color);
+        }
+
+
+        /* Original .content-card styles might need adjustment or removal if fully replaced */
+        .page-title { /* No longer used for "My content", but kept if other pages use it */
             font-size: 2rem;
             font-weight: 700;
             margin-bottom: 2.5rem;
         }
 
-        .section-title {
+        .section-title { /* Kept if used in "About" or other static sections */
             font-size: 1.75rem;
             font-weight: 600;
             margin-bottom: 1rem;
         }
-
-        .content-card {
-            background-color: var(--card-bg);
-            border-radius: 1.25rem;
-            padding: 1rem;
-            color: black;
-            position: relative;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .content-image {
-            width: 100px;
-            height: 100px;
-            border-radius: 0.75rem;
-            object-fit: cover;
-        }
-
-        .content-info {
-            flex-grow: 1;
-        }
-
-        .content-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            line-height: 1.3;
-        }
-
-        .content-category {
-            font-size: 1rem;
-            color: #666;
-        }
-
-        .action-button {
-            position: absolute;
-            bottom: -0.75rem;
-            right: 1rem;
-            border: none;
-            border-radius: 1.5rem;
-            padding: 0.5rem 1.25rem;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: all 0.3s var(--transition-bezier);
-        }
-
-        .delete-button {
-            background-color: var(--delete-color);
-        }
-
-        .add-button {
-            background-color: var(--primary-color);
-        }
-
-        .action-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-        }
+        /* End of new/modified styles */
 
         .bottom-nav {
             position: fixed;
@@ -219,39 +310,63 @@
         }
     </style>
 </head>
+</head>
 <body>
     <div class="app-wrapper">
-        <header class="header">
-            <img src="assets/img/logo.png" alt="Logo" class="logo-icon">
+        <!-- New Profile Header -->
+        <header class="profile-header" id="header-banner">
+            <div class="profile-header-content">
+                <div class="profile-header-main">
+                    <img src="assets/img/Jhon.webp" alt="Profile Picture" id="profile-picture">
+                    <h1 id="user-name">Jhon Doe</h1>
+                </div>
+                <div class="profile-header-actions">
+                    <button id="view-mode-toggle">View as Others</button>
+                    <button id="edit-profile-btn">Edit Profile</button>
+                    <button id="subscribe-btn-header" style="display: none;">Subscribe</button>
+                </div>
+            </div>
         </header>
 
-        <h1 class="page-title">My content</h1>
+        <div class="main-content-area">
+            <!-- Tab Navigation -->
+            <nav class="tabs-nav">
+                <span class="tab-link active" data-tab="movies">Movies</span>
+                <span class="tab-link" data-tab="series">Series</span>
+                <span class="tab-link" data-tab="streams">Streams</span>
+                <span class="tab-link" data-tab="about">About</span>
+            </nav>
 
-        <section>
-            <h2 class="section-title">Movie</h2>
-            <div class="content-card">
-                <img src="assets/img/cartelera1.png" alt="Movie thumbnail" class="content-image">
-                <div class="content-info">
-                    <h3 class="content-title">Super cars 3 - the change is now</h3>
-                    <p class="content-category">Fantasy</p>
+            <!-- Tab Content -->
+            <section id="movies-content" class="tab-content active">
+                <h2 class="section-title">My Movies</h2>
+                <div id="movies-container">
+                    <!-- Movies will be rendered here by JavaScript -->
                 </div>
-                <button class="action-button delete-button">Delete</button>
-            </div>
-        </section>
+            </section>
 
-        <section>
-            <h2 class="section-title">Serie</h2>
-            <div class="content-card">
-                <img src="assets/img/cartelera2.png" alt="Serie thumbnail" class="content-image">
-                <div class="content-info">
-                    <h3 class="content-title">Pablo Escobar</h3>
-                    <p class="content-category">Action</p>
+            <section id="series-content" class="tab-content">
+                <h2 class="section-title">My Series</h2>
+                <div id="series-container">
+                    <!-- Series will be rendered here by JavaScript -->
                 </div>
-                <button class="action-button add-button">Add Episode</button>
-            </div>
-        </section>
+            </section>
 
-        <!-- Bottom Navigation -->
+            <section id="streams-content" class="tab-content">
+                <h2 class="section-title">My Streams</h2>
+                <div id="streams-container">
+                    <!-- Streams will be rendered here by JavaScript -->
+                </div>
+            </section>
+
+            <section id="about-content" class="tab-content">
+                <h2 class="section-title">About Me</h2>
+                <p>This is the about section. Information about the user can go here.</p>
+                <!-- Placeholder content -->
+            </section>
+        </div>
+
+        <!-- Bottom Navigation (remains the same) -->
         <nav class="bottom-nav">
             <a href="dashboard.html" class="nav-item">
                 <img src="assets/img/home.svg" alt="Home" class="nav-icon">
@@ -275,9 +390,42 @@
             </a>
         </nav>
     </div>
-</body>
-</html>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-</body>
 
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/my_content.js" defer></script>
+    <script>
+        // Tab switching logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabLinks = document.querySelectorAll('.tab-link');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const viewModeToggle = document.getElementById('view-mode-toggle');
+
+            tabLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const tabName = link.getAttribute('data-tab');
+
+                    tabLinks.forEach(item => item.classList.remove('active'));
+                    tabContents.forEach(item => item.classList.remove('active'));
+
+                    link.classList.add('active');
+                    document.getElementById(tabName + '-content').classList.add('active');
+                });
+            });
+
+            if(viewModeToggle) {
+                let isPublicView = false; // Initial state: Owner's view
+                viewModeToggle.addEventListener('click', () => {
+                    isPublicView = !isPublicView;
+                    toggleViewMode(isPublicView);
+                    viewModeToggle.textContent = isPublicView ? "View as Owner" : "View as Others";
+                });
+                // Set initial button text
+                viewModeToggle.textContent = "View as Others";
+            }
+            
+            // Initialize page (already called by my_content.js, but if needed here for other things)
+            // initMyContentPage(); 
+        });
+    </script>
+</body>
 </html>

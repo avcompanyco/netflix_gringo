@@ -2,19 +2,10 @@
 <html data-bs-theme="light" lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>netflixd</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-</head>
-
-<body><!DOCTYPE html>
-<html lang="es">
-<head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>My Account</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -197,6 +188,59 @@
                 font-size: 0.9rem;
             }
         }
+
+        /* Styles for Subscribed Channels Section */
+        .subscribed-channel-card {
+            background-color: var(--card-bg); /* Or a slightly different bg: #2a2a45; */
+            color: var(--text-dark); /* Assuming text on card-bg is dark */
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none; /* For the <a> tag wrapping the card */
+            transition: transform 0.2s ease-in-out;
+        }
+        .subscribed-channel-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .subscribed-channel-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-color);
+        }
+
+        .subscribed-channel-info {
+            flex-grow: 1;
+        }
+
+        .subscribed-channel-info h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0 0 0.25rem 0;
+            color: var(--text-dark); /* Ensure heading color is dark if on light card */
+        }
+        
+        .unsubscribe-btn {
+            background-color: var(--secondary-color); /* Or a lighter gray: #ccc; */
+            color: white; /* Or dark text: var(--text-dark); */
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .unsubscribe-btn:hover {
+            background-color: #1a7ebd; /* Darken secondary */
+        }
+
     </style>
 </head>
 <body>
@@ -225,6 +269,15 @@
             </div>
         </section>
 
+        <!-- My Subscriptions Section -->
+        <section>
+            <h2 class="section-title">Channels I Follow</h2>
+            <div id="subscribed-channels-container">
+                <!-- Subscribed channels will be rendered here -->
+            </div>
+        </section>
+
+
         <!-- Bottom Navigation -->
         <nav class="bottom-nav">
             <a href="dashboard.html" class="nav-item">
@@ -252,6 +305,93 @@
 </body>
 </html>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mock Data for Subscribed Channels
+            const subscribedChannels = [
+                { 
+                    id: 'user789', 
+                    name: 'Streamer Pro', 
+                    profilePicture: 'assets/img/Tomas.avif', 
+                    channelUrl: 'user_channel_template.html?userId=user789' // Conceptual URL
+                },
+                { 
+                    id: 'user456', 
+                    name: 'Movie Buff Central', 
+                    profilePicture: 'assets/img/Victoria.jpg', 
+                    channelUrl: 'user_channel_template.html?userId=user456' 
+                },
+                { 
+                    id: 'user101', 
+                    name: 'Gamer Girl X', 
+                    profilePicture: 'assets/img/Jhon.webp', // Using Jhon as placeholder
+                    channelUrl: 'user_channel_template.html?userId=user101' 
+                }
+            ];
 
+            // Rendering Function for Subscribed Channels
+            function renderSubscribedChannels(channels) {
+                const container = document.getElementById('subscribed-channels-container');
+                if (!container) return;
+
+                container.innerHTML = ''; // Clear existing content
+
+                if (channels.length === 0) {
+                    container.innerHTML = '<p style="color: #ccc; text-align: center;">You are not subscribed to any channels yet.</p>';
+                    return;
+                }
+
+                channels.forEach(channel => {
+                    const cardLink = document.createElement('a');
+                    cardLink.href = channel.channelUrl; // In a real app, this would go to the specific channel
+                    cardLink.classList.add('subscribed-channel-card');
+                    cardLink.setAttribute('data-channel-id', channel.id);
+
+                    const img = document.createElement('img');
+                    img.src = channel.profilePicture;
+                    img.alt = `${channel.name}'s profile picture`;
+                    img.classList.add('subscribed-channel-img');
+
+                    const infoDiv = document.createElement('div');
+                    infoDiv.classList.add('subscribed-channel-info');
+                    
+                    const nameHeader = document.createElement('h4');
+                    nameHeader.textContent = channel.name;
+                    infoDiv.appendChild(nameHeader);
+
+                    const unsubscribeBtn = document.createElement('button');
+                    unsubscribeBtn.classList.add('unsubscribe-btn');
+                    unsubscribeBtn.textContent = 'Unsubscribe';
+                    unsubscribeBtn.setAttribute('data-channel-id', channel.id);
+                    unsubscribeBtn.setAttribute('data-channel-name', channel.name);
+                    
+                    unsubscribeBtn.addEventListener('click', function(event) {
+                        event.preventDefault(); // Prevent navigation if card is a link
+                        event.stopPropagation(); // Stop click from bubbling to the card link
+                        const channelIdToUnsubscribe = event.target.dataset.channelId;
+                        const channelNameToUnsubscribe = event.target.dataset.channelName;
+                        // Simulate unsubscription
+                        alert(`Unsubscribed from ${channelNameToUnsubscribe} (ID: ${channelIdToUnsubscribe})!`);
+                        // TODO: In a real app, remove this channel from the `subscribedChannels` array and re-render.
+                        // For this mockup, we can remove the card from the DOM:
+                        cardLink.remove(); 
+                        // Check if container is empty after removal
+                        if (container.children.length === 0) {
+                             container.innerHTML = '<p style="color: #ccc; text-align: center;">You are not subscribed to any channels yet.</p>';
+                        }
+                    });
+
+                    cardLink.appendChild(img);
+                    cardLink.appendChild(infoDiv);
+                    cardLink.appendChild(unsubscribeBtn); // Append button to the card link itself
+                    
+                    container.appendChild(cardLink);
+                });
+            }
+
+            // Call rendering function on page load
+            renderSubscribedChannels(subscribedChannels);
+        });
+    </script>
+</body>
 </html>

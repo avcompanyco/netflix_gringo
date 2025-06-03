@@ -1,0 +1,243 @@
+:root {
+    --main-bg: #0A0A23;
+    --primary-color: #F06292;
+    --secondary-color: #2196F3;
+    --text-light: #ffffff;
+    --text-dark: #1A1B1E;
+    --card-bg: #1C1C3A;
+    --input-bg: #E8E8E8;
+    --container-padding: 1.5rem;
+    --danger-color: #DC3545;
+    --success-color: #28a745;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--main-bg);
+    color: var(--text-light);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.streaming-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    max-width: 1200px; /* Max width for the page */
+    margin: 0 auto;
+    width: 100%;
+}
+
+.streaming-header {
+    background-color: rgba(0,0,0,0.2);
+    padding: 0.75rem var(--container-padding);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.streaming-header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--primary-color);
+}
+
+.back-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.main-content-area {
+    flex: 1; /* Takes up available space */
+    padding: var(--container-padding);
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center video and controls */
+}
+
+.video-area {
+    width: 100%;
+    max-width: 800px; /* Max width for video */
+    background-color: #000;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    aspect-ratio: 16 / 9; /* Maintain aspect ratio */
+}
+
+#localVideoStream {
+    width: 100%;
+    height: 100%;
+    display: block; /* Remove extra space below video */
+    object-fit: cover; /* Cover the area, might crop */
+}
+
+.video-placeholder-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: var(--text-light);
+    text-align: center;
+    padding: 1rem;
+    z-index: 1; /* Show above video if video element has content but stream not "on" */
+}
+.video-placeholder-overlay p {
+    margin: 0.5rem 0;
+}
+
+
+.stream-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 800px; /* Match video area width */
+    margin-bottom: var(--container-padding); /* Space before chat or bottom */
+}
+
+.control-btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s, opacity 0.3s;
+    color: var(--text-light);
+}
+
+.control-btn.start { background-color: var(--success-color); }
+.control-btn.stop { background-color: var(--danger-color); }
+.control-btn.mic, .control-btn.cam { background-color: var(--secondary-color); }
+
+.control-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+.control-btn:not(:disabled):hover {
+    opacity: 0.8;
+}
+
+.chat-area {
+    background-color: var(--card-bg);
+    padding: var(--container-padding);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    width: 100%; /* Full width on mobile */
+    max-width: 400px; /* Max width for chat on larger screens */
+    margin: 0 auto var(--container-padding) auto; /* Center chat on larger screens */
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    max-height: 400px; /* Limit chat height */
+}
+
+.chat-area h3 {
+    font-size: 1.2rem;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.chat-messages-display {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 0.75rem;
+    padding: 0.5rem;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 5px;
+    min-height: 150px; /* Ensure it has some height */
+}
+
+.chat-messages-display p {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+    word-wrap: break-word;
+}
+.chat-messages-display p strong {
+    color: var(--secondary-color);
+}
+
+.chat-input-area {
+    display: flex;
+    gap: 0.5rem;
+}
+
+#chatMessageInput {
+    flex-grow: 1;
+    padding: 0.6rem;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 5px;
+    background-color: var(--main-bg);
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+#chatMessageInput::placeholder {
+    color: #aaa;
+}
+
+#sendChatMessageBtn {
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+#sendChatMessageBtn:hover {
+    opacity: 0.8;
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+    .streaming-container {
+        flex-direction: row; /* Side-by-side layout on larger screens */
+    }
+    .main-content-area {
+        flex: 3; /* Video area takes more space */
+        padding-right: 0; /* Remove padding if chat is next to it */
+        align-items: flex-start; /* Align items to the start */
+    }
+    .chat-area {
+        flex: 1; /* Chat area takes less space */
+        margin: var(--container-padding); /* Add margin around chat */
+        border-top: none; /* Remove top border if side by side */
+        border-left: 1px solid rgba(255,255,255,0.1); /* Add left border */
+        max-height: none; /* Allow chat to take full height of its container */
+        height: calc(100vh - 2 * var(--container-padding) - 50px); /* Adjust height based on header, approximate */
+    }
+     .stream-controls, .video-area {
+        margin-left:0; /* Align to left in its container */
+     }
+}
+
+@media (max-width: 767px) {
+    .stream-controls {
+        margin-bottom: 1rem; /* Ensure spacing between controls and chat on mobile */
+    }
+    .chat-area {
+         /* max-height: 30vh; /* More constrained height on mobile */
+    }
+}
