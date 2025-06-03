@@ -6,11 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>My Account</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/brand_styles.css"> /* Added brand styles */
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --main-bg: #0A0A23;
-            --primary-color: #F06292;
+        /* Keep page-specific styles, remove redundant variables if they are in brand_styles.css */
+        /* :root { */ /* Assuming most of these are now in brand_styles.css */
+            /* --main-bg: #0A0A23; */
+            /* --primary-color: #F06292; */
+            /* --secondary-color: #2196F3; */
+            /* --card-bg: #E6E6E6; */
+            /* --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1); */
+            /* --container-padding: 1.5rem; */
+        /* } */
+
+        body {
+            /* font-family already set by brand_styles.css */
+            /* background-color already set by brand_styles.css */
+            /* color already set by brand_styles.css */
+            margin: 0; /* Keep if not in brand_styles body */
+            padding: 0; /* Keep if not in brand_styles body */
+            min-height: 100vh; /* Keep if not in brand_styles body */
+        }
+        /* Ensure app-wrapper and other structural styles are specific enough or don't conflict */
             --secondary-color: #2196F3;
             --card-bg: #E6E6E6;
             --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1);
@@ -85,14 +102,14 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: all 0.3s var(--transition-bezier);
             text-decoration: none; /* quitar subrayado de enlaces */
-            color: inherit; /* usar el mismo color del texto */
-            display: inline-block; /* necesario para aplicar padding correctamente */
-            text-align: center;
+            /* color: inherit; */ /* Will be handled by .btn class */
+            /* display: inline-block; */ /* Will be handled by .btn class */
+            /* text-align: center; */ /* Will be handled by .btn class */
         }
 
         .manage-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            /* transform: scale(1.05); */ /* Base .btn hover might handle this or can be added */
+            /* box-shadow: 0 6px 12px rgba(0,0,0,0.15); */ /* Hover state handled by .btn:hover */
         }
 
         .bottom-nav {
@@ -225,21 +242,9 @@
             margin: 0 0 0.25rem 0;
             color: var(--text-dark); /* Ensure heading color is dark if on light card */
         }
-        
-        .unsubscribe-btn {
-            background-color: var(--secondary-color); /* Or a lighter gray: #ccc; */
-            color: white; /* Or dark text: var(--text-dark); */
-            border: none;
-            padding: 0.4rem 0.8rem;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .unsubscribe-btn:hover {
-            background-color: #1a7ebd; /* Darken secondary */
-        }
+
+        /* .unsubscribe-btn styling will be replaced by .btn .btn-danger or similar */
+        /* Removed old .unsubscribe-btn styles */
 
     </style>
 </head>
@@ -256,7 +261,7 @@
             <div class="info-card">
                 <p class="info-text">Email: mark@movie.com</p>
                 <p class="info-text">Password: *****</p>
-                <a href="manage_user.html" class="manage-button">Manage</a>
+                <a href="manage_user.html" class="manage-button btn btn-outline-primary">Manage</a>
             </div>
         </section>
 
@@ -265,7 +270,7 @@
             <div class="info-card">
                 <p class="info-text">Plan: Golden</p>
                 <p class="info-text">Next payment: 2/June/2025</p>
-                <a href="manage_subs.html" class="manage-button">Manage</a>
+                <a href="manage_subs.html" class="manage-button btn btn-outline-primary">Manage</a>
             </div>
         </section>
 
@@ -309,23 +314,23 @@
         document.addEventListener('DOMContentLoaded', () => {
             // Mock Data for Subscribed Channels
             const subscribedChannels = [
-                { 
-                    id: 'user789', 
-                    name: 'Streamer Pro', 
-                    profilePicture: 'assets/img/Tomas.avif', 
+                {
+                    id: 'user789',
+                    name: 'Streamer Pro',
+                    profilePicture: 'assets/img/Tomas.avif',
                     channelUrl: 'user_channel_template.html?userId=user789' // Conceptual URL
                 },
-                { 
-                    id: 'user456', 
-                    name: 'Movie Buff Central', 
-                    profilePicture: 'assets/img/Victoria.jpg', 
-                    channelUrl: 'user_channel_template.html?userId=user456' 
+                {
+                    id: 'user456',
+                    name: 'Movie Buff Central',
+                    profilePicture: 'assets/img/Victoria.jpg',
+                    channelUrl: 'user_channel_template.html?userId=user456'
                 },
-                { 
-                    id: 'user101', 
-                    name: 'Gamer Girl X', 
+                {
+                    id: 'user101',
+                    name: 'Gamer Girl X',
                     profilePicture: 'assets/img/Jhon.webp', // Using Jhon as placeholder
-                    channelUrl: 'user_channel_template.html?userId=user101' 
+                    channelUrl: 'user_channel_template.html?userId=user101'
                 }
             ];
 
@@ -354,17 +359,17 @@
 
                     const infoDiv = document.createElement('div');
                     infoDiv.classList.add('subscribed-channel-info');
-                    
+
                     const nameHeader = document.createElement('h4');
                     nameHeader.textContent = channel.name;
                     infoDiv.appendChild(nameHeader);
 
                     const unsubscribeBtn = document.createElement('button');
-                    unsubscribeBtn.classList.add('unsubscribe-btn');
+                    unsubscribeBtn.classList.add('btn', 'btn-danger'); // Applied new classes
                     unsubscribeBtn.textContent = 'Unsubscribe';
                     unsubscribeBtn.setAttribute('data-channel-id', channel.id);
                     unsubscribeBtn.setAttribute('data-channel-name', channel.name);
-                    
+
                     unsubscribeBtn.addEventListener('click', function(event) {
                         event.preventDefault(); // Prevent navigation if card is a link
                         event.stopPropagation(); // Stop click from bubbling to the card link
@@ -374,7 +379,7 @@
                         alert(`Unsubscribed from ${channelNameToUnsubscribe} (ID: ${channelIdToUnsubscribe})!`);
                         // TODO: In a real app, remove this channel from the `subscribedChannels` array and re-render.
                         // For this mockup, we can remove the card from the DOM:
-                        cardLink.remove(); 
+                        cardLink.remove();
                         // Check if container is empty after removal
                         if (container.children.length === 0) {
                              container.innerHTML = '<p style="color: #ccc; text-align: center;">You are not subscribed to any channels yet.</p>';
@@ -384,7 +389,7 @@
                     cardLink.appendChild(img);
                     cardLink.appendChild(infoDiv);
                     cardLink.appendChild(unsubscribeBtn); // Append button to the card link itself
-                    
+
                     container.appendChild(cardLink);
                 });
             }

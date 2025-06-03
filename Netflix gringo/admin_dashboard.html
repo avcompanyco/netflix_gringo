@@ -17,34 +17,54 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Standardized Variables from brand_styles.css */
             --main-bg: #0A0A23;
-            --sidebar-bg: #0F122E; 
-            --content-area-bg: #0A0A23; 
-            --primary-color: #F06292; 
-            --primary-color-hover: #D84373; 
-            --secondary-color: #2196F3; 
-            --secondary-color-hover: #1976D2;
-            --input-bg: #E8E8E8; 
-            --text-dark-on-light-bg: #1A1B1E;
-            --text-light: #FFFFFF;
-            --text-headings: #f0f6fc; 
-            --text-muted: #aeb8c4; 
-            --border-color: #2c2c4c; 
-            --error-color: #ff6b6b; 
+            --primary-color: #F06292; /* Pink */
+            --primary-color-hover: #D84373; /* Darker Pink */
+            --secondary-color: #2196F3; /* Blue */
+            --secondary-color-hover: #1976D2; /* Darker Blue */
+
+            --text-light: #f0f6fc;
+            --text-dark: #1A1B1E;
+            --text-muted: #aeb8c4;
+            --text-headings: #ffffff;
+
+            --card-bg-light: #E6E6E6;
+            --card-bg-dark: #1C1C3A;
+            --input-bg-light: #E8E8E8;
+
+            --link-color: var(--secondary-color);
+            --link-color-hover: var(--secondary-color-hover);
+
+            --danger-color: #DC3545;
+            --danger-color-hover: #c82333;
+            --error-color: #ff6b6b; /* Retaining admin's specific lighter red for specific error states if needed, or can be merged with danger */
             --error-color-hover: #e04848;
-            --warning-color: #FFB74D; 
+            --success-color: #28a745;
+            --success-color-hover: #218838;
+            --warning-color: #FFB74D;
             --warning-color-hover: #FFA726;
-            --success-color: #4CAF50;
-            --info-color: #64B5F6; 
+            --info-color: #64B5F6;
             --info-color-hover: #42A5F5;
+
+            --border-color-darkbg: #2c2c4c;
+            --border-color-lightbg: #ced4da;
+
+            --border-radius-sm: 0.25rem;
+            --border-radius-md: 0.5rem;
+            --font-family-sans-serif: 'Poppins', sans-serif;
+
+            /* Admin Specific (can be gradually phased out or kept if truly unique) */
+            --sidebar-bg: #0F122E;
+            --content-area-bg: var(--main-bg); /* Aliased to main-bg */
+            --text-dark-on-light-bg: var(--text-dark); /* Aliased */
+            --border-color: var(--border-color-darkbg); /* Aliased */
 
             --section-bg: rgba(20, 22, 46, 0.5); 
             --table-header-bg: rgba(30, 33, 63, 0.7);
             --table-row-hover-bg: rgba(240, 98, 146, 0.08); 
             --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
             --shadow-md: 0 5px 15px rgba(0,0,0,0.3);
-            --border-radius-sm: 6px; 
-            --border-radius-md: 10px;
         }
 
         body, html {
@@ -129,9 +149,30 @@
             border-radius: var(--border-radius-sm); text-decoration: none; font-weight: 500;
             font-size: 0.95rem; transition: background-color 0.2s ease, transform 0.2s ease; border: none; cursor: pointer;
         }
-        .action-button:hover { background-color: var(--primary-color-hover); transform: translateY(-1px); }
+        .action-button:hover { background-color: var(--primary-color-hover); /* transform: translateY(-1px); */ } /* Base .btn handles transform */
         .action-button.secondary { background-color: var(--secondary-color); }
         .action-button.secondary:hover { background-color: var(--secondary-color-hover); }
+
+        /* Applying .btn base styles to .action-button */
+        .action-button {
+            display: inline-block;
+            font-weight: 500; /* Corresponds to --font-weight-medium */
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            user-select: none;
+            border: 1px solid transparent; /* Base .btn has this */
+            /* padding already defined: 0.7rem 1.4rem; */
+            /* font-size already defined: 0.95rem; */
+            /* border-radius already defined: var(--border-radius-sm); */
+            /* transition already defined: background-color 0.2s ease, transform 0.2s ease; */
+            text-decoration: none;
+        }
+        .action-button:active {
+            transform: translateY(1px);
+            filter: brightness(95%);
+        }
+
 
         .dashboard-module { display: none; }
         .dashboard-module.active { display: block; animation: fadeInPlatform 0.4s ease-out; }
@@ -152,50 +193,40 @@
         
         .admin-table-wrapper { overflow-x: auto; background-color: var(--section-bg); border-radius:var(--border-radius-md); padding: 0.5rem; box-shadow: var(--shadow-sm); }
         .admin-table { width: 100%; border-collapse: separate; border-spacing: 0; color: var(--text-light); font-size: 0.95rem; }
-        .admin-table th, .admin-table td { padding: 1rem 1.1rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border-color); }
+        .admin-table th, .admin-table td { padding: 1rem 1.1rem; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--border-color-darkbg); } /* Use standardized var */
         .admin-table th { background-color: var(--table-header-bg); font-weight: 600; white-space: nowrap; color: var(--text-headings); font-size: 1rem; }
         .admin-table tr:last-child td { border-bottom: none; }
         .admin-table tr:hover { background-color: var(--table-row-hover-bg); }
         
-        /* ESTILOS MEJORADOS PARA BOTONES DE ACCIÓN EN TABLA Y TARJETAS */
-        .action-buttons { /* Contenedor de botones en tablas y tarjetas */
+        .action-buttons {
             display: flex;
             align-items: center;
-            gap: 0.6rem; 
-            white-space: nowrap; 
+            gap: 0.6rem;
+            white-space: nowrap;
         }
-        .action-buttons button, 
-        .action-buttons a,
-        .plan-card-actions button { /* Aplicar a botones de plan también */
-            font-size: 0.825rem; /* Unificado y ligeramente ajustado */
-            padding: 0.45rem 0.85rem; /* Unificado */
-            border-radius: var(--border-radius-sm);
-            border: 1px solid transparent;
-            font-weight: 500;
-            text-align: center;
-            min-width: 65px; 
-            cursor: pointer;
-            text-decoration: none;
-            color: white; /* Texto blanco por defecto para la mayoría */
-            transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-        }
-        .action-buttons button:hover, 
-        .action-buttons a:hover,
-        .plan-card-actions button:hover {
-            transform: translateY(-1px); /* Efecto hover sutil */
-        }
-        
-        .action-btn-view, .action-btn-monitor { background-color: var(--info-color); border-color:var(--info-color); }
-        .action-btn-view:hover, .action-btn-monitor:hover { background-color: var(--info-color-hover); }
 
-        .action-btn-edit { background-color: var(--secondary-color); border-color:var(--secondary-color); }
-        .action-btn-edit:hover { background-color: var(--secondary-color-hover); }
-        
-        .action-btn-end, .action-btn-archive, .action-btn-cancel-item { background-color: var(--warning-color); border-color:var(--warning-color); color: #222; /* Texto oscuro para naranja */ }
-        .action-btn-end:hover, .action-btn-archive:hover, .action-btn-cancel-item:hover { background-color: var(--warning-color-hover); }
-
-        .action-btn-delete { background-color: var(--error-color); border-color:var(--error-color); }
-        .action-btn-delete:hover { background-color: var(--error-color-hover); }
+        /* Base style for .btn elements within .action-buttons or .plan-card-actions */
+        .action-buttons .btn,
+        .plan-card-actions .btn {
+            font-size: 0.825rem;
+            padding: 0.4rem 0.8rem;
+            min-width: auto;
+            /* Ensure these inherit general .btn properties from brand_styles.css when linked */
+            /* For now, make sure they are clickable and have basic appearance */
+            border: 1px solid transparent; /* From .btn base */
+            font-weight: var(--font-weight-medium); /* from .btn base */
+            text-align: center; /* from .btn base */
+            cursor: pointer; /* from .btn base */
+            text-decoration: none; /* from .btn base */
+            color: white; /* Default, overridden by specific .btn- types */
+            transition: var(--transition-short); /* from .btn base */
+        }
+         .action-buttons .btn:hover,
+         .plan-card-actions .btn:hover {
+            transform: translateY(-1px);
+            filter: brightness(90%); /* General hover effect */
+        }
+        /* Old .action-btn-* specific color styles are removed as they are replaced by .btn-* classes in JS. */
 
         .pagination-controls { display: flex; justify-content: flex-end; align-items: center; margin-top: 1.5rem; gap: 0.5rem; }
         .pagination-controls button, .pagination-controls span {
@@ -239,7 +270,7 @@
         .form-checkbox-group label { font-size: 0.95rem; color: var(--text-muted); margin-bottom:0; font-weight: 400; }
         
         .modal-actions { margin-top: 2rem; display: flex; justify-content: flex-end; gap: 1rem; }
-        .modal-actions .action-button.cancel { background-color: #4a4a58; }
+        .modal-actions .action-button.cancel { background-color: #4a4a58; } /* Keep custom cancel or make .btn-grey */
         .modal-actions .action-button.cancel:hover { background-color: #606070; }
 
         .plans-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
@@ -307,7 +338,7 @@
                 <section class="dashboard-module" id="users">
                     <div class="content-header">
                         <h1 class="page-module-title">Manage Users</h1>
-                        <button class="action-button" id="addUserBtn">+ Add User</button>
+                        <button class="action-button btn btn-primary" id="addUserBtn">+ Add User</button>
                     </div>
                     <div class="table-controls">
                         <div class="search-bar"><input type="search" id="userSearchInput" placeholder="Search by ID, Name, Email..."></div>
@@ -320,10 +351,7 @@
                         <table class="admin-table" id="usersTable">
                             <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Plan</th><th>Joined</th><th>Status</th><th>Actions</th></tr></thead>
                             <tbody>
-                                <tr><td>USR001</td><td>Elena Rodriguez</td><td>elena.r@example.com</td><td>Golden</td><td>2024-01-10</td><td>Active</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-delete">Delete</button></td></tr>
-                                <tr><td>USR002</td><td>Marcus Chen</td><td>m.chen@example.dev</td><td>Silver</td><td>2024-02-05</td><td>Active</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-delete">Delete</button></td></tr>
-                                <tr><td>USR003</td><td>Aisha Khan</td><td>a.khan@example.io</td><td>Golden</td><td>2023-12-15</td><td>Suspended</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-delete">Delete</button></td></tr>
-                                <tr><td>USR004</td><td>John "Big J" Doe</td><td>big.j@example.net</td><td>Silver</td><td>2024-03-20</td><td>Active</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-delete">Delete</button></td></tr>
+                                <!-- User rows will be rendered by JS -->
                             </tbody>
                         </table>
                     </div>
@@ -331,7 +359,7 @@
                 </section>
 
                 <section class="dashboard-module" id="content">
-                    <div class="content-header"><h1 class="page-module-title">Manage Content</h1><button class="action-button" id="addContentBtn">+ Add Content</button></div>
+                    <div class="content-header"><h1 class="page-module-title">Manage Content</h1><button class="action-button btn btn-primary" id="addContentBtn">+ Add Content</button></div>
                      <div class="table-controls">
                          <div class="search-bar"><input type="search" id="contentSearchInput" placeholder="Search by Title, ID, Uploader..."></div>
                         <div class="filter-options">
@@ -343,10 +371,7 @@
                         <table class="admin-table" id="contentTable">
                             <thead><tr><th>ID</th><th>Title</th><th>Type</th><th>Uploader</th><th>Upload Date</th><th>Status</th><th>Actions</th></tr></thead>
                             <tbody>
-                                <tr><td>VID071</td><td>Cyber City Nights</td><td>Movie</td><td>USR001 (Elena)</td><td>2024-05-01</td><td>Published</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-delete">Delete</button></td></tr>
-                                <tr><td>SER003E05</td><td>Chronicles - S01E05: The Awakening</td><td>Serie Episode</td><td>USR002 (Marcus)</td><td>2024-04-22</td><td>Published</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-delete">Delete</button></td></tr>
-                                <tr><td>MOV012</td><td>Ocean's Whisper</td><td>Movie</td><td>USR004 (John)</td><td>2024-05-10</td><td>Pending Review</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-delete">Delete</button></td></tr>
-                                <tr><td>LIVREC005</td><td>DevTalk Q&A - May</td><td>Live Recording</td><td>Platform Team</td><td>2024-05-15</td><td>Processing</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-delete">Delete</button></td></tr>
+                                <!-- Content rows will be rendered by JS -->
                             </tbody>
                         </table>
                     </div>
@@ -356,14 +381,14 @@
                 <section class="dashboard-module" id="plans">
                     <div class="content-header">
                         <h1 class="page-module-title">Subscription Plans</h1>
-                        <button class="action-button" id="addNewPlanBtn">+ Add New Plan</button>
+                        <button class="action-button btn btn-primary" id="addNewPlanBtn">+ Add New Plan</button>
                     </div>
                     <div class="plans-grid" id="plansGridContainer">
                         </div>
                 </section>
 
                 <section class="dashboard-module" id="liveStreams">
-                     <div class="content-header"><h1 class="page-module-title">Manage Live Streams</h1><button class="action-button" id="scheduleStreamBtn">+ Schedule Stream</button></div>
+                     <div class="content-header"><h1 class="page-module-title">Manage Live Streams</h1><button class="action-button btn btn-primary" id="scheduleStreamBtn">+ Schedule Stream</button></div>
                      <div class="table-controls">
                          <div class="search-bar"><input type="search" id="liveSearchInput" placeholder="Search by Title, ID, Broadcaster..."></div>
                         <div class="filter-options">
@@ -374,10 +399,7 @@
                         <table class="admin-table" id="liveStreamsTable">
                             <thead><tr><th>ID</th><th>Title</th><th>Broadcaster</th><th>Status</th><th>Viewers</th><th>Time (UTC)</th><th>Actions</th></tr></thead>
                             <tbody>
-                                <tr><td>LIVE001</td><td>Weekly Platform Q&A</td><td>USR001 (Elena)</td><td><span style="color:var(--success-color); font-weight:bold;">● Live</span></td><td>150</td><td>Started: 20:30</td><td class="action-buttons"><button class="action-btn-monitor">Monitor</button><button class="action-btn-end">End</button><button class="action-btn-archive">Archive</button></td></tr>
-                                <tr><td>LIVE002</td><td>Exclusive Movie Premiere</td><td>Platform Team</td><td><span style="color:var(--secondary-color);">Scheduled</span></td><td>0</td><td>Tomorrow, 14:00</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-cancel-item">Cancel</button></td></tr>
-                                <tr><td>LIVE003</td><td>Indie Game Showcase</td><td>USR004 (John)</td><td><span style="color:var(--text-muted);">Ended</span></td><td>87 (Peak)</td><td>Ended: 2h ago</td><td class="action-buttons"><button class="action-btn-view">View Rec</button><button class="action-btn-delete">Delete Rec</button></td></tr>
-                                 <tr><td>LIVE004</td><td>Artist Spotlight: Live Painting</td><td>USR002 (Marcus)</td><td><span style="color:var(--warning-color);">Upcoming</span></td><td>0</td><td>May 25, 10:00</td><td class="action-buttons"><button class="action-btn-edit">Edit</button><button class="action-btn-cancel-item">Cancel</button></td></tr>
+                                <!-- Live stream rows will be rendered by JS -->
                             </tbody>
                         </table>
                     </div>
@@ -428,8 +450,8 @@
                     <input type="number" id="planTrialDays" class="form-control-custom" min="0" value="0" placeholder="e.g., 7">
                 </div>
                 <div class="modal-actions">
-                    <button type="button" class="action-button cancel" id="cancelPlanForm">Cancel</button>
-                    <button type="submit" class="action-button" id="savePlanBtn">Save Plan</button>
+                    <button type="button" class="action-button cancel btn" id="cancelPlanForm">Cancel</button>
+                    <button type="submit" class="action-button btn btn-primary" id="savePlanBtn">Save Plan</button>
                 </div>
             </form>
         </div>
@@ -472,8 +494,8 @@
                     </select>
                 </div>
                 <div class="modal-actions">
-                    <button type="button" class="action-button cancel" id="cancelUserForm">Cancel</button>
-                    <button type="submit" class="action-button" id="saveUserBtn">Save User</button>
+                    <button type="button" class="action-button cancel btn" id="cancelUserForm">Cancel</button>
+                    <button type="submit" class="action-button btn btn-primary" id="saveUserBtn">Save User</button>
                 </div>
             </form>
         </div>
@@ -520,8 +542,8 @@
                     </select>
                 </div>
                 <div class="modal-actions">
-                    <button type="button" class="action-button cancel" id="cancelContentForm">Cancel</button>
-                    <button type="submit" class="action-button" id="saveContentBtn">Save Content</button>
+                    <button type="button" class="action-button cancel btn" id="cancelContentForm">Cancel</button>
+                    <button type="submit" class="action-button btn btn-primary" id="saveContentBtn">Save Content</button>
                 </div>
             </form>
         </div>
@@ -554,8 +576,8 @@
                     <textarea id="streamDescription" class="form-control-custom" rows="3"></textarea>
                 </div>
                 <div class="modal-actions">
-                    <button type="button" class="action-button cancel" id="cancelScheduleStreamForm">Cancel</button>
-                    <button type="submit" class="action-button" id="saveScheduleStreamBtn">Save Stream</button>
+                    <button type="button" class="action-button cancel btn" id="cancelScheduleStreamForm">Cancel</button>
+                    <button type="submit" class="action-button btn btn-primary" id="saveScheduleStreamBtn">Save Stream</button>
                 </div>
             </form>
         </div>
@@ -713,7 +735,7 @@ document.addEventListener('DOMContentLoaded', function () {
             row.insertCell().textContent = user.email;
             row.insertCell().textContent = user.plan;
             row.insertCell().textContent = user.joinedDate;
-            
+
             const statusCell = row.insertCell();
             statusCell.textContent = user.status;
             if(user.status === 'Active') statusCell.style.color = 'var(--success-color)';
@@ -722,15 +744,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const actionsCell = row.insertCell();
             actionsCell.classList.add('action-buttons');
-            
+
             const editBtn = document.createElement('button');
-            editBtn.classList.add('action-btn-edit');
+            editBtn.classList.add('btn', 'btn-edit'); // Updated classes
             editBtn.textContent = 'Edit';
             editBtn.onclick = () => openUserModal('edit', user.id);
             actionsCell.appendChild(editBtn);
 
             const deleteBtn = document.createElement('button');
-            deleteBtn.classList.add('action-btn-delete');
+            deleteBtn.classList.add('btn', 'btn-danger'); // Updated classes
             deleteBtn.textContent = 'Delete';
             deleteBtn.onclick = () => deleteUser(user.id);
             actionsCell.appendChild(deleteBtn);
@@ -740,7 +762,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function openUserModal(mode = 'add', userId = null) {
         userForm.reset(); // Clear previous form data
         userEditIdInput.value = ''; // Clear edit ID
-        
+
         const userPlanSelect = document.getElementById('userPlan');
         userPlanSelect.innerHTML = ''; // Clear old plan options
         currentPlans.forEach(plan => {
@@ -759,7 +781,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('userEmail').value = user.email;
                 userPlanSelect.value = user.plan;
                 document.getElementById('userStatus').value = user.status;
-                document.getElementById('userPassword').value = ''; 
+                document.getElementById('userPassword').value = '';
                 document.getElementById('userPassword').placeholder = 'Leave blank if no change';
             } else {
                 alert('User not found for editing.');
@@ -775,7 +797,7 @@ document.addEventListener('DOMContentLoaded', function () {
     function closeUserModal() {
         userModal.classList.remove('active');
     }
-    
+
     userForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const userId = userEditIdInput.value;
@@ -793,12 +815,12 @@ document.addEventListener('DOMContentLoaded', function () {
         if (userId) { // Editing existing user
             const userIndex = mockUsers.findIndex(u => u.id === userId);
             if (userIndex > -1) {
-                mockUsers[userIndex] = { 
-                    ...mockUsers[userIndex], 
-                    name: userName, 
-                    email: userEmail, 
-                    plan: userPlan, 
-                    status: userStatus 
+                mockUsers[userIndex] = {
+                    ...mockUsers[userIndex],
+                    name: userName,
+                    email: userEmail,
+                    plan: userPlan,
+                    status: userStatus
                     // Password update would be handled here in a real backend
                 };
                 alert(`User "${userName}" updated! (Simulated)`);
@@ -832,7 +854,7 @@ document.addEventListener('DOMContentLoaded', function () {
             renderUsersTable(); // Refresh the table to reflect the deletion
         }
     }
-    
+
     // Attach event listener for Add User button
     if(addUserBtn) {
         addUserBtn.addEventListener('click', () => openUserModal('add'));
@@ -864,7 +886,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Assuming uploader is an object like {id: 'USR001', name: 'Elena'} or just a name string
             row.insertCell().textContent = typeof item.uploader === 'object' ? item.uploader.name : item.uploader;
             row.insertCell().textContent = item.uploadDate;
-            
+
             const statusCell = row.insertCell();
             statusCell.textContent = item.status;
             // Optional: Style status cell based on content
@@ -875,33 +897,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const actionsCell = row.insertCell();
             actionsCell.classList.add('action-buttons');
-            
+
             const editBtn = document.createElement('button');
-            editBtn.classList.add('action-btn-edit');
+            editBtn.classList.add('btn', 'btn-edit');
             editBtn.textContent = 'Edit';
             editBtn.onclick = () => openContentModal('edit', item.id);
             actionsCell.appendChild(editBtn);
 
             const deleteBtn = document.createElement('button');
-            deleteBtn.classList.add('action-btn-delete');
+            deleteBtn.classList.add('btn', 'btn-danger');
             deleteBtn.textContent = 'Delete';
             deleteBtn.onclick = () => deleteContentItem(item.id);
             actionsCell.appendChild(deleteBtn);
-            
-            // Example for Change Status - could be a dropdown or more buttons
+
             const archiveBtn = document.createElement('button');
-            archiveBtn.classList.add('action-btn-archive'); // Use an existing or new class
+            archiveBtn.classList.add('btn', 'btn-warning');
             archiveBtn.textContent = 'Archive';
-            archiveBtn.style.minWidth = '80px'; // Ensure text fits
+            // archiveBtn.style.minWidth = '80px'; // Can be handled by .btn padding or specific utility class if needed
             archiveBtn.onclick = () => changeContentStatus(item.id, 'Archived');
             if(item.status === 'Archived') archiveBtn.disabled = true;
             actionsCell.appendChild(archiveBtn);
 
             if(item.status !== 'Published') {
                 const publishBtn = document.createElement('button');
-                publishBtn.classList.add('action-btn-view'); // Using view style for publish
+                publishBtn.classList.add('btn', 'btn-success');
                 publishBtn.textContent = 'Publish';
-                publishBtn.style.minWidth = '80px';
+                // publishBtn.style.minWidth = '80px';
                 publishBtn.onclick = () => changeContentStatus(item.id, 'Published');
                 actionsCell.appendChild(publishBtn);
             }
@@ -951,7 +972,7 @@ document.addEventListener('DOMContentLoaded', function () {
             alert("Title, Type, and Uploader ID are required.");
             return;
         }
-        
+
         // Find uploader name from mockUsers (simplified)
         const uploaderObj = mockUsers.find(u => u.id === uploaderId);
         const uploaderDisplay = uploaderObj ? {id: uploaderObj.id, name: uploaderObj.name} : {id: uploaderId, name: uploaderId};
@@ -1028,7 +1049,7 @@ document.addEventListener('DOMContentLoaded', function () {
             row.insertCell().textContent = stream.id;
             row.insertCell().textContent = stream.title;
             row.insertCell().textContent = typeof stream.broadcaster === 'object' ? stream.broadcaster.name : stream.broadcaster;
-            
+
             const statusCell = row.insertCell();
             statusCell.textContent = stream.status;
             if (stream.status === 'Live') statusCell.style.color = 'var(--success-color)';
@@ -1038,7 +1059,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
             row.insertCell().textContent = stream.viewers || 0;
-            
+
             const timeCell = row.insertCell();
             if (stream.status === 'Live' && stream.startTime) {
                 timeCell.textContent = `Started: ${new Date(stream.startTime).toLocaleTimeString()}`;
@@ -1056,23 +1077,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
             if (stream.status === 'Live') {
                 actionsCell.innerHTML = `
-                    <button class="action-btn-monitor" onclick="handleLiveStreamAction('${stream.id}', 'monitor')">Monitor</button>
-                    <button class="action-btn-end" onclick="handleLiveStreamAction('${stream.id}', 'end')">End</button>`;
+                    <button class="btn btn-info" onclick="handleLiveStreamAction('${stream.id}', 'monitor')">Monitor</button>
+                    <button class="btn btn-warning" onclick="handleLiveStreamAction('${stream.id}', 'end')">End</button>`;
             } else if (stream.status === 'Scheduled' || stream.status === 'Upcoming') {
                 actionsCell.innerHTML = `
-                    <button class="action-btn-edit" onclick="openScheduleStreamModal('edit', '${stream.id}')">Edit</button>
-                    <button class="action-btn-cancel-item" onclick="handleLiveStreamAction('${stream.id}', 'cancel')">Cancel</button>`;
+                    <button class="btn btn-edit" onclick="openScheduleStreamModal('edit', '${stream.id}')">Edit</button>
+                    <button class="btn btn-outline-danger" onclick="handleLiveStreamAction('${stream.id}', 'cancel')">Cancel</button>`;
             } else if (stream.status === 'Ended') {
                 actionsCell.innerHTML = `
-                    <button class="action-btn-view" onclick="handleLiveStreamAction('${stream.id}', 'view_recording')">View Rec</button>
-                    <button class="action-btn-archive" onclick="handleLiveStreamAction('${stream.id}', 'archive')">Archive</button>
-                    <button class="action-btn-delete" onclick="handleLiveStreamAction('${stream.id}', 'delete_recording')">Delete Rec</button>`;
+                    <button class="btn btn-info" onclick="handleLiveStreamAction('${stream.id}', 'view_recording')">View Rec</button>
+                    <button class="btn btn-warning" onclick="handleLiveStreamAction('${stream.id}', 'archive')">Archive</button>
+                    <button class="btn btn-danger" onclick="handleLiveStreamAction('${stream.id}', 'delete_recording')">Delete Rec</button>`;
             } else if (stream.status === 'Archived') {
                  actionsCell.innerHTML = `
-                    <button class="action-btn-view" onclick="handleLiveStreamAction('${stream.id}', 'view_recording')">View Rec</button>
-                    <button class="action-btn-delete" onclick="handleLiveStreamAction('${stream.id}', 'delete_recording')">Delete Rec</button>`;
+                    <button class="btn btn-info" onclick="handleLiveStreamAction('${stream.id}', 'view_recording')">View Rec</button>
+                    <button class="btn btn-danger" onclick="handleLiveStreamAction('${stream.id}', 'delete_recording')">Delete Rec</button>`;
             } else if (stream.status === 'Cancelled') {
-                 actionsCell.innerHTML = `<button class="action-btn-delete" onclick="handleLiveStreamAction('${stream.id}', 'delete_cancelled')">Delete</button>`;
+                 actionsCell.innerHTML = `<button class="btn btn-danger" onclick="handleLiveStreamAction('${stream.id}', 'delete_cancelled')">Delete</button>`;
             }
         });
     }
@@ -1083,7 +1104,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Populate broadcaster select - simplified, ideally from mockUsers
         const broadcasterSelect = document.getElementById('streamBroadcaster');
         // broadcasterSelect.innerHTML = ''; // Clear if populating dynamically
-        // mockUsers.forEach(user => { 
+        // mockUsers.forEach(user => {
         //     const option = document.createElement('option');
         //     option.value = user.id; option.textContent = user.name;
         //     broadcasterSelect.appendChild(option);
@@ -1148,9 +1169,9 @@ document.addEventListener('DOMContentLoaded', function () {
         } else { // Adding
             const newStream = {
                 id: 'LIVE' + String(Date.now()).slice(-4) + String(Math.floor(Math.random()*100)).padStart(2,'0'),
-                title, 
-                broadcaster: broadcasterDisplay, 
-                scheduledTime, 
+                title,
+                broadcaster: broadcasterDisplay,
+                scheduledTime,
                 description,
                 status: 'Scheduled', // Default to scheduled
                 viewers: 0
@@ -1230,8 +1251,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     <div class="plan-card-header">
                         <h3 class="plan-card-title">${plan.name}</h3>
                         <div class="plan-card-actions action-buttons">
-                            <button class="action-btn-edit" onclick="openPlanModal('edit', '${plan.id}')">Edit</button>
-                            <button class="action-btn-delete" onclick="deletePlan('${plan.id}')">Delete</button>
+                            <button class="btn btn-edit" onclick="openPlanModal('edit', '${plan.id}')">Edit</button>
+                            <button class="btn btn-danger" onclick="deletePlan('${plan.id}')">Delete</button>
                         </div>
                     </div>
                     <ul class="plan-card-details">

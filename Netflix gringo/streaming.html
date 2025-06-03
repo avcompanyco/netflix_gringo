@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Start Streaming - Live</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/brand_styles.css"> <!-- Added brand styles -->
     <link rel="stylesheet" href="assets/css/streaming_page.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -25,10 +26,10 @@
             </div>
 
             <div class="stream-controls">
-                <button id="startStreamBtn" class="control-btn start">Start Stream</button>
-                <button id="stopStreamBtn" class="control-btn stop" disabled>Stop Stream</button>
-                <button id="toggleMicBtn" class="control-btn mic" disabled>Mute Mic</button>
-                <button id="toggleCamBtn" class="control-btn cam" disabled>Disable Cam</button>
+                <button id="startStreamBtn" class="btn btn-success">Start Stream</button>
+                <button id="stopStreamBtn" class="btn btn-danger" disabled>Stop Stream</button>
+                <button id="toggleMicBtn" class="btn btn-secondary" disabled>Mute Mic</button>
+                <button id="toggleCamBtn" class="btn btn-secondary" disabled>Disable Cam</button>
             </div>
         </div>
 
@@ -39,7 +40,7 @@
             </div>
             <div class="chat-input-area">
                 <input type="text" id="chatMessageInput" placeholder="Type your message...">
-                <button id="sendChatMessageBtn">Send</button>
+                <button id="sendChatMessageBtn" class="btn btn-primary">Send</button>
             </div>
         </aside>
     </div>

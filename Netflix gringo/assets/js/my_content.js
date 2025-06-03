@@ -59,15 +59,17 @@ function renderMovies(movies) {
 
     movies.forEach(movie => {
         const card = `
-            <div class="movie-card">
-                <img src="${movie.thumbnailUrl}" alt="${movie.title}" class="movie-thumbnail">
-                <h3>${movie.title}</h3>
+            <a href="movie_detail.html?id=${movie.id}" class="content-card-link">
+                <div class="movie-card">
+                    <img src="${movie.thumbnailUrl}" alt="${movie.title}" class="movie-thumbnail">
+                    <h3>${movie.title}</h3>
                 <p>Category: ${movie.category}</p>
                 <p>Views: ${movie.views}</p>
                 <p>Uploaded: ${new Date(movie.uploadDate).toLocaleDateString()}</p>
-                <button class="edit-btn" onclick="alert('Edit movie: ${movie.id}')">Edit</button>
-                <button class="delete-btn" onclick="alert('Delete movie: ${movie.id}')">Delete</button>
-            </div>
+                <button class="btn btn-edit edit-btn" onclick="event.preventDefault(); event.stopPropagation(); alert('Edit movie: ${movie.id}')">Edit</button>
+                <button class="btn btn-danger delete-btn" onclick="event.preventDefault(); event.stopPropagation(); alert('Delete movie: ${movie.id}')">Delete</button>
+                </div>
+            </a>
         `;
         container.innerHTML += card;
     });
@@ -81,17 +83,19 @@ function renderSeries(series) {
     series.forEach(serie => {
         // Basic series card for now. Episode listing can be complex.
         const card = `
-            <div class="series-card">
-                <img src="${serie.thumbnailUrl}" alt="${serie.title}" class="series-thumbnail">
-                <h3>${serie.title}</h3>
+            <a href="series_detail.html?id=${serie.id}" class="content-card-link">
+                <div class="series-card">
+                    <img src="${serie.thumbnailUrl}" alt="${serie.title}" class="series-thumbnail">
+                    <h3>${serie.title}</h3>
                 <p>Category: ${serie.category}</p>
                 <p>Total Views: ${serie.totalViews}</p>
                 <p>Seasons: ${serie.seasons.length}</p>
-                <button class="edit-btn" onclick="alert('Edit series: ${serie.id}')">Edit Series</button>
-                <button class="delete-btn" onclick="alert('Delete series: ${serie.id}')">Delete Series</button>
-                <button class="action-btn" onclick="alert('Add episode to series: ${serie.id}')">Add Episode</button>
+                <button class="btn btn-edit edit-btn" onclick="event.preventDefault(); event.stopPropagation(); alert('Edit series: ${serie.id}')">Edit Series</button>
+                <button class="btn btn-danger delete-btn" onclick="event.preventDefault(); event.stopPropagation(); alert('Delete series: ${serie.id}')">Delete Series</button>
+                <button class="btn btn-secondary action-btn" onclick="event.preventDefault(); event.stopPropagation(); alert('Add episode to series: ${serie.id}')">Add Episode</button>
                 <!-- Expand episodes functionality can be added here -->
-            </div>
+                </div>
+            </a>
         `;
         container.innerHTML += card;
     });
@@ -108,16 +112,35 @@ function renderStreams(streams) {
         const streamDate = stream.date ? `<p>Date: ${new Date(stream.date).toLocaleDateString()}</p>` : '';
         const buttonText = stream.status === 'Live' ? 'Manage Stream' : 'Delete Recording';
 
-        const card = `
-            <div class="stream-card">
-                <img src="${stream.thumbnailUrl}" alt="${stream.title}" class="stream-thumbnail">
-                <h3>${stream.title} ${liveBadge}</h3>
-                ${viewersOrViews}
-                ${streamDate}
-                <button class="action-btn" onclick="alert('${buttonText} for stream: ${stream.id}')">${buttonText}</button>
-            </div>
+        let cardHtml = '';
+        const isClickable = stream.status === 'Ended'; // Only past streams are clickable for now
+        const cardContent = `
+            <img src="${stream.thumbnailUrl}" alt="${stream.title}" class="stream-thumbnail">
+            <h3>${stream.title} ${liveBadge}</h3>
+            ${viewersOrViews}
+            ${streamDate}
+            <button
+                class="btn btn-secondary action-btn"
+                onclick="${isClickable ? "event.preventDefault(); event.stopPropagation(); " : ""}alert('${buttonText} for stream: ${stream.id}')"
+            >${buttonText}</button>
         `;
-        container.innerHTML += card;
+
+        if (isClickable) {
+            cardHtml = `
+                <a href="movie_detail.html?id=${stream.id}" class="content-card-link">
+                    <div class="stream-card">
+                        ${cardContent}
+                    </div>
+                </a>
+            `;
+        } else {
+            cardHtml = `
+                <div class="stream-card">
+                    ${cardContent}
+                </div>
+            `;
+        }
+        container.innerHTML += cardHtml;
     });
 }
 

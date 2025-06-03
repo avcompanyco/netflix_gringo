@@ -82,6 +82,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 micEnabled = !micEnabled;
                 audioTrack.enabled = micEnabled;
                 toggleMicBtn.textContent = micEnabled ? 'Mute Mic' : 'Unmute Mic';
+                if (micEnabled) {
+                    toggleMicBtn.classList.remove('toggled-off', 'btn-danger');
+                    toggleMicBtn.classList.add('btn-secondary');
+                } else {
+                    toggleMicBtn.classList.remove('btn-secondary');
+                    toggleMicBtn.classList.add('toggled-off', 'btn-danger');
+                }
             }
         });
     }
@@ -94,28 +101,39 @@ document.addEventListener('DOMContentLoaded', () => {
                 videoTrack.enabled = camEnabled;
                 toggleCamBtn.textContent = camEnabled ? 'Disable Cam' : 'Enable Cam';
                 localVideoStreamElement.style.display = camEnabled ? 'block' : 'none';
-                if(!camEnabled && videoPlaceholder.style.display === 'none'){
-                    // Show a message if placeholder is hidden (i.e. stream is active)
-                     videoPlaceholder.innerHTML = '<p>Camera is disabled. Click "Enable Cam" to show video.</p>';
-                     videoPlaceholder.style.display = 'flex';
-                } else if (camEnabled) {
-                     videoPlaceholder.style.display = 'none'; // Hide placeholder if cam is re-enabled
-                }
 
+                if (camEnabled) {
+                    toggleCamBtn.classList.remove('toggled-off', 'btn-danger');
+                    toggleCamBtn.classList.add('btn-secondary');
+                    videoPlaceholder.style.display = 'none'; // Hide placeholder if cam is re-enabled
+                } else {
+                    toggleCamBtn.classList.remove('btn-secondary');
+                    toggleCamBtn.classList.add('toggled-off', 'btn-danger');
+                    if (videoPlaceholder.style.display === 'none' || videoPlaceholder.innerHTML === '') {
+                        // Show a message if placeholder is hidden or empty (i.e. stream is active or was active)
+                        videoPlaceholder.innerHTML = '<p>Camera is disabled. Click "Enable Cam" to show video.</p>';
+                        videoPlaceholder.style.display = 'flex';
+                    }
+                }
             }
         });
     }
 
     // Chat Simulation
     function displayChatMessage(user, message, isSelf = false) {
-        const messageElement = document.createElement('p');
-        const userStrong = document.createElement('strong');
-        userStrong.textContent = user + ': ';
-        messageElement.appendChild(userStrong);
-        messageElement.appendChild(document.createTextNode(message));
+        const messageElement = document.createElement('div'); // Changed to div for better styling
+        messageElement.classList.add('chat-message');
         if (isSelf) {
-            messageElement.style.color = 'var(--primary-color)'; // Highlight self messages
+            messageElement.classList.add('self-message');
+        } else {
+            messageElement.classList.add('other-message');
         }
+
+        const userStrong = document.createElement('strong');
+        userStrong.textContent = user;
+        messageElement.appendChild(userStrong);
+        messageElement.appendChild(document.createTextNode(message)); // Text node for the message content
+
         chatMessages.appendChild(messageElement);
         chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
     }
@@ -140,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
+
     // Initial placeholder state
     if(videoPlaceholder) {
         videoPlaceholder.style.display = 'flex';
