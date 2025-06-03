@@ -307,7 +307,7 @@
                 <section class="dashboard-module" id="users">
                     <div class="content-header">
                         <h1 class="page-module-title">Manage Users</h1>
-                        <button class="action-button" onclick="alert('Open Add User Form/Modal')">+ Add User</button>
+                        <button class="action-button" id="addUserBtn">+ Add User</button>
                     </div>
                     <div class="table-controls">
                         <div class="search-bar"><input type="search" id="userSearchInput" placeholder="Search by ID, Name, Email..."></div>
@@ -331,7 +331,7 @@
                 </section>
 
                 <section class="dashboard-module" id="content">
-                    <div class="content-header"><h1 class="page-module-title">Manage Content</h1><button class="action-button" onclick="alert('Open Add Content Form/Modal')">+ Add Content</button></div>
+                    <div class="content-header"><h1 class="page-module-title">Manage Content</h1><button class="action-button" id="addContentBtn">+ Add Content</button></div>
                      <div class="table-controls">
                          <div class="search-bar"><input type="search" id="contentSearchInput" placeholder="Search by Title, ID, Uploader..."></div>
                         <div class="filter-options">
@@ -363,7 +363,7 @@
                 </section>
 
                 <section class="dashboard-module" id="liveStreams">
-                     <div class="content-header"><h1 class="page-module-title">Manage Live Streams</h1><button class="action-button" onclick="alert('Open Schedule Live Stream Form/Modal')">+ Schedule Stream</button></div>
+                     <div class="content-header"><h1 class="page-module-title">Manage Live Streams</h1><button class="action-button" id="scheduleStreamBtn">+ Schedule Stream</button></div>
                      <div class="table-controls">
                          <div class="search-bar"><input type="search" id="liveSearchInput" placeholder="Search by Title, ID, Broadcaster..."></div>
                         <div class="filter-options">
@@ -435,6 +435,132 @@
         </div>
     </div>
 
+    <!-- User Modal -->
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="userModalTitle">Add New User</h2>
+                <button class="close-modal-btn" id="closeUserModal" aria-label="Close">&times;</button>
+            </div>
+            <form id="userForm">
+                <input type="hidden" id="userEditId" value="">
+                <div class="form-group-custom">
+                    <label for="userName" class="form-label-custom">Name:</label>
+                    <input type="text" id="userName" class="form-control-custom" required>
+                </div>
+                <div class="form-group-custom">
+                    <label for="userEmail" class="form-label-custom">Email:</label>
+                    <input type="email" id="userEmail" class="form-control-custom" required>
+                </div>
+                <div class="form-group-custom">
+                    <label for="userPlan" class="form-label-custom">Plan:</label>
+                    <select id="userPlan" class="form-control-custom">
+                        <!-- Options will be populated by JS or manually kept in sync -->
+                         <option value="Silver">Silver</option>
+                         <option value="Golden">Golden</option>
+                    </select>
+                </div>
+                <div class="form-group-custom">
+                    <label for="userPassword" class="form-label-custom">Password (leave blank if no change for edit):</label>
+                    <input type="password" id="userPassword" class="form-control-custom">
+                </div>
+                 <div class="form-group-custom">
+                    <label for="userStatus" class="form-label-custom">Status:</label>
+                    <select id="userStatus" class="form-control-custom">
+                        <option value="Active">Active</option>
+                        <option value="Suspended">Suspended</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="action-button cancel" id="cancelUserForm">Cancel</button>
+                    <button type="submit" class="action-button" id="saveUserBtn">Save User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Content Modal -->
+    <div id="contentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="contentModalTitle">Add New Content</h2>
+                <button class="close-modal-btn" id="closeContentModal" aria-label="Close">&times;</button>
+            </div>
+            <form id="contentForm">
+                <input type="hidden" id="contentEditId" value="">
+                <div class="form-group-custom">
+                    <label for="contentTitle" class="form-label-custom">Title:</label>
+                    <input type="text" id="contentTitle" class="form-control-custom" required>
+                </div>
+                <div class="form-group-custom">
+                    <label for="contentType" class="form-label-custom">Type:</label>
+                    <select id="contentType" class="form-control-custom" required>
+                        <option value="Movie">Movie</option>
+                        <option value="Serie">Serie</option>
+                        <option value="Episode">Episode</option> <!-- Assuming 'Episode' is a valid type if 'Serie' is a collection -->
+                    </select>
+                </div>
+                <div class="form-group-custom">
+                    <label for="contentUploader" class="form-label-custom">Uploader (User ID):</label>
+                    <input type="text" id="contentUploader" class="form-control-custom" placeholder="Enter User ID" required>
+                    <!-- Ideally, this would be a select populated from mockUsers -->
+                </div>
+                <div class="form-group-custom">
+                    <label for="contentDescription" class="form-label-custom">Description:</label>
+                    <textarea id="contentDescription" class="form-control-custom" rows="3"></textarea>
+                </div>
+                <div class="form-group-custom">
+                    <label for="contentStatus" class="form-label-custom">Status:</label>
+                    <select id="contentStatus" class="form-control-custom">
+                        <option value="Published">Published</option>
+                        <option value="Pending Review">Pending Review</option>
+                        <option value="Draft">Draft</option>
+                        <option value="Rejected">Rejected</option>
+                        <option value="Archived">Archived</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="action-button cancel" id="cancelContentForm">Cancel</button>
+                    <button type="submit" class="action-button" id="saveContentBtn">Save Content</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Schedule Stream Modal -->
+    <div id="scheduleStreamModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="scheduleStreamModalTitle">Schedule New Stream</h2>
+                <button class="close-modal-btn" id="closeScheduleStreamModal" aria-label="Close">&times;</button>
+            </div>
+            <form id="scheduleStreamForm">
+                <input type="hidden" id="streamEditId" value="">
+                <div class="form-group-custom">
+                    <label for="streamTitle" class="form-label-custom">Stream Title:</label>
+                    <input type="text" id="streamTitle" class="form-control-custom" required>
+                </div>
+                <div class="form-group-custom">
+                    <label for="streamBroadcaster" class="form-label-custom">Broadcaster (User ID):</label>
+                    <input type="text" id="streamBroadcaster" class="form-control-custom" placeholder="Enter User ID" required>
+                    <!-- Ideally, this would be a select populated from mockUsers -->
+                </div>
+                <div class="form-group-custom">
+                    <label for="streamScheduledTime" class="form-label-custom">Scheduled Start Time:</label>
+                    <input type="datetime-local" id="streamScheduledTime" class="form-control-custom" required>
+                </div>
+                <div class="form-group-custom">
+                    <label for="streamDescription" class="form-label-custom">Description (Optional):</label>
+                    <textarea id="streamDescription" class="form-control-custom" rows="3"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="action-button cancel" id="cancelScheduleStreamForm">Cancel</button>
+                    <button type="submit" class="action-button" id="saveScheduleStreamBtn">Save Stream</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const navLinks = document.querySelectorAll('.admin-nav .nav-link');
@@ -449,6 +575,16 @@ document.addEventListener('DOMContentLoaded', function () {
         const targetModule = document.getElementById(moduleId);
         if (targetModule) {
             targetModule.classList.add('active');
+            // Call render functions when module is shown
+            if (moduleId === 'users') {
+                renderUsersTable();
+            } else if (moduleId === 'plans') {
+                renderPlanCards();
+            } else if (moduleId === 'content') {
+                renderContentTable();
+            } else if (moduleId === 'liveStreams') {
+                renderLiveStreamsTable();
+            }
         } else {
             // Fallback to dashboard if module not found
             document.getElementById('dashboardOverview')?.classList.add('active');
@@ -486,12 +622,24 @@ document.addEventListener('DOMContentLoaded', function () {
     if (adminLogoutLink) {
         adminLogoutLink.addEventListener('click', (e) => {
             e.preventDefault();
-            // alert('Logout Action Triggered! Redirecting...'); // Para depuración
-            window.location.href = 'login_admin.html'; // Redirección a login_admin.html
+            window.location.href = 'login_admin.html';
         });
     }
 
-    // --- Subscription Plan Modal & Management (JS sin cambios funcionales significativos) ---
+    // --- Mock Data ---
+    let mockUsers = [
+        {id: 'USR001', name: 'Elena Rodriguez', email: 'elena.r@example.com', plan: 'Golden', joinedDate: '2024-01-10', status: 'Active'},
+        {id: 'USR002', name: 'Marcus Chen', email: 'm.chen@example.dev', plan: 'Silver', joinedDate: '2024-02-05', status: 'Active'},
+        {id: 'USR003', name: 'Aisha Khan', email: 'a.khan@example.io', plan: 'Golden', joinedDate: '2023-12-15', status: 'Suspended'},
+        {id: 'USR004', name: 'John "Big J" Doe', email: 'big.j@example.net', plan: 'Silver', joinedDate: '2024-03-20', status: 'Active'}
+    ];
+
+    let currentPlans = [
+        { id: 'golden', name: "Golden Access", price: 19.99, billingInterval: "month", description: "Access to all premium content and features.", uploadLimit: 0, uploadUnlimited: true, liveLimit: 0, liveUnlimited: true, trialDays: 0 },
+        { id: 'silver', name: "Silver Starter", price: 9.99, billingInterval: "month", description: "Great for getting started.", uploadLimit: 30, uploadUnlimited: false, liveLimit: 5, liveUnlimited: false, trialDays: 7 }
+    ];
+
+    // --- Plan Modal Elements ---
     const planModal = document.getElementById('planModal');
     const addNewPlanBtn = document.getElementById('addNewPlanBtn');
     const closePlanModalBtn = document.getElementById('closePlanModal');
@@ -500,11 +648,577 @@ document.addEventListener('DOMContentLoaded', function () {
     const planModalTitle = document.getElementById('planModalTitle');
     const planEditIdInput = document.getElementById('planEditId'); 
 
-    let currentPlans = [
-        { id: 'golden', name: "Golden Access", price: 19.99, billingInterval: "month", description: "Access to all premium content and features.", uploadLimit: 0, uploadUnlimited: true, liveLimit: 0, liveUnlimited: true, trialDays: 0 },
-        { id: 'silver', name: "Silver Starter", price: 9.99, billingInterval: "month", description: "Great for getting started.", uploadLimit: 30, uploadUnlimited: false, liveLimit: 5, liveUnlimited: false, trialDays: 7 }
+    // --- User Modal Elements ---
+    const userModal = document.getElementById('userModal');
+    const addUserBtn = document.getElementById('addUserBtn');
+    const closeUserModalBtn = document.getElementById('closeUserModal');
+    const cancelUserFormBtn = document.getElementById('cancelUserForm');
+    const userForm = document.getElementById('userForm');
+    const userModalTitle = document.getElementById('userModalTitle');
+    const userEditIdInput = document.getElementById('userEditId');
+
+    // Content Modal Elements
+    const contentModal = document.getElementById('contentModal');
+    const addContentBtn = document.getElementById('addContentBtn');
+    const closeContentModalBtn = document.getElementById('closeContentModal');
+    const cancelContentFormBtn = document.getElementById('cancelContentForm');
+    const contentForm = document.getElementById('contentForm');
+    const contentModalTitle = document.getElementById('contentModalTitle');
+    const contentEditIdInput = document.getElementById('contentEditId');
+
+    // Schedule Stream Modal Elements
+    const scheduleStreamModal = document.getElementById('scheduleStreamModal');
+    const scheduleStreamBtn = document.getElementById('scheduleStreamBtn'); // Added this ID to the button
+    const closeScheduleStreamModalBtn = document.getElementById('closeScheduleStreamModal');
+    const cancelScheduleStreamFormBtn = document.getElementById('cancelScheduleStreamForm');
+    const scheduleStreamForm = document.getElementById('scheduleStreamForm');
+    const scheduleStreamModalTitle = document.getElementById('scheduleStreamModalTitle');
+    const streamEditIdInput = document.getElementById('streamEditId');
+
+
+    // --- Mock Data Additions ---
+    let mockContent = [
+        {id: 'VID071', title: 'Cyber City Nights', type: 'Movie', uploader: {id: 'USR001', name: 'Elena'}, uploadDate: '2024-05-01', status: 'Published'},
+        {id: 'SER003E05', title: 'Chronicles - S01E05: The Awakening', type: 'Serie Episode', uploader: {id: 'USR002', name: 'Marcus'}, uploadDate: '2024-04-22', status: 'Published'},
+        {id: 'MOV012', title: 'Ocean\'s Whisper', type: 'Movie', uploader: {id: 'USR004', name: 'John'}, uploadDate: '2024-05-10', status: 'Pending Review'},
+        {id: 'LIVREC005', title: 'DevTalk Q&A - May', type: 'Live Recording', uploader: {id: 'PlatformTeam', name: 'Platform Team'}, uploadDate: '2024-05-15', status: 'Processing'}
     ];
 
+    let mockLiveStreams = [
+        {id: 'LIVE001', title: 'Weekly Platform Q&A', broadcaster: {id: 'USR001', name: 'Elena'}, status: 'Live', viewers: 150, startTime: '2024-07-28T20:30:00Z', scheduledTime: '2024-07-28T20:30:00Z', description: 'Answering your questions!'},
+        {id: 'LIVE002', title: 'Exclusive Movie Premiere', broadcaster: {id: 'PlatformTeam', name: 'Platform Team'}, status: 'Scheduled', viewers: 0, scheduledTime: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), description: 'Premiere of the new blockbuster.'}, // Tomorrow
+        {id: 'LIVE003', title: 'Indie Game Showcase', broadcaster: {id: 'USR004', name: 'John'}, status: 'Ended', viewers: 87, startTime: '2024-07-27T18:00:00Z', endTime: '2024-07-27T20:00:00Z', scheduledTime: '2024-07-27T18:00:00Z', description: 'Showcasing new indie games.'},
+        {id: 'LIVE004', title: 'Artist Spotlight: Live Painting', broadcaster: {id: 'USR002', name: 'Marcus'}, status: 'Upcoming', viewers: 0, scheduledTime: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(), description: 'Live painting session.'} // In 2 days
+    ];
+
+
+    // --- Users Module Functions ---
+    function renderUsersTable() {
+        const usersTableBody = document.getElementById('usersTable')?.getElementsByTagName('tbody')[0];
+        if (!usersTableBody) {
+            console.error("Users table body not found!");
+            return;
+        }
+        usersTableBody.innerHTML = ''; // Clear existing rows
+
+        if (mockUsers.length === 0) {
+            usersTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:1rem;">No users found.</td></tr>';
+            return;
+        }
+
+        mockUsers.forEach(user => {
+            const row = usersTableBody.insertRow();
+            row.insertCell().textContent = user.id;
+            row.insertCell().textContent = user.name;
+            row.insertCell().textContent = user.email;
+            row.insertCell().textContent = user.plan;
+            row.insertCell().textContent = user.joinedDate;
+            
+            const statusCell = row.insertCell();
+            statusCell.textContent = user.status;
+            if(user.status === 'Active') statusCell.style.color = 'var(--success-color)';
+            if(user.status === 'Suspended') statusCell.style.color = 'var(--error-color)';
+
+
+            const actionsCell = row.insertCell();
+            actionsCell.classList.add('action-buttons');
+            
+            const editBtn = document.createElement('button');
+            editBtn.classList.add('action-btn-edit');
+            editBtn.textContent = 'Edit';
+            editBtn.onclick = () => openUserModal('edit', user.id);
+            actionsCell.appendChild(editBtn);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.classList.add('action-btn-delete');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.onclick = () => deleteUser(user.id);
+            actionsCell.appendChild(deleteBtn);
+        });
+    }
+
+    function openUserModal(mode = 'add', userId = null) {
+        userForm.reset(); // Clear previous form data
+        userEditIdInput.value = ''; // Clear edit ID
+        
+        const userPlanSelect = document.getElementById('userPlan');
+        userPlanSelect.innerHTML = ''; // Clear old plan options
+        currentPlans.forEach(plan => {
+            const option = document.createElement('option');
+            option.value = plan.name; // Using plan name as value, could be plan.id
+            option.textContent = plan.name;
+            userPlanSelect.appendChild(option);
+        });
+
+        if (mode === 'edit' && userId) {
+            const user = mockUsers.find(u => u.id === userId);
+            if (user) {
+                userModalTitle.textContent = 'Edit User: ' + user.name;
+                userEditIdInput.value = user.id;
+                document.getElementById('userName').value = user.name;
+                document.getElementById('userEmail').value = user.email;
+                userPlanSelect.value = user.plan;
+                document.getElementById('userStatus').value = user.status;
+                document.getElementById('userPassword').value = ''; 
+                document.getElementById('userPassword').placeholder = 'Leave blank if no change';
+            } else {
+                alert('User not found for editing.');
+                return; // Don't open modal if user not found
+            }
+        } else {
+            userModalTitle.textContent = 'Add New User';
+            document.getElementById('userPassword').placeholder = ''; // Default placeholder
+        }
+        userModal.classList.add('active');
+    }
+
+    function closeUserModal() {
+        userModal.classList.remove('active');
+    }
+    
+    userForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const userId = userEditIdInput.value;
+        const userName = document.getElementById('userName').value.trim();
+        const userEmail = document.getElementById('userEmail').value.trim();
+        const userPlan = document.getElementById('userPlan').value;
+        const userPassword = document.getElementById('userPassword').value; // Not directly used in mock data display
+        const userStatus = document.getElementById('userStatus').value;
+
+        if (!userName || !userEmail || !userPlan) {
+            alert("Name, Email, and Plan are required.");
+            return;
+        }
+
+        if (userId) { // Editing existing user
+            const userIndex = mockUsers.findIndex(u => u.id === userId);
+            if (userIndex > -1) {
+                mockUsers[userIndex] = { 
+                    ...mockUsers[userIndex], 
+                    name: userName, 
+                    email: userEmail, 
+                    plan: userPlan, 
+                    status: userStatus 
+                    // Password update would be handled here in a real backend
+                };
+                alert(`User "${userName}" updated! (Simulated)`);
+            }
+        } else { // Adding new user
+            const newUser = {
+                id: 'USR' + String(Date.now()).slice(-4) + String(Math.floor(Math.random() * 10)).padStart(1, '0'),
+                name: userName,
+                email: userEmail,
+                plan: userPlan,
+                joinedDate: new Date().toISOString().split('T')[0], // Today's date
+                status: userStatus
+            };
+            mockUsers.push(newUser);
+            alert(`User "${userName}" added! (Simulated)`);
+        }
+        renderUsersTable();
+        closeUserModal();
+    });
+
+    function deleteUser(userId) {
+        const userIndex = mockUsers.findIndex(u => u.id === userId);
+        if (userIndex === -1) {
+            alert("User not found for deletion.");
+            return;
+        }
+        const userName = mockUsers[userIndex].name;
+        if (confirm(`Are you sure you want to delete user "${userName}" (ID: ${userId})? This action cannot be undone.`)) {
+            mockUsers.splice(userIndex, 1); // Remove user from array using splice for direct modification
+            alert(`User "${userName}" has been deleted. (Simulated)`);
+            renderUsersTable(); // Refresh the table to reflect the deletion
+        }
+    }
+    
+    // Attach event listener for Add User button
+    if(addUserBtn) {
+        addUserBtn.addEventListener('click', () => openUserModal('add'));
+    }
+    // Event listeners for user modal close/cancel (already attached in previous diff, kept for clarity)
+    if(closeUserModalBtn) closeUserModalBtn.addEventListener('click', closeUserModal);
+    if(cancelUserFormBtn) cancelUserFormBtn.addEventListener('click', closeUserModal);
+    if(userModal) userModal.addEventListener('click', (e) => { if (e.target === userModal) closeUserModal(); });
+
+    // --- Content Module Functions (Skeletons) ---
+    function renderContentTable() {
+        const contentTableBody = document.getElementById('contentTable')?.getElementsByTagName('tbody')[0];
+        if (!contentTableBody) {
+            console.error("Content table body not found!");
+            return;
+        }
+        contentTableBody.innerHTML = ''; // Clear existing rows
+
+        if (mockContent.length === 0) {
+            contentTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:1rem;">No content found.</td></tr>';
+            return;
+        }
+
+        mockContent.forEach(item => {
+            const row = contentTableBody.insertRow();
+            row.insertCell().textContent = item.id;
+            row.insertCell().textContent = item.title;
+            row.insertCell().textContent = item.type;
+            // Assuming uploader is an object like {id: 'USR001', name: 'Elena'} or just a name string
+            row.insertCell().textContent = typeof item.uploader === 'object' ? item.uploader.name : item.uploader;
+            row.insertCell().textContent = item.uploadDate;
+            
+            const statusCell = row.insertCell();
+            statusCell.textContent = item.status;
+            // Optional: Style status cell based on content
+            // if(item.status === 'Published') statusCell.style.color = 'var(--success-color)';
+            // else if(item.status === 'Pending Review') statusCell.style.color = 'var(--warning-color)';
+            // else statusCell.style.color = 'var(--text-muted)';
+
+
+            const actionsCell = row.insertCell();
+            actionsCell.classList.add('action-buttons');
+            
+            const editBtn = document.createElement('button');
+            editBtn.classList.add('action-btn-edit');
+            editBtn.textContent = 'Edit';
+            editBtn.onclick = () => openContentModal('edit', item.id);
+            actionsCell.appendChild(editBtn);
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.classList.add('action-btn-delete');
+            deleteBtn.textContent = 'Delete';
+            deleteBtn.onclick = () => deleteContentItem(item.id);
+            actionsCell.appendChild(deleteBtn);
+            
+            // Example for Change Status - could be a dropdown or more buttons
+            const archiveBtn = document.createElement('button');
+            archiveBtn.classList.add('action-btn-archive'); // Use an existing or new class
+            archiveBtn.textContent = 'Archive';
+            archiveBtn.style.minWidth = '80px'; // Ensure text fits
+            archiveBtn.onclick = () => changeContentStatus(item.id, 'Archived');
+            if(item.status === 'Archived') archiveBtn.disabled = true;
+            actionsCell.appendChild(archiveBtn);
+
+            if(item.status !== 'Published') {
+                const publishBtn = document.createElement('button');
+                publishBtn.classList.add('action-btn-view'); // Using view style for publish
+                publishBtn.textContent = 'Publish';
+                publishBtn.style.minWidth = '80px';
+                publishBtn.onclick = () => changeContentStatus(item.id, 'Published');
+                actionsCell.appendChild(publishBtn);
+            }
+        });
+    }
+
+    function openContentModal(mode = 'add', contentId = null) {
+        contentForm.reset();
+        contentEditIdInput.value = '';
+        // Note: Uploader select population from mockUsers would be ideal here
+        // For now, it's a text input as per modal HTML
+
+        if (mode === 'edit' && contentId) {
+            const item = mockContent.find(c => c.id === contentId);
+            if (item) {
+                contentModalTitle.textContent = 'Edit Content: ' + item.title;
+                contentEditIdInput.value = item.id;
+                document.getElementById('contentTitle').value = item.title;
+                document.getElementById('contentType').value = item.type;
+                document.getElementById('contentUploader').value = typeof item.uploader === 'object' ? item.uploader.id : item.uploader; // Assuming ID if object
+                document.getElementById('contentDescription').value = item.description || '';
+                document.getElementById('contentStatus').value = item.status;
+            } else {
+                alert('Content item not found for editing.');
+                return;
+            }
+        } else {
+            contentModalTitle.textContent = 'Add New Content';
+        }
+        if(contentModal) contentModal.classList.add('active');
+    }
+
+    function closeContentModal() {
+        if(contentModal) contentModal.classList.remove('active');
+    }
+
+    contentForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const contentId = contentEditIdInput.value;
+        const title = document.getElementById('contentTitle').value.trim();
+        const type = document.getElementById('contentType').value;
+        const uploaderId = document.getElementById('contentUploader').value.trim(); // This is an ID
+        const description = document.getElementById('contentDescription').value.trim();
+        const status = document.getElementById('contentStatus').value;
+
+        if (!title || !type || !uploaderId) {
+            alert("Title, Type, and Uploader ID are required.");
+            return;
+        }
+        
+        // Find uploader name from mockUsers (simplified)
+        const uploaderObj = mockUsers.find(u => u.id === uploaderId);
+        const uploaderDisplay = uploaderObj ? {id: uploaderObj.id, name: uploaderObj.name} : {id: uploaderId, name: uploaderId};
+
+
+        if (contentId) { // Editing
+            const index = mockContent.findIndex(c => c.id === contentId);
+            if (index > -1) {
+                mockContent[index] = {
+                    ...mockContent[index],
+                    title, type, uploader: uploaderDisplay, description, status
+                };
+                alert(`Content "${title}" updated!`);
+            }
+        } else { // Adding
+            const newItem = {
+                id: 'CON' + String(Date.now()).slice(-4) + String(Math.floor(Math.random()*100)).padStart(2,'0'),
+                title, type, uploader: uploaderDisplay, description, status,
+                uploadDate: new Date().toISOString().split('T')[0]
+            };
+            mockContent.push(newItem);
+            alert(`Content "${title}" added!`);
+        }
+        renderContentTable();
+        closeContentModal();
+    });
+
+    function deleteContentItem(contentId) {
+        const itemIndex = mockContent.findIndex(c => c.id === contentId);
+        if (itemIndex === -1) {
+            alert("Content item not found for deletion.");
+            return;
+        }
+        const itemTitle = mockContent[itemIndex].title;
+        if (confirm(`Are you sure you want to delete content "${itemTitle}" (ID: ${contentId})? This action cannot be undone.`)) {
+            mockContent.splice(itemIndex, 1);
+            alert(`Content "${itemTitle}" has been deleted. (Simulated)`);
+            renderContentTable();
+        }
+    }
+
+    function changeContentStatus(contentId, newStatus) {
+        const itemIndex = mockContent.findIndex(c => c.id === contentId);
+        if (itemIndex > -1) {
+            mockContent[itemIndex].status = newStatus;
+            alert(`Content "${mockContent[itemIndex].title}" status changed to ${newStatus}. (Simulated)`);
+            renderContentTable();
+        } else {
+            alert("Content item not found for status change.");
+        }
+    }
+
+    if(addContentBtn) addContentBtn.addEventListener('click', () => openContentModal('add'));
+    if(closeContentModalBtn) closeContentModalBtn.addEventListener('click', closeContentModal);
+    if(cancelContentFormBtn) cancelContentFormBtn.addEventListener('click', closeContentModal);
+    if(contentModal) contentModal.addEventListener('click', (e) => { if (e.target === contentModal) closeContentModal(); });
+
+    // --- Live Streams Module Functions (Skeletons) ---
+    function renderLiveStreamsTable() {
+        const liveStreamsTableBody = document.getElementById('liveStreamsTable')?.getElementsByTagName('tbody')[0];
+        if (!liveStreamsTableBody) {
+            console.error("Live streams table body not found!");
+            return;
+        }
+        liveStreamsTableBody.innerHTML = ''; // Clear existing rows
+
+        if (mockLiveStreams.length === 0) {
+            liveStreamsTableBody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:1rem;">No live streams found.</td></tr>';
+            return;
+        }
+
+        mockLiveStreams.forEach(stream => {
+            const row = liveStreamsTableBody.insertRow();
+            row.insertCell().textContent = stream.id;
+            row.insertCell().textContent = stream.title;
+            row.insertCell().textContent = typeof stream.broadcaster === 'object' ? stream.broadcaster.name : stream.broadcaster;
+            
+            const statusCell = row.insertCell();
+            statusCell.textContent = stream.status;
+            if (stream.status === 'Live') statusCell.style.color = 'var(--success-color)';
+            else if (stream.status === 'Scheduled' || stream.status === 'Upcoming') statusCell.style.color = 'var(--warning-color)';
+            else if (stream.status === 'Ended' || stream.status === 'Archived') statusCell.style.color = 'var(--text-muted)';
+            else if (stream.status === 'Cancelled') statusCell.style.color = 'var(--error-color)';
+
+
+            row.insertCell().textContent = stream.viewers || 0;
+            
+            const timeCell = row.insertCell();
+            if (stream.status === 'Live' && stream.startTime) {
+                timeCell.textContent = `Started: ${new Date(stream.startTime).toLocaleTimeString()}`;
+            } else if (stream.status === 'Ended' && stream.endTime) {
+                timeCell.textContent = `Ended: ${new Date(stream.endTime).toLocaleString()}`;
+            } else if (stream.scheduledTime) {
+                timeCell.textContent = `Scheduled: ${new Date(stream.scheduledTime).toLocaleString()}`;
+            } else {
+                timeCell.textContent = 'N/A';
+            }
+
+            const actionsCell = row.insertCell();
+            actionsCell.classList.add('action-buttons');
+            actionsCell.innerHTML = ''; // Clear previous buttons
+
+            if (stream.status === 'Live') {
+                actionsCell.innerHTML = `
+                    <button class="action-btn-monitor" onclick="handleLiveStreamAction('${stream.id}', 'monitor')">Monitor</button>
+                    <button class="action-btn-end" onclick="handleLiveStreamAction('${stream.id}', 'end')">End</button>`;
+            } else if (stream.status === 'Scheduled' || stream.status === 'Upcoming') {
+                actionsCell.innerHTML = `
+                    <button class="action-btn-edit" onclick="openScheduleStreamModal('edit', '${stream.id}')">Edit</button>
+                    <button class="action-btn-cancel-item" onclick="handleLiveStreamAction('${stream.id}', 'cancel')">Cancel</button>`;
+            } else if (stream.status === 'Ended') {
+                actionsCell.innerHTML = `
+                    <button class="action-btn-view" onclick="handleLiveStreamAction('${stream.id}', 'view_recording')">View Rec</button>
+                    <button class="action-btn-archive" onclick="handleLiveStreamAction('${stream.id}', 'archive')">Archive</button>
+                    <button class="action-btn-delete" onclick="handleLiveStreamAction('${stream.id}', 'delete_recording')">Delete Rec</button>`;
+            } else if (stream.status === 'Archived') {
+                 actionsCell.innerHTML = `
+                    <button class="action-btn-view" onclick="handleLiveStreamAction('${stream.id}', 'view_recording')">View Rec</button>
+                    <button class="action-btn-delete" onclick="handleLiveStreamAction('${stream.id}', 'delete_recording')">Delete Rec</button>`;
+            } else if (stream.status === 'Cancelled') {
+                 actionsCell.innerHTML = `<button class="action-btn-delete" onclick="handleLiveStreamAction('${stream.id}', 'delete_cancelled')">Delete</button>`;
+            }
+        });
+    }
+
+    function openScheduleStreamModal(mode = 'add', streamId = null) {
+        scheduleStreamForm.reset();
+        streamEditIdInput.value = '';
+        // Populate broadcaster select - simplified, ideally from mockUsers
+        const broadcasterSelect = document.getElementById('streamBroadcaster');
+        // broadcasterSelect.innerHTML = ''; // Clear if populating dynamically
+        // mockUsers.forEach(user => { 
+        //     const option = document.createElement('option');
+        //     option.value = user.id; option.textContent = user.name;
+        //     broadcasterSelect.appendChild(option);
+        // });
+
+
+        if (mode === 'edit' && streamId) {
+            const stream = mockLiveStreams.find(s => s.id === streamId);
+            if (stream) {
+                scheduleStreamModalTitle.textContent = 'Edit Stream Schedule: ' + stream.title;
+                streamEditIdInput.value = stream.id;
+                document.getElementById('streamTitle').value = stream.title;
+                document.getElementById('streamBroadcaster').value = typeof stream.broadcaster === 'object' ? stream.broadcaster.id : stream.broadcaster;
+                document.getElementById('streamDescription').value = stream.description || '';
+                if (stream.scheduledTime) {
+                    // Format for datetime-local input: YYYY-MM-DDThh:mm
+                    const dt = new Date(stream.scheduledTime);
+                    // Adjust for local timezone offset before formatting
+                    dt.setMinutes(dt.getMinutes() - dt.getTimezoneOffset());
+                    document.getElementById('streamScheduledTime').value = dt.toISOString().slice(0,16);
+                }
+            } else {
+                alert('Live stream not found for editing.');
+                return;
+            }
+        } else {
+            scheduleStreamModalTitle.textContent = 'Schedule New Stream';
+        }
+        if(scheduleStreamModal) scheduleStreamModal.classList.add('active');
+    }
+
+    function closeScheduleStreamModal() {
+        if(scheduleStreamModal) scheduleStreamModal.classList.remove('active');
+    }
+
+    scheduleStreamForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const streamId = streamEditIdInput.value;
+        const title = document.getElementById('streamTitle').value.trim();
+        const broadcasterId = document.getElementById('streamBroadcaster').value.trim();
+        const scheduledTime = document.getElementById('streamScheduledTime').value;
+        const description = document.getElementById('streamDescription').value.trim();
+
+        if (!title || !broadcasterId || !scheduledTime) {
+            alert("Title, Broadcaster ID, and Scheduled Time are required.");
+            return;
+        }
+
+        const broadcasterObj = mockUsers.find(u => u.id === broadcasterId);
+        const broadcasterDisplay = broadcasterObj ? {id: broadcasterObj.id, name: broadcasterObj.name} : {id: broadcasterId, name: broadcasterId};
+
+        if (streamId) { // Editing
+            const index = mockLiveStreams.findIndex(s => s.id === streamId);
+            if (index > -1) {
+                mockLiveStreams[index] = {
+                    ...mockLiveStreams[index],
+                    title, broadcaster: broadcasterDisplay, scheduledTime, description,
+                    status: (new Date(scheduledTime) > new Date()) ? 'Scheduled' : mockLiveStreams[index].status // Keep current status if date not in future, or re-evaluate
+                };
+                alert(`Stream "${title}" updated!`);
+            }
+        } else { // Adding
+            const newStream = {
+                id: 'LIVE' + String(Date.now()).slice(-4) + String(Math.floor(Math.random()*100)).padStart(2,'0'),
+                title, 
+                broadcaster: broadcasterDisplay, 
+                scheduledTime, 
+                description,
+                status: 'Scheduled', // Default to scheduled
+                viewers: 0
+            };
+            mockLiveStreams.push(newStream);
+            alert(`Stream "${title}" scheduled!`);
+        }
+        renderLiveStreamsTable();
+        closeScheduleStreamModal();
+    });
+
+
+    function handleLiveStreamAction(streamId, action) {
+        const streamIndex = mockLiveStreams.findIndex(s => s.id === streamId);
+        if (streamIndex === -1) {
+            alert("Live stream not found.");
+            return;
+        }
+        const stream = mockLiveStreams[streamIndex];
+
+        switch (action) {
+            case 'monitor':
+                alert(`Monitoring stream: "${stream.title}" (ID: ${streamId})`);
+                break;
+            case 'end':
+                if (confirm(`Are you sure you want to end the stream "${stream.title}"?`)) {
+                    stream.status = 'Ended';
+                    stream.endTime = new Date().toISOString();
+                    stream.viewers = 0; // Reset viewers or set to final count if available
+                    alert(`Stream "${stream.title}" ended.`);
+                }
+                break;
+            case 'cancel':
+                if (confirm(`Are you sure you want to cancel the stream "${stream.title}"?`)) {
+                    stream.status = 'Cancelled';
+                    alert(`Stream "${stream.title}" cancelled.`);
+                }
+                break;
+            case 'view_recording':
+                alert(`Viewing recording for stream: "${stream.title}" (ID: ${streamId})`);
+                break;
+            case 'archive':
+                if (confirm(`Are you sure you want to archive the recording for "${stream.title}"?`)) {
+                    stream.status = 'Archived';
+                    alert(`Recording for "${stream.title}" archived.`);
+                }
+                break;
+            case 'delete_recording':
+            case 'delete_cancelled': // Handles deletion for both ended recordings and cancelled streams
+                const itemType = action === 'delete_recording' ? 'recording' : 'cancelled stream schedule';
+                if (confirm(`Are you sure you want to delete the ${itemType} for "${stream.title}" (ID: ${streamId})? This action cannot be undone.`)) {
+                    mockLiveStreams.splice(streamIndex, 1);
+                    alert(`The ${itemType} for "${stream.title}" has been deleted.`);
+                }
+                break;
+            default:
+                alert(`Unknown action: ${action} for stream: ${stream.title}`);
+        }
+        renderLiveStreamsTable(); // Re-render the table to reflect changes
+    }
+
+    if(scheduleStreamBtn) scheduleStreamBtn.addEventListener('click', () => openScheduleStreamModal('add'));
+    if(closeScheduleStreamModalBtn) closeScheduleStreamModalBtn.addEventListener('click', closeScheduleStreamModal);
+    if(cancelScheduleStreamFormBtn) cancelScheduleStreamFormBtn.addEventListener('click', closeScheduleStreamModal);
+    if(scheduleStreamModal) scheduleStreamModal.addEventListener('click', (e) => { if (e.target === scheduleStreamModal) closeScheduleStreamModal(); });
+
+
+    // --- Subscription Plan Functions ---
     function renderPlanCards() {
         const container = document.getElementById('plansGridContainer');
         if (!container) return;

@@ -1,0 +1,248 @@
+:root {
+    --main-bg: #0A0A23;
+    --header-banner-height: 200px;
+    --profile-pic-size: 100px;
+    --primary-color: #F06292;
+    --secondary-color: #2196F3;
+    --card-bg: #E6E6E6;
+    --delete-color: #DC3545; /* Kept for reference, but not used */
+    --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1);
+    --container-padding: 1.5rem;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--main-bg);
+    color: white;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+.app-wrapper {
+    padding-bottom: 80px; /* For bottom nav */
+    margin: 0 auto;
+}
+.main-content-area {
+    padding-left: var(--container-padding);
+    padding-right: var(--container-padding);
+    max-width: 600px; 
+    margin: 0 auto;
+}
+
+/* Profile Header Styles */
+.profile-header {
+    position: relative;
+    height: var(--header-banner-height);
+    background-size: cover;
+    background-position: center;
+    margin-bottom: calc(var(--profile-pic-size) / 2 + 1rem); 
+}
+
+.profile-header-content {
+    position: absolute;
+    bottom: calc(-1 * var(--profile-pic-size) / 2); 
+    left: var(--container-padding);
+    right: var(--container-padding);
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.profile-header-main {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    flex-grow: 1;
+}
+
+/* Specific for channel page profile picture and user name */
+#channel-profile-picture {
+    width: var(--profile-pic-size);
+    height: var(--profile-pic-size);
+    border-radius: 50%;
+    border: 3px solid var(--main-bg);
+    object-fit: cover;
+}
+
+#channel-user-name {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: calc(var(--profile-pic-size) / 10);
+}
+
+.profile-header-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: calc(var(--profile-pic-size) / 10);
+}
+
+/* Subscribe Button Styling */
+#subscribeBtn {
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    color: white;
+    padding: 0.5rem 1.5rem; /* Made padding a bit more generous */
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500; /* Added font weight */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#subscribeBtn:hover {
+    background-color: #d84374; /* Darken primary color on hover */
+    border-color: #d84374;
+}
+
+#subscribeBtn.subscribed {
+    background-color: var(--secondary-color); /* Different bg when subscribed */
+    border-color: var(--secondary-color);
+    color: white;
+}
+#subscribeBtn.subscribed:hover {
+    background-color: #1b7ac0; /* Darken secondary color on hover */
+    border-color: #1b7ac0;
+}
+
+
+/* Tab Navigation Styles */
+.tabs-nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: transparent;
+    padding: 0.5rem 0;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.tab-link {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    color: #aaa;
+    font-weight: 500;
+    transition: color 0.3s, border-bottom 0.3s;
+    border-bottom: 2px solid transparent;
+    text-align: center;
+}
+
+.tab-link.active {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Card Styles for dynamic content (channel page specific) */
+.channel-content-card { /* New common class for cards on this page if needed, or just use .movie-card etc. */
+    background-color: var(--card-bg);
+    border-radius: 1rem;
+    padding: 1rem;
+    color: black;
+    margin-bottom: 1.5rem;
+}
+
+.channel-content-card .thumbnail, /* Specific selector for thumbnails inside these cards */
+.movie-card img, .series-card img, .stream-card img { /* Keep existing for potential reuse if classes are mixed */
+    width: 100%; 
+    max-height: 180px; 
+    object-fit: cover;
+    border-radius: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.channel-content-card h3,
+.movie-card h3, .series-card h3, .stream-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.channel-content-card p,
+.movie-card p, .series-card p, .stream-card p {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.25rem;
+}
+
+.live-badge { /* Copied from my_content.html styles */
+    background-color: red;
+    color: white;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: 0.5rem;
+}
+
+.section-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: white; /* Ensure visibility */
+}
+
+/* Bottom Navigation identical to my_content.html */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--main-bg);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    z-index: 1000;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    font-size: 0.8rem;
+    gap: 4px;
+    transition: all 0.3s var(--transition-bezier);
+}
+
+.nav-item.active {
+    color: var(--primary-color);
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.nav-icon.profile {
+    border-radius: 50%;
+}
+
+/* Responsive adjustments (mostly copied from my_content.html) */
+@media (min-width: 768px) {
+    .app-wrapper {
+        /* max-width: 600px; */ /* Can be wider for channel pages if desired */
+        /* padding-left: 0; */
+        /* padding-right: 0; */
+    }
+    .section-title {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .main-content-area {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
