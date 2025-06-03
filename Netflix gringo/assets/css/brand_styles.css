@@ -1,0 +1,194 @@
+:root {
+    /* Color Palette */
+    --main-bg: #0A0A23;
+    --primary-color: #F06292; /* Pink */
+    --primary-color-hover: #D84373; /* Darker Pink */
+    --secondary-color: #2196F3; /* Blue */
+    --secondary-color-hover: #1976D2; /* Darker Blue */
+
+    /* Text Colors */
+    --text-light: #f0f6fc; /* Default text on dark backgrounds */
+    --text-dark: #1A1B1E;  /* Default text on light backgrounds */
+    --text-muted: #aeb8c4;
+    --text-headings: #ffffff; /* Slightly brighter for main headings */
+
+    /* Backgrounds & Cards */
+    --card-bg-light: #E6E6E6; /* For light-themed cards */
+    --card-bg-dark: #1C1C3A;   /* For dark-themed cards or sections */
+    --input-bg-light: #E8E8E8; /* For input fields that are light */
+    --section-bg-dark-transparent: rgba(20, 22, 46, 0.5); /* From admin dashboard */
+
+    /* Links */
+    --link-color: var(--secondary-color);
+    --link-color-hover: var(--secondary-color-hover);
+
+    /* Semantic Colors */
+    --danger-color: #DC3545;        /* Bootstrap-like red for delete/errors */
+    --danger-color-hover: #c82333;
+    --success-color: #28a745;       /* Bootstrap-like green */
+    --success-color-hover: #218838;
+    --warning-color: #FFB74D;       /* Admin's orange/yellow */
+    --warning-color-hover: #FFA726;
+    --info-color: #64B5F6;          /* Admin's light blue */
+    --info-color-hover: #42A5F5;
+
+    /* Borders */
+    --border-color-darkbg: #2c2c4c;  /* For borders on dark backgrounds */
+    --border-color-lightbg: #ced4da; /* For borders on light backgrounds (e.g., inputs) */
+
+    /* Border Radius */
+    --border-radius-sm: 0.25rem; /* Approx 4px */
+    --border-radius-md: 0.5rem;  /* Approx 8px */
+    --border-radius-lg: 0.75rem; /* Approx 12px */
+    --border-radius-pill: 50px;
+
+    /* Typography */
+    --font-family-sans-serif: 'Poppins', sans-serif;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500; /* Added for buttons/emphasis */
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Transitions */
+    --transition-short: all 0.2s ease-in-out;
+    --transition-medium: all 0.3s ease-in-out;
+}
+
+/* Base Body Styles */
+body {
+    font-family: var(--font-family-sans-serif);
+    background-color: var(--main-bg);
+    color: var(--text-light);
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-headings);
+    font-weight: var(--font-weight-semibold);
+    margin-top: 0;
+    margin-bottom: 0.75rem; /* Consistent bottom margin */
+}
+h1 { font-size: 2.25rem; } /* Approx 36px */
+h2 { font-size: 1.75rem; } /* Approx 28px */
+h3 { font-size: 1.375rem; }/* Approx 22px */
+h4 { font-size: 1.125rem; }/* Approx 18px */
+
+/* Links */
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: var(--transition-short);
+}
+a:hover {
+    color: var(--link-color-hover);
+    text-decoration: underline;
+}
+
+/* Basic Button Styling */
+.btn {
+    display: inline-block;
+    font-weight: var(--font-weight-medium);
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.6rem 1.2rem; /* Default padding */
+    font-size: 0.95rem; /* Default font size */
+    border-radius: var(--border-radius-md);
+    transition: var(--transition-short);
+    text-decoration: none; /* Ensure links styled as buttons don't have underline */
+}
+.btn:hover {
+    text-decoration: none; /* Ensure no underline on hover for button links */
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+.btn-primary:hover {
+    background-color: var(--primary-color-hover);
+    border-color: var(--primary-color-hover);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
+.btn-secondary:hover {
+    background-color: var(--secondary-color-hover);
+    border-color: var(--secondary-color-hover);
+    color: white;
+}
+
+.btn-danger {
+    background-color: var(--danger-color);
+    color: white;
+    border-color: var(--danger-color);
+}
+.btn-danger:hover {
+    background-color: var(--danger-color-hover);
+    border-color: var(--danger-color-hover);
+    color: white;
+}
+
+/* Example: Edit button could use secondary or a specific color if defined */
+.btn-edit {
+    background-color: var(--info-color); /* Using info color for edit */
+    color: white;
+    border-color: var(--info-color);
+}
+.btn-edit:hover {
+    background-color: var(--info-color-hover);
+    border-color: var(--info-color-hover);
+    color: white;
+}
+
+
+.btn-outline-primary {
+    background-color: transparent;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+.btn-outline-primary:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-outline-secondary {
+    background-color: transparent;
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+}
+.btn-outline-secondary:hover {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+/* Active state for buttons (optional, for pressed feel) */
+.btn:active {
+    transform: translateY(1px);
+    filter: brightness(95%);
+}
+
+/* Links that act as cards/blocks */
+.content-card-link {
+    text-decoration: none;
+    color: inherit; /* Inherit color from parent, so card text color is used */
+    display: block; /* Ensure the link takes up the block space for clicking */
+}
+.content-card-link:hover {
+    text-decoration: none; /* Ensure no underline on hover for card links */
+    color: inherit; /* Ensure color remains inherited on hover */
+}

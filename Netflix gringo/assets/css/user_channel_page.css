@@ -1,22 +1,24 @@
-:root {
-    --main-bg: #0A0A23;
+/* :root { */ /* Variables moved to brand_styles.css */
+    /* --main-bg: #0A0A23; */
+    /* --header-banner-height: 200px; */ /* Page specific, keep */
+    /* --profile-pic-size: 100px; */ /* Page specific, keep */
+    /* --primary-color: #F06292; */
+    /* --secondary-color: #2196F3; */
+    /* --card-bg: #E6E6E6; */
+    /* --delete-color: #DC3545; */
+    /* --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1); */ /* Potentially move to brand */
+    /* --container-padding: 1.5rem; */ /* Page specific, keep */
+/* } */
+:root { /* Keep page-specific ones */
     --header-banner-height: 200px;
     --profile-pic-size: 100px;
-    --primary-color: #F06292;
-    --secondary-color: #2196F3;
-    --card-bg: #E6E6E6;
-    --delete-color: #DC3545; /* Kept for reference, but not used */
     --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1);
     --container-padding: 1.5rem;
 }
 
+
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--main-bg);
-    color: white;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
+    /* Base styles from brand_styles.css */
 }
 
 .app-wrapper {
@@ -26,9 +28,37 @@ body {
 .main-content-area {
     padding-left: var(--container-padding);
     padding-right: var(--container-padding);
-    max-width: 600px; 
+    max-width: 600px; /* Default for mobile */
     margin: 0 auto;
 }
+
+/* Desktop Layout Enhancements for content containers */
+@media (min-width: 768px) { /* Medium devices (tablets, landscape phones) */
+    .main-content-area {
+        max-width: 960px; /* Wider for tablets */
+    }
+    #channel-movies-container, #channel-series-container, #channel-streams-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+        gap: var(--container-padding, 1.5rem);
+    }
+}
+
+@media (min-width: 992px) { /* Large devices (desktops) */
+    .main-content-area {
+        max-width: 1200px; /* Even wider for desktops */
+    }
+     #channel-movies-container, #channel-series-container, #channel-streams-container {
+        grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    }
+}
+
+@media (min-width: 1200px) { /* Extra large devices */
+     #channel-movies-container, #channel-series-container, #channel-streams-container {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Flexible columns */
+    }
+}
+
 
 /* Profile Header Styles */
 .profile-header {
@@ -36,12 +66,12 @@ body {
     height: var(--header-banner-height);
     background-size: cover;
     background-position: center;
-    margin-bottom: calc(var(--profile-pic-size) / 2 + 1rem); 
+    margin-bottom: calc(var(--profile-pic-size) / 2 + 1rem);
 }
 
 .profile-header-content {
     position: absolute;
-    bottom: calc(-1 * var(--profile-pic-size) / 2); 
+    bottom: calc(-1 * var(--profile-pic-size) / 2);
     left: var(--container-padding);
     right: var(--container-padding);
     display: flex;
@@ -78,33 +108,19 @@ body {
     margin-bottom: calc(var(--profile-pic-size) / 10);
 }
 
-/* Subscribe Button Styling */
-#subscribeBtn {
-    background-color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-    color: white;
-    padding: 0.5rem 1.5rem; /* Made padding a bit more generous */
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 500; /* Added font weight */
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-#subscribeBtn:hover {
-    background-color: #d84374; /* Darken primary color on hover */
-    border-color: #d84374;
-}
-
+/* Subscribe Button Styling - now leverages .btn classes */
+/* #subscribeBtn will have .btn and .btn-primary by default (from HTML) */
+/* The .subscribed class will modify its appearance */
 #subscribeBtn.subscribed {
-    background-color: var(--secondary-color); /* Different bg when subscribed */
+    background-color: var(--secondary-color);
     border-color: var(--secondary-color);
     color: white;
 }
 #subscribeBtn.subscribed:hover {
-    background-color: #1b7ac0; /* Darken secondary color on hover */
-    border-color: #1b7ac0;
+    background-color: var(--secondary-color-hover);
+    border-color: var(--secondary-color-hover);
 }
+/* Default state hover is handled by .btn-primary:hover from brand_styles.css */
 
 
 /* Tab Navigation Styles */
@@ -141,28 +157,33 @@ body {
 }
 
 /* Card Styles for dynamic content (channel page specific) */
-.channel-content-card { /* New common class for cards on this page if needed, or just use .movie-card etc. */
-    background-color: var(--card-bg);
-    border-radius: 1rem;
+.channel-content-card,
+.movie-card, .series-card, .stream-card { /* Apply to all card types on this page */
+    background-color: var(--card-bg-light); /* Ensure consistency with brand variable */
+    border-radius: var(--border-radius-lg); /* Use brand variable */
     padding: 1rem;
-    color: black;
-    margin-bottom: 1.5rem;
+    color: var(--text-dark); /* Ensure consistency */
+    margin-bottom: var(--container-padding, 1.5rem); /* Use variable for spacing */
+    width: 100%; /* Fill grid cell */
+    display: flex;
+    flex-direction: column;
 }
 
-.channel-content-card .thumbnail, /* Specific selector for thumbnails inside these cards */
-.movie-card img, .series-card img, .stream-card img { /* Keep existing for potential reuse if classes are mixed */
-    width: 100%; 
-    max-height: 180px; 
+.channel-content-card .thumbnail,
+.movie-card img, .series-card img, .stream-card img {
+    width: 100%;
+    aspect-ratio: 16 / 9; /* Standardized aspect ratio */
     object-fit: cover;
-    border-radius: 0.75rem;
+    border-radius: var(--border-radius-md); /* Use brand variable */
     margin-bottom: 0.75rem;
 }
 
 .channel-content-card h3,
 .movie-card h3, .series-card h3, .stream-card h3 {
     font-size: 1.2rem;
-    font-weight: 600;
+    font-weight: var(--font-weight-semibold);
     margin-bottom: 0.25rem;
+    color: var(--text-dark);
 }
 
 .channel-content-card p,
@@ -170,15 +191,16 @@ body {
     font-size: 0.9rem;
     color: #555;
     margin-bottom: 0.25rem;
+    flex-grow: 1; /* Allow text to take space, pushing buttons down if any were present */
 }
 
-.live-badge { /* Copied from my_content.html styles */
-    background-color: red;
+.live-badge {
+    background-color: var(--danger-color); /* Use a brand color */
     color: white;
     padding: 0.2rem 0.5rem;
-    border-radius: 0.25rem;
+    border-radius: var(--border-radius-sm);
     font-size: 0.8rem;
-    font-weight: bold;
+    font-weight: var(--font-weight-bold);
     margin-left: 0.5rem;
 }
 

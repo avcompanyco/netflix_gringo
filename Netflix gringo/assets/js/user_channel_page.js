@@ -54,18 +54,20 @@ function renderChannelOwnerProfile(user) {
 function renderChannelMovies(movies) {
     const container = document.getElementById('channel-movies-container');
     if (!container) return;
-    container.innerHTML = ''; 
+    container.innerHTML = '';
 
     movies.forEach(movie => {
         const card = `
-            <div class="channel-content-card movie-card">
-                <img src="${movie.thumbnailUrl}" alt="${movie.title}" class="thumbnail">
-                <h3>${movie.title}</h3>
+            <a href="movie_detail.html?id=${movie.id}" class="content-card-link">
+                <div class="channel-content-card movie-card">
+                    <img src="${movie.thumbnailUrl}" alt="${movie.title}" class="thumbnail">
+                    <h3>${movie.title}</h3>
                 <p>Category: ${movie.category}</p>
                 <p>Views: ${movie.views}</p>
                 <p>Uploaded: ${new Date(movie.uploadDate).toLocaleDateString()}</p>
                 <!-- No management buttons -->
-            </div>
+                </div>
+            </a>
         `;
         container.innerHTML += card;
     });
@@ -78,14 +80,16 @@ function renderChannelSeries(series) {
 
     series.forEach(serie => {
         const card = `
-            <div class="channel-content-card series-card">
-                <img src="${serie.thumbnailUrl}" alt="${serie.title}" class="thumbnail">
-                <h3>${serie.title}</h3>
+            <a href="series_detail.html?id=${serie.id}" class="content-card-link">
+                <div class="channel-content-card series-card">
+                    <img src="${serie.thumbnailUrl}" alt="${serie.title}" class="thumbnail">
+                    <h3>${serie.title}</h3>
                 <p>Category: ${serie.category}</p>
                 <p>Total Views: ${serie.totalViews}</p>
                 <p>Seasons: ${serie.seasons.length}</p>
                 <!-- No management buttons -->
-            </div>
+                </div>
+            </a>
         `;
         container.innerHTML += card;
     });
@@ -101,16 +105,32 @@ function renderChannelStreams(streams) {
         const viewersOrViews = stream.status === 'Live' ? `<p>Viewers: ${stream.viewers}</p>` : `<p>Views: ${stream.views}</p>`;
         const streamDate = stream.date ? `<p>Date: ${new Date(stream.date).toLocaleDateString()}</p>` : '';
 
-        const card = `
-            <div class="channel-content-card stream-card">
-                <img src="${stream.thumbnailUrl}" alt="${stream.title}" class="thumbnail">
-                <h3>${stream.title} ${liveBadge}</h3>
-                ${viewersOrViews}
-                ${streamDate}
-                <!-- No management buttons -->
-            </div>
+        let cardHtml = '';
+        const isClickable = stream.status === 'Ended'; // Only past streams are clickable
+        const cardContent = `
+            <img src="${stream.thumbnailUrl}" alt="${stream.title}" class="thumbnail">
+            <h3>${stream.title} ${liveBadge}</h3>
+            ${viewersOrViews}
+            ${streamDate}
+            <!-- No management buttons -->
         `;
-        container.innerHTML += card;
+
+        if (isClickable) {
+            cardHtml = `
+                <a href="movie_detail.html?id=${stream.id}" class="content-card-link">
+                    <div class="channel-content-card stream-card">
+                        ${cardContent}
+                    </div>
+                </a>
+            `;
+        } else {
+            cardHtml = `
+                <div class="channel-content-card stream-card">
+                    ${cardContent}
+                </div>
+            `;
+        }
+        container.innerHTML += cardHtml;
     });
 }
 
@@ -118,10 +138,12 @@ function updateSubscribeButton() {
     if (!subscribeBtn) return;
     if (isSubscribed) {
         subscribeBtn.textContent = 'Subscribed';
-        subscribeBtn.classList.add('subscribed');
+        subscribeBtn.classList.remove('btn-primary');
+        subscribeBtn.classList.add('btn-secondary', 'subscribed'); // Or btn-outline-primary, etc.
     } else {
         subscribeBtn.textContent = 'Subscribe';
-        subscribeBtn.classList.remove('subscribed');
+        subscribeBtn.classList.remove('btn-secondary', 'subscribed');
+        subscribeBtn.classList.add('btn-primary');
     }
 }
 

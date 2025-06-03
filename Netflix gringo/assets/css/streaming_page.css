@@ -1,25 +1,18 @@
+/* Variables are now primarily in brand_styles.css */
+/* Page-specific variables can remain if necessary, but most common ones are removed. */
 :root {
-    --main-bg: #0A0A23;
-    --primary-color: #F06292;
-    --secondary-color: #2196F3;
-    --text-light: #ffffff;
-    --text-dark: #1A1B1E;
-    --card-bg: #1C1C3A;
-    --input-bg: #E8E8E8;
+    /* Example of keeping a page-specific var if needed, most are gone */
     --container-padding: 1.5rem;
-    --danger-color: #DC3545;
-    --success-color: #28a745;
 }
 
+
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--main-bg);
-    color: var(--text-light);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+    /* font-family, background-color, color are inherited from brand_styles.css */
+    margin: 0; /* Kept as it's a reset */
+    padding: 0; /* Kept as it's a reset */
+    display: flex; /* Layout specific */
+    flex-direction: column; /* Layout specific */
+    min-height: 100vh; /* Layout specific */
 }
 
 .streaming-container {
@@ -68,10 +61,11 @@ body {
     max-width: 800px; /* Max width for video */
     background-color: #000;
     position: relative;
-    border-radius: 8px;
+    border-radius: var(--border-radius-md); /* Use brand variable */
     overflow: hidden;
     margin-bottom: 1rem;
     aspect-ratio: 16 / 9; /* Maintain aspect ratio */
+    border: 1px solid var(--border-color-darkbg); /* Added border */
 }
 
 #localVideoStream {
@@ -91,14 +85,21 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.8); /* Darker for more contrast */
     color: var(--text-light);
     text-align: center;
-    padding: 1rem;
-    z-index: 1; /* Show above video if video element has content but stream not "on" */
+    padding: 2rem; /* Increased padding */
+    z-index: 1;
+    border-radius: var(--border-radius-sm); /* Match inner radius if video area has one */
 }
 .video-placeholder-overlay p {
     margin: 0.5rem 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+.video-placeholder-overlay p:first-child {
+    font-weight: var(--font-weight-medium);
+    font-size: 1.1rem;
 }
 
 
@@ -115,100 +116,113 @@ body {
     margin-bottom: var(--container-padding); /* Space before chat or bottom */
 }
 
-.control-btn {
-    padding: 0.6rem 1.2rem;
-    border: none;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s, opacity 0.3s;
-    color: var(--text-light);
+/* .control-btn styles are removed as .btn classes from brand_styles.css are used directly in HTML */
+/* Specific .start, .stop, .mic, .cam classes for background are also removed. */
+/* Hover and disabled states are handled by .btn and .btn:disabled from brand_styles.css */
+/* Added style for toggled-off state */
+.stream-controls .btn.toggled-off {
+    background-color: var(--danger-color);
+    border-color: var(--danger-color-hover);
+}
+.stream-controls .btn.toggled-off:hover {
+    background-color: var(--danger-color-hover);
 }
 
-.control-btn.start { background-color: var(--success-color); }
-.control-btn.stop { background-color: var(--danger-color); }
-.control-btn.mic, .control-btn.cam { background-color: var(--secondary-color); }
-
-.control-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-.control-btn:not(:disabled):hover {
-    opacity: 0.8;
-}
 
 .chat-area {
-    background-color: var(--card-bg);
+    background-color: var(--card-bg-dark); /* Use brand variable */
     padding: var(--container-padding);
-    border-top: 1px solid rgba(255,255,255,0.1);
-    width: 100%; /* Full width on mobile */
-    max-width: 400px; /* Max width for chat on larger screens */
-    margin: 0 auto var(--container-padding) auto; /* Center chat on larger screens */
-    border-radius: 8px;
+    border-top: 1px solid var(--border-color-darkbg); /* Use brand variable */
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto var(--container-padding) auto;
+    border-radius: var(--border-radius-md); /* Use brand variable */
     display: flex;
     flex-direction: column;
-    max-height: 400px; /* Limit chat height */
+    max-height: 400px;
 }
 
 .chat-area h3 {
-    font-size: 1.2rem;
+    font-size: 1.2rem; /* Consistent with other h3 if defined in brand_styles */
     margin-top: 0;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem; /* Increased margin */
     color: var(--primary-color);
     text-align: center;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-color-darkbg);
 }
 
 .chat-messages-display {
     flex-grow: 1;
     overflow-y: auto;
-    margin-bottom: 0.75rem;
-    padding: 0.5rem;
-    background-color: rgba(0,0,0,0.1);
-    border-radius: 5px;
-    min-height: 150px; /* Ensure it has some height */
+    margin-bottom: 1rem; /* Increased margin */
+    padding: 0.75rem; /* Increased padding */
+    background-color: rgba(0,0,0,0.2); /* Slightly darker for contrast */
+    border-radius: var(--border-radius-sm); /* Use brand variable */
+    min-height: 150px;
 }
 
-.chat-messages-display p {
-    margin: 0 0 0.5rem 0;
-    font-size: 0.9rem;
+/* Chat Message Bubbles */
+.chat-message {
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--border-radius-lg); /* Pill-like messages */
+    margin-bottom: 0.75rem;
+    max-width: 85%;
     word-wrap: break-word;
+    line-height: 1.4;
 }
-.chat-messages-display p strong {
-    color: var(--secondary-color);
+.chat-message strong { /* Sender's name */
+    display: block;
+    font-weight: var(--font-weight-medium);
+    margin-bottom: 0.2rem;
+    font-size: 0.8rem;
 }
+
+.self-message {
+    background-color: var(--primary-color);
+    color: white; /* Ensure text is light on primary color */
+    margin-left: auto;
+    border-bottom-right-radius: var(--border-radius-sm); /* Flat edge */
+}
+.self-message strong {
+    color: rgba(255,255,255,0.85); /* Slightly muted white for sender on own bubble */
+}
+
+.other-message {
+    background-color: var(--section-bg-dark-transparent); /* Using a defined subtle dark bg */
+    color: var(--text-light);
+    margin-right: auto;
+    border-bottom-left-radius: var(--border-radius-sm); /* Flat edge */
+}
+.other-message strong {
+    color: var(--secondary-color); /* Or a neutral accent */
+}
+
 
 .chat-input-area {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.75rem; /* Increased gap */
 }
 
 #chatMessageInput {
     flex-grow: 1;
-    padding: 0.6rem;
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 5px;
-    background-color: var(--main-bg);
+    padding: 0.75rem 1rem; /* Match brand .form-control if exists, or standardize */
+    border: 1px solid var(--border-color-darkbg);
+    border-radius: var(--border-radius-md); /* Match brand .form-control */
+    background-color: var(--main-bg); /* Darker input field */
     color: var(--text-light);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+}
+#chatMessageInput:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(var(--primary-rgb, 240, 98, 146), 0.25); /* Requires --primary-rgb or manual RGB */
 }
 #chatMessageInput::placeholder {
-    color: #aaa;
+    color: var(--text-muted);
 }
 
-#sendChatMessageBtn {
-    padding: 0.6rem 1rem;
-    border: none;
-    border-radius: 5px;
-    background-color: var(--primary-color);
-    color: var(--text-light);
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: background-color 0.3s;
-}
-#sendChatMessageBtn:hover {
-    opacity: 0.8;
-}
+/* #sendChatMessageBtn styles are removed as .btn .btn-primary are used directly in HTML */
 
 /* Responsive adjustments */
 @media (min-width: 768px) {

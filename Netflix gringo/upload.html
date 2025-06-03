@@ -6,25 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Upload Content</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/brand_styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Page-specific variables */
         :root {
-            --main-bg: #0A0A23;
-            --primary-color: #F06292;
-            --secondary-color: #2196F3; /* Added for streaming button */
-            --input-bg: #E8E8E8;
-            --text-dark: #1A1B1E;
-            --card-bg: #1C1C3A; /* For series sections */
+             --input-bg: #E8E8E8;
+             --text-dark: #1A1B1E;
+             --card-bg-for-series-sections: #1C1C3A; /* Renamed for clarity, used by season-block */
+             --form-section-bg: rgba(255,255,255,0.05);
+             /* --season-block-bg: rgba(var(--primary-rgb, 240, 98, 146), 0.05); */ /* Removed as --card-bg-for-series-sections is used */
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--main-bg);
-            color: white;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            padding-bottom: 80px; /* For bottom nav */
+            /* Base styles from brand_styles.css will apply */
+            padding-bottom: 80px; /* Specific to pages with bottom nav */
         }
 
         .app-wrapper {
@@ -58,31 +54,16 @@
             flex-wrap: wrap; /* Allow wrapping on small screens */
         }
 
-        .toggle-btn {
-            background: transparent;
-            border: 1px solid var(--primary-color); /* Added border for non-active */
-            color: var(--primary-color);
-            padding: 0.6rem 1.2rem; /* Adjusted padding */
-            border-radius: 25px; /* Adjusted radius */
-            font-size: 1rem; /* Adjusted font size */
-            font-weight: 500; /* Adjusted font weight */
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .toggle-btn.active {
-            background: var(--primary-color);
-            color: white;
-        }
+        /* .toggle-btn and .toggle-btn.active styles removed */
 
         /* General form styling */
         .form-section {
-            background-color: rgba(255,255,255,0.05); /* Subtle background for forms */
+            background-color: var(--form-section-bg);
             padding: 1.5rem;
-            border-radius: 10px;
+            border-radius: var(--border-radius-md); /* Use brand variable */
             margin-bottom: 2rem;
         }
-        
+
         .form-group {
             margin-bottom: 1.25rem; /* Consistent spacing */
         }
@@ -112,7 +93,7 @@
         .form-control::placeholder {
             color: #777; /* Darker placeholder */
         }
-        
+
         textarea.form-control {
             min-height: 100px;
         }
@@ -144,22 +125,42 @@
 
 
         /* Series dynamic sections */
-        .season-block, .episode-block {
-            background-color: var(--card-bg);
-            padding: 1rem;
-            border-radius: 8px;
-            margin-top: 1rem;
-            border: 1px solid rgba(255,255,255,0.1);
+        /* Series dynamic sections - Styling (already mostly good, minor variable consistency check) */
+        .season-block {
+            background-color: var(--card-bg-for-series-sections);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-md);
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color-darkbg);
+            border-left: 3px solid var(--primary-color);
         }
-        .season-block h4, .episode-block h5 {
-            font-weight: 600;
-            margin-bottom: 0.75rem;
+        .season-block h4 { /* This is the Season Title */
+            font-weight: var(--font-weight-semibold);
+            margin-bottom: 1rem;
             color: var(--primary-color);
+            padding-bottom: 0.75rem; /* Adjusted padding */
+            border-bottom: 1px solid var(--border-color-darkbg);
         }
-        .season-block button, .episode-block button {
-            margin-top: 0.5rem;
+
+        .episode-block {
+            background-color: rgba(255,255,255,0.04); /* Subtle difference from season block */
+            padding: 1.25rem; /* Slightly more padding */
+            border-radius: var(--border-radius-sm);
+            margin-top: 1rem;
+            margin-left: 1rem;
+            border: 1px solid var(--border-color-darkbg); /* Using a more defined border */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Soft shadow for depth */
         }
-        
+        .episode-block h5 { /* This is the Episode Title */
+            font-weight: var(--font-weight-medium);
+            margin-bottom: 1rem; /* More space below episode title */
+            color: var(--text-headings); /* Use standard heading color */
+        }
+        .season-block .btn, .episode-block .btn {
+            margin-top: 1rem; /* Standardized top margin for buttons in these blocks */
+        }
+
         /* Start Streaming Section */
         #streamSection {
             background-color: var(--secondary-color);
@@ -225,31 +226,7 @@
             border-radius: 50%;
         }
 
-        .save-btn {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 0.75rem;
-            border-radius: 15px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            /* Ajustado el margen inferior para que no se quede pegado al bottom-nav */
-            margin: 1.5rem 0; /* Adjusted margin, no need for huge bottom margin if body has padding */
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .save-btn:hover {
-            opacity: 0.8;
-            /* transform: scale(1.02); */ /* Removed scale for consistency with other buttons */
-        }
-        .btn-secondary { /* For less prominent actions like Add Season/Episode */
-            background-color: var(--secondary-color);
-        }
-        .btn-secondary:hover {
-            opacity: 0.8;
-        }
+        /* .save-btn and .btn-secondary styles removed */
 
     </style>
 </head>
@@ -261,9 +238,9 @@
         </header>
 
         <div class="toggle-container">
-            <button class="toggle-btn active" data-form="movie">Movie</button>
-            <button class="toggle-btn" data-form="serie">Series</button>
-            <button class="toggle-btn" data-form="stream">Start Streaming</button>
+            <button class="btn btn-primary toggle-btn active" data-form="movie">Movie</button> <!-- Start with .btn-primary for active -->
+            <button class="btn btn-outline-primary toggle-btn" data-form="serie">Series</button>
+            <button class="btn btn-outline-primary toggle-btn" data-form="stream">Start Streaming</button>
         </div>
 
         <!-- Movie Upload Form -->
@@ -308,7 +285,7 @@
                 <label for="movieMaturityRating" class="form-label">Maturity Rating</label>
                 <input type="text" id="movieMaturityRating" class="form-control" placeholder="e.g., PG, PG-13, R">
             </div>
-            <button type="submit" id="saveMovieBtn" class="save-btn">Save Movie</button>
+            <button type="submit" id="saveMovieBtn" class="btn btn-primary" style="width: 100%; margin: 1.5rem 0;">Save Movie</button>
         </form>
 
         <!-- Series Upload Form -->
@@ -333,12 +310,12 @@
                 <label for="seriesThumbnail" class="form-label">Overall Series Thumbnail</label>
                 <input type="file" id="seriesThumbnail" class="form-control" accept="image/*" required>
             </div>
-            <button type="button" id="saveSeriesBtn" class="save-btn btn-secondary">Save Series & Add Seasons</button>
-            
+            <button type="button" id="saveSeriesBtn" class="btn btn-secondary" style="width: 100%; margin: 1.5rem 0;">Save Series & Add Seasons</button>
+
             <div id="seasons-container" style="margin-top: 1.5rem;">
                 <!-- Seasons and episodes will be added here dynamically -->
             </div>
-            <button type="button" id="addSeasonBtn" class="save-btn" style="margin-top:1rem; display: none;">Add New Season</button>
+            <button type="button" id="addSeasonBtn" class="btn btn-primary" style="margin-top:1rem; display: none; width: 100%;">Add New Season</button>
              <!-- A general save for all series changes might be complex, for now, episodes save individually -->
         </form>
 
@@ -378,7 +355,7 @@
         const movieForm = document.getElementById('movieForm');
         const serieForm = document.getElementById('serieForm');
         const streamSection = document.getElementById('streamSection');
-        
+
         const saveMovieBtn = document.getElementById('saveMovieBtn');
         const saveSeriesBtn = document.getElementById('saveSeriesBtn');
         const addSeasonBtn = document.getElementById('addSeasonBtn');
@@ -387,18 +364,24 @@
 
         toggleBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                toggleBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+                toggleBtns.forEach(b => {
+                    b.classList.remove('btn-primary', 'active'); // Remove active state and primary color
+                    b.classList.add('btn-outline-primary');
+                });
+                // Set clicked button to primary style and active
+                btn.classList.remove('btn-outline-primary');
+                btn.classList.add('btn-primary', 'active');
 
                 movieForm.style.display = 'none';
                 serieForm.style.display = 'none';
                 streamSection.style.display = 'none';
 
-                if (btn.dataset.form === 'movie') {
+                const formType = btn.dataset.form;
+                if (formType === 'movie') {
                     movieForm.style.display = 'block';
-                } else if (btn.dataset.form === 'serie') {
+                } else if (formType === 'serie') {
                     serieForm.style.display = 'block';
-                } else if (btn.dataset.form === 'stream') {
+                } else if (formType === 'stream') {
                     streamSection.style.display = 'block';
                 }
             });
@@ -428,7 +411,7 @@
                 }
             });
         }
-        
+
         if(addSeasonBtn) {
             addSeasonBtn.addEventListener('click', function() {
                 seasonCounter++;
@@ -444,7 +427,7 @@
                     </div>
                     <!-- Episodes for this season will go here -->
                     <div id="episodes-${seasonId}" class="episodes-container"></div>
-                    <button type="button" class="save-btn btn-secondary add-episode-btn" data-season-container="episodes-${seasonId}" data-season-number="${seasonCounter}">Add Episode to Season ${seasonCounter}</button>
+                    <button type="button" class="btn btn-secondary add-episode-btn" data-season-container="episodes-${seasonId}" data-season-number="${seasonCounter}" style="width: 100%;">Add Episode to Season ${seasonCounter}</button>
                 `;
                 seasonsContainer.appendChild(newSeasonBlock);
 
@@ -481,7 +464,7 @@
                     <label for="${episodeId}-video" class="form-label">Episode Video File</label>
                     <input type="file" id="${episodeId}-video" class="form-control" accept="video/*" required>
                 </div>
-                <button type="button" class="save-btn save-episode-btn" data-episode-id="${episodeId}">Save Episode ${episodeCounter}</button>
+                <button type="button" class="btn btn-primary save-episode-btn" data-episode-id="${episodeId}" style="width: 100%;">Save Episode ${episodeCounter}</button>
             `;
             episodesContainer.appendChild(newEpisodeBlock);
 
