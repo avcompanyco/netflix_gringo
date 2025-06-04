@@ -32,30 +32,30 @@ body {
     margin: 0 auto;
 }
 
-/* Desktop Layout Enhancements for content containers */
-@media (min-width: 768px) { /* Medium devices (tablets, landscape phones) */
+/* Desktop Layout Enhancements for content containers (mirroring my_content.html) */
+@media (min-width: 768px) {
     .main-content-area {
-        max-width: 960px; /* Wider for tablets */
+        max-width: 960px;
     }
     #channel-movies-container, #channel-series-container, #channel-streams-container {
         display: grid;
-        grid-template-columns: repeat(2, 1fr); /* 2 columns */
+        grid-template-columns: repeat(2, 1fr);
         gap: var(--container-padding, 1.5rem);
     }
 }
 
-@media (min-width: 992px) { /* Large devices (desktops) */
+@media (min-width: 992px) {
     .main-content-area {
-        max-width: 1200px; /* Even wider for desktops */
+        max-width: 1200px;
     }
      #channel-movies-container, #channel-series-container, #channel-streams-container {
-        grid-template-columns: repeat(3, 1fr); /* 3 columns */
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
-@media (min-width: 1200px) { /* Extra large devices */
+@media (min-width: 1200px) {
      #channel-movies-container, #channel-series-container, #channel-streams-container {
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Flexible columns */
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
 }
 
@@ -189,9 +189,9 @@ body {
 .channel-content-card p,
 .movie-card p, .series-card p, .stream-card p {
     font-size: 0.9rem;
-    color: #555;
+    color: #555; /* Using a specific gray for less emphasis on card paragraph text */
     margin-bottom: 0.25rem;
-    flex-grow: 1; /* Allow text to take space, pushing buttons down if any were present */
+    flex-grow: 1;
 }
 
 .live-badge {

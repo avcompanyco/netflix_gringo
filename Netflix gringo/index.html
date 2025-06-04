@@ -2,183 +2,100 @@
 <html data-bs-theme="light" lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>netflixd</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-</head>
-
-<body><!DOCTYPE html>
-<html lang="es">
+<html lang="en"> <!-- Changed lang to en for consistency -->
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Welcome - Movie Platform</title> <!-- More descriptive title -->
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css"> <!-- Assuming this is the local Bootstrap -->
+    <link rel="stylesheet" href="assets/css/brand_styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #0A0A23;
-            color: white;
-            min-height: 100vh;
-        }
+        /* body styles will come from brand_styles.css */
 
-        .app-container {
-            position: relative;
+        .welcome-page-wrapper { /* Renamed from app-container for clarity */
             min-height: 100vh;
             padding: 2rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            text-align: center; /* Center align all text content */
         }
 
-        .login-button {
+        .welcome-login-btn-container { /* New container for positioning login button */
             position: absolute;
             top: 20px;
             right: 20px;
-            background-color: white;
-            color: #0A0A23;
-            border: none;
-            border-radius: 30px;
-            padding: 0.5rem 2rem;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
         }
+        /* .login-button specific styles removed, will use .btn classes */
+        /* .start-button specific styles removed, will use .btn classes */
 
-        .login-button:hover {
-            transform: scale(1.05);
-            background-color: white;
-            color: #0A0A23;
-        }
-
-        .logo-icon {
+        .logo-icon { /* Retaining specific margin/size for this page */
             width: 48px;
             height: 48px;
             margin-bottom: 2.5rem;
         }
 
-        .welcome-title {
-            font-size: 2rem;
-            font-weight: 600;
-            text-align: center;
+        .welcome-title { /* Retaining specific styles for this page's headings */
+            font-size: 2rem; /* Base size */
+            font-weight: var(--font-weight-semibold); /* Use brand variable */
+            color: var(--text-headings); /* Use brand variable */
             margin-bottom: 0.5rem;
             letter-spacing: -0.5px;
         }
 
         .welcome-subtitle {
-            font-size: 1.75rem;
-            font-weight: 600;
-            text-align: center;
+            font-size: 1.75rem; /* Base size */
+            font-weight: var(--font-weight-semibold); /* Use brand variable */
+            color: var(--text-headings); /* Use brand variable */
             margin-bottom: 3rem;
             letter-spacing: -0.5px;
         }
 
-        .start-button {
-            background-color: #DC3545;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            padding: 0.875rem 3rem;
-            font-size: 1.1rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .start-button:hover {
-            transform: scale(1.05);
-            background-color: #bb2d3b;
-            color: white;
-        }
-
-        /* Tablet */
-        @media (min-width: 768px) {
+        /* Responsive adjustments for typography and logo */
+        @media (min-width: 768px) { /* Tablet */
             .logo-icon {
                 width: 60px;
                 height: 60px;
                 margin-bottom: 3rem;
             }
-
-            .welcome-title {
-                font-size: 2.5rem;
-            }
-
-            .welcome-subtitle {
-                font-size: 2.25rem;
-            }
-
-            .start-button {
-                padding: 1rem 3.5rem;
-                font-size: 1.2rem;
-            }
+            .welcome-title { font-size: 2.5rem; }
+            .welcome-subtitle { font-size: 2.25rem; }
+            /* Button sizes can be handled by .btn-lg or specific padding in .btn if needed */
         }
 
-        /* Desktop */
-        @media (min-width: 1200px) {
+        @media (min-width: 1200px) { /* Desktop */
             .logo-icon {
                 width: 72px;
                 height: 72px;
                 margin-bottom: 3.5rem;
             }
-
-            .welcome-title {
-                font-size: 3rem;
-            }
-
-            .welcome-subtitle {
-                font-size: 2.75rem;
-            }
-
-            .start-button {
-                padding: 1.125rem 4rem;
-                font-size: 1.25rem;
-            }
-
-            .login-button {
-                padding: 0.625rem 2.5rem;
-                font-size: 1.1rem;
-            }
+            .welcome-title { font-size: 3rem; }
+            .welcome-subtitle { font-size: 2.75rem; }
         }
 
-        /* Mobile small */
-        @media (max-width: 400px) {
-            .app-container {
-                padding: 1.5rem;
-            }
-
-            .welcome-title {
-                font-size: 1.75rem;
-            }
-
-            .welcome-subtitle {
-                font-size: 1.5rem;
-            }
-
-            .login-button {
-                padding: 0.4rem 1.75rem;
-                font-size: 0.9rem;
-            }
+        @media (max-width: 400px) { /* Mobile small */
+            .welcome-page-wrapper { padding: 1.5rem; }
+            .welcome-title { font-size: 1.75rem; }
+            .welcome-subtitle { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <a href="log_in.html" class="btn login-button" role="button">Log In</a>
+    <div class="welcome-page-wrapper">
+        <div class="welcome-login-btn-container">
+            <a href="log_in.html" class="btn btn-outline-primary" role="button">Log In</a>
+        </div>
         
         <img src="assets/img/logo.png" alt="Logo" class="logo-icon">
         
         <h1 class="welcome-title">The best movies</h1>
         <h2 class="welcome-subtitle">ALL IN ONE</h2>
         
-        <a href="create_account.html" class="btn start-button" role="button">Start now</a>
+        <a href="create_account.html" class="btn btn-primary btn-lg" role="button">Start now</a> <!-- Added .btn-lg for larger call to action -->
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script> <!-- Assuming local Bootstrap JS -->
 </body>
-</html>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-</body>
-
 </html>

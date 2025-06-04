@@ -88,18 +88,19 @@ body {
     background-color: rgba(0, 0, 0, 0.8); /* Darker for more contrast */
     color: var(--text-light);
     text-align: center;
-    padding: 2rem; /* Increased padding */
+    padding: 2rem;
     z-index: 1;
-    border-radius: var(--border-radius-sm); /* Match inner radius if video area has one */
+    border-radius: var(--border-radius-sm);
 }
 .video-placeholder-overlay p {
     margin: 0.5rem 0;
-    font-size: 1rem;
+    font-size: 1rem; /* Base text size */
     line-height: 1.5;
 }
 .video-placeholder-overlay p:first-child {
-    font-weight: var(--font-weight-medium);
-    font-size: 1.1rem;
+    font-weight: var(--font-weight-semibold); /* More emphasis */
+    font-size: 1.2rem; /* Slightly larger */
+    color: var(--text-headings);
 }
 
 
@@ -130,93 +131,95 @@ body {
 
 
 .chat-area {
-    background-color: var(--card-bg-dark); /* Use brand variable */
+    background-color: var(--card-bg-dark);
     padding: var(--container-padding);
-    border-top: 1px solid var(--border-color-darkbg); /* Use brand variable */
+    border-top: 1px solid var(--border-color-darkbg);
     width: 100%;
     max-width: 400px;
     margin: 0 auto var(--container-padding) auto;
-    border-radius: var(--border-radius-md); /* Use brand variable */
+    border-radius: var(--border-radius-md);
     display: flex;
     flex-direction: column;
-    max-height: 400px;
+    max-height: 400px; /* Consider if this is still needed or if flex properties handle height well */
 }
 
 .chat-area h3 {
-    font-size: 1.2rem; /* Consistent with other h3 if defined in brand_styles */
+    font-size: 1.25rem; /* Slightly larger for section title */
     margin-top: 0;
-    margin-bottom: 1rem; /* Increased margin */
-    color: var(--primary-color);
+    margin-bottom: 1rem;
+    color: var(--text-headings); /* More standard heading color */
     text-align: center;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.75rem; /* Increased padding */
     border-bottom: 1px solid var(--border-color-darkbg);
 }
 
 .chat-messages-display {
     flex-grow: 1;
     overflow-y: auto;
-    margin-bottom: 1rem; /* Increased margin */
-    padding: 0.75rem; /* Increased padding */
-    background-color: rgba(0,0,0,0.2); /* Slightly darker for contrast */
-    border-radius: var(--border-radius-sm); /* Use brand variable */
+    margin-bottom: 1rem;
+    padding: 0.5rem; /* Adjusted for bubble padding */
+    background-color: var(--main-bg); /* Match page background for seamless look */
+    border-radius: var(--border-radius-sm);
     min-height: 150px;
 }
 
-/* Chat Message Bubbles */
+/* Chat Message Bubbles - Refined */
 .chat-message {
-    padding: 0.5rem 0.75rem;
-    border-radius: var(--border-radius-lg); /* Pill-like messages */
+    padding: 0.6rem 1rem; /* Slightly more padding */
+    border-radius: var(--border-radius-lg);
     margin-bottom: 0.75rem;
-    max-width: 85%;
+    max-width: 90%; /* Allow slightly wider bubbles */
     word-wrap: break-word;
-    line-height: 1.4;
+    line-height: 1.45; /* Improved line height */
+    font-size: 0.9rem; /* Base message text size */
 }
 .chat-message strong { /* Sender's name */
     display: block;
-    font-weight: var(--font-weight-medium);
-    margin-bottom: 0.2rem;
-    font-size: 0.8rem;
+    font-weight: var(--font-weight-semibold); /* Bolder sender name */
+    margin-bottom: 0.25rem; /* More space after name */
+    font-size: 0.85rem; /* Slightly larger sender name */
+    opacity: 0.9;
 }
 
 .self-message {
     background-color: var(--primary-color);
-    color: white; /* Ensure text is light on primary color */
+    color: white;
     margin-left: auto;
-    border-bottom-right-radius: var(--border-radius-sm); /* Flat edge */
+    border-bottom-right-radius: var(--border-radius-sm);
 }
 .self-message strong {
-    color: rgba(255,255,255,0.85); /* Slightly muted white for sender on own bubble */
+    color: rgba(255,255,255,0.9);
 }
 
 .other-message {
-    background-color: var(--section-bg-dark-transparent); /* Using a defined subtle dark bg */
+    background-color: var(--card-bg-dark); /* Use a defined card background */
     color: var(--text-light);
     margin-right: auto;
-    border-bottom-left-radius: var(--border-radius-sm); /* Flat edge */
+    border-bottom-left-radius: var(--border-radius-sm);
 }
 .other-message strong {
-    color: var(--secondary-color); /* Or a neutral accent */
+    color: var(--secondary-color); /* Using secondary color for other users' names */
 }
 
 
 .chat-input-area {
     display: flex;
-    gap: 0.75rem; /* Increased gap */
+    gap: 0.75rem;
 }
 
 #chatMessageInput {
     flex-grow: 1;
-    padding: 0.75rem 1rem; /* Match brand .form-control if exists, or standardize */
+    padding: 0.75rem 1rem;
     border: 1px solid var(--border-color-darkbg);
-    border-radius: var(--border-radius-md); /* Match brand .form-control */
-    background-color: var(--main-bg); /* Darker input field */
+    border-radius: var(--border-radius-md);
+    background-color: var(--section-bg-dark-transparent); /* Slightly offset from main bg */
     color: var(--text-light);
     font-size: 0.95rem;
 }
 #chatMessageInput:focus {
     border-color: var(--primary-color);
-    outline: none;
-    box-shadow: 0 0 0 2px rgba(var(--primary-rgb, 240, 98, 146), 0.25); /* Requires --primary-rgb or manual RGB */
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(var(--primary-rgb, 240, 98, 146), 0.35); /* Slightly more prominent shadow */
 }
 #chatMessageInput::placeholder {
     color: var(--text-muted);

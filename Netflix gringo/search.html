@@ -2,291 +2,136 @@
 <html data-bs-theme="light" lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>netflixd</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-</head>
-
-<body><!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Search | Movie Platform</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/brand_styles.css">
+    <link rel="stylesheet" href="assets/css/search_page.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --gradient-start: #F06292;
-            --gradient-end: #2196F3;
-            --main-bg: #0A0A23;
-            --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        /* Existing page-specific styles for categories-grid, category-card etc. can be moved to search_page.css */
+        /* For this diff, we'll primarily focus on removing redundant body/variable styles and adapting the search bar */
+
+        /* :root { */ /* These were page-specific, now use brand_styles.css */
+            /* --gradient-start: #F06292; */
+            /* --gradient-end: #2196F3; */
+            /* --main-bg: #0A0A23; */
+            /* --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1); */
+        /* } */
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--main-bg);
-            color: white;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            overflow-x: hidden;
+            /* Basic body styles will come from brand_styles.css */
+            overflow-x: hidden; /* Keep if needed */
         }
 
+        /* .app-wrapper can be replaced by .search-page-wrapper if layouts are different, or keep if consistent */
+        /* For now, assuming .app-wrapper provides base padding and .search-page-wrapper for max-width */
         .app-wrapper {
-            padding-bottom: 80px;
+             padding-bottom: 80px; /* For bottom nav. brand_styles body might handle this too */
         }
 
-        /* Header and Search Bar */
+        /* Header styles specific to search page, like sticky, can remain or be part of search_page.css */
         .header {
-            position: sticky;
+            position: sticky; /* Keep sticky header for search */
             top: 0;
-            background-color: var(--main-bg);
-            padding: 1rem;
-            z-index: 100;
+            background-color: var(--main-bg); /* Use brand variable */
+            padding: 1rem; /* Adjust padding as needed */
+            z-index: 1000; /* Ensure it's above other content */
+            border-bottom: 1px solid var(--border-color-darkbg); /* Add a separator */
         }
 
-        .logo-icon {
-            width: 48px;
-            height: 48px;
-            margin: 0 auto 1.5rem;
+        .logo-icon { /* Keep if specifically styled for this header */
+            width: 36px; /* Smaller logo for sticky header */
+            height: 36px;
+            margin: 0 auto 1rem; /* Centered above search bar on mobile */
             display: block;
         }
 
-        .search-container {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-            width: 100%;
+        /* Old .search-bar styles will be replaced by .form-control and .search-bar-container */
+        /* Removed .search-bar, .search-bar:focus, .search-bar::placeholder */
+
+        .content { /* General content padding */
+            padding: 0 var(--container-padding, 1.5rem);
         }
 
-        .search-bar {
-            width: 100%;
-            background: rgba(47, 47, 79, 0.7);
-            border: none;
-            border-radius: 12px;
-            padding: 1rem 1.5rem;
-            color: white;
-            font-size: 1rem;
-            transition: all 0.3s var(--transition-bezier);
+        .page-title-main { /* Renamed from .page-title to avoid conflict if Explore/Results needs different styling */
+             /* Styles will come from h1/h2 in brand_styles.css or specific rules in search_page.css */
+             /* Example: text-align: center; margin: 1.5rem 0; */
         }
 
-        .search-bar:focus {
-            background: rgba(47, 47, 79, 0.9);
-            outline: none;
-        }
+        /* Styles for .categories-grid, .category-card etc. should be in search_page.css */
+        /* Removing them from here for brevity if they are being moved to search_page.css */
 
-        .search-bar::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
+        /* Styles for .search-results (now #resultsGrid) should be in search_page.css */
+        /* Removed .search-results, .search-results.active, .movie-card (results) */
 
-        /* Main Content */
-        .content {
-            padding: 0 1rem;
-        }
+        /* Bottom Nav styling comes from brand_styles.css or its own component CSS if it becomes one */
+        /* For now, assuming .bottom-nav and .nav-item are styled sufficiently by other CSS (e.g., my_content's CSS) */
 
-        .page-title {
-            font-size: 2rem;
-            font-weight: 600;
-            margin: 2rem 0;
-        }
-
-        /* Categories Grid */
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .category-card {
-            position: relative;
-            aspect-ratio: 1/1;
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-            background: rgba(47, 47, 79, 0.3);
-            transition: transform 0.3s var(--transition-bezier);
-        }
-
-        .category-card:hover {
-            transform: scale(1.02);
-        }
-
-        .category-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-        }
-
-        .category-card:hover .category-image {
-            opacity: 1;
-        }
-
-        .category-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.1));
-            display: flex;
-            align-items: flex-end;
-            padding: 1.5rem;
-        }
-
-        .category-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin: 0;
-        }
-
-        /* Search Results */
-        .search-results {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-top: 1rem;
-            display: none;
-        }
-
-        .search-results.active {
-            display: grid;
-        }
-
-        .movie-card {
-            aspect-ratio: 2/3;
-            border-radius: 12px;
-            overflow: hidden;
-        }
-
-        .movie-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--main-bg);
-            padding: 1rem;
-            display: flex;
-            justify-content: space-around;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            z-index: 1000;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: white;
-            text-decoration: none;
-            font-size: 0.8rem;
-            gap: 4px;
-            transition: all 0.3s var(--transition-bezier);
-        }
-
-        .nav-item.active {
-            color: var(--gradient-start);
-        }
-
-        .nav-icon {
-            width: 24px;
-            height: 24px;
-        }
-
-        /* Desktop Styles */
-        @media (min-width: 1200px) {
-            .app-wrapper {
-                max-width: 1600px;
-                margin: 0 auto;
-            }
-
+        /* Desktop specific overrides for layout can be in search_page.css */
+        @media (min-width: 768px) { /* Example: make logo and search bar inline */
             .header {
-                padding: 2rem 4rem;
-            }
-
-            .search-container {
-                max-width: 100%;
-                padding: 0 10%;
-            }
-
-            .content {
-                padding: 0 4rem;
-            }
-
-            .page-title {
-                font-size: 2.5rem;
-                margin: 3rem 0;
-            }
-
-            .categories-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 2rem;
-            }
-
-            .category-title {
-                font-size: 1.5rem;
-            }
-
-            .search-results {
-                grid-template-columns: repeat(6, 1fr);
+                display: flex;
+                align-items: center;
                 gap: 1.5rem;
+                padding: 0.75rem var(--container-padding, 1.5rem);
+            }
+            .logo-icon {
+                margin: 0;
+                width: 32px; /* Even smaller in compact header */
+                height: 32px;
+            }
+            .search-bar-container { /* Let it take remaining space */
+                flex-grow: 1;
+                margin-bottom: 0; /* Remove bottom margin when in flex header */
+                max-width: 600px; /* Or other desired max width */
+                margin-left: 0; /* Align left within flex parent */
             }
         }
     </style>
 </head>
 <body>
-    <div class="app-wrapper">
-        <!-- Header -->
+    <div class="app-wrapper search-page-wrapper"> <!-- Added search-page-wrapper -->
         <header class="header">
             <img src="assets/img/logo.png" alt="Logo" class="logo-icon">
-            <div class="search-container">
-                <input type="text" class="search-bar" placeholder="Search by title, genre...">
+            <div class="search-bar-container">
+                <input type="search" id="searchInputField" class="form-control" placeholder="Search movies, series, channels...">
+                <button id="searchSubmitBtn" class="btn btn-primary">Search</button>
             </div>
         </header>
 
-        <!-- Main Content -->
         <main class="content">
-            <h1 class="page-title">Explore</h1>
+            <h1 id="pageTitle" class="page-title-main">Explore</h1>
 
-            <!-- Categories Grid -->
-            <div class="categories-grid">
+            <div class="categories-grid" id="categoriesGrid">
+                <!-- Category cards remain for now, JS will hide them -->
                 <div class="category-card">
                     <img src="assets/img/action.png" alt="Action & Adventure" class="category-image">
-                    <div class="category-overlay">
-                        <h2 class="category-title">Action & Adventure</h2>
-                    </div>
+                    <div class="category-overlay"><h2 class="category-title">Action & Adventure</h2></div>
                 </div>
                 <div class="category-card">
                     <img src="assets/img/comedy.png" alt="Comedy" class="category-image">
-                    <div class="category-overlay">
-                        <h2 class="category-title">Comedy</h2>
-                    </div>
+                    <div class="category-overlay"><h2 class="category-title">Comedy</h2></div>
                 </div>
                 <div class="category-card">
                     <img src="assets/img/drama.png" alt="Drama" class="category-image">
-                    <div class="category-overlay">
-                        <h2 class="category-title">Drama</h2>
-                    </div>
+                    <div class="category-overlay"><h2 class="category-title">Drama</h2></div>
                 </div>
                 <div class="category-card">
                     <img src="assets/img/horror.png" alt="Horror" class="category-image">
-                    <div class="category-overlay">
-                        <h2 class="category-title">Horror</h2>
-                    </div>
+                    <div class="category-overlay"><h2 class="category-title">Horror</h2></div>
                 </div>
             </div>
 
-            <!-- Search Results -->
-            <div class="search-results">
-                <!-- Results will be populated dynamically -->
-            </div>
+            <section class="search-results-area" id="searchResultsArea" style="display: none;">
+                <h2 id="searchResultsTitle" class="page-title-main">Search Results</h2>
+                <div id="resultsGrid" class="results-grid-container">
+                    <!-- Results will be populated here by JS -->
+                </div>
+            </section>
         </main>
 
        <!-- Bottom Navigation -->
@@ -315,29 +160,97 @@
     </div>
 
     <script>
-        const searchBar = document.querySelector('.search-bar');
-        const categoriesGrid = document.querySelector('.categories-grid');
-        const searchResults = document.querySelector('.search-results');
-        const pageTitle = document.querySelector('.page-title');
+        const searchInputField = document.getElementById('searchInputField');
+        const searchSubmitBtn = document.getElementById('searchSubmitBtn');
+        const categoriesGrid = document.getElementById('categoriesGrid');
+        const searchResultsArea = document.getElementById('searchResultsArea');
+        const searchResultsTitle = document.getElementById('searchResultsTitle');
+        const resultsGrid = document.getElementById('resultsGrid');
+        const pageTitleHeader = document.getElementById('pageTitle'); // The main H1 "Explore"
 
-        searchBar.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.trim().toLowerCase();
-            
+        const mockSearchableContent = [
+            { id: 'mov1', title: "Action Movie Alpha", type: 'movie', thumbnailUrl: 'assets/img/cartelera1.png', description: "A great action film with explosions." },
+            { id: 'ser1', title: "Space Adventure Series", type: 'series', thumbnailUrl: 'assets/img/cartelera2.png', category: "Sci-Fi drama" },
+            { id: 'mov2', title: "Comedy Central Movie", type: 'movie', thumbnailUrl: 'assets/img/cartelera3.jpg', description: "Hilarious comedy for the whole family." },
+            { id: 'chan1', title: "Gamer Zone Channel", type: 'channel', thumbnailUrl: 'assets/img/Jhon.webp', description: "Your source for gaming news and streams." },
+            { id: 'mov3', title: "Deep Space Horror", type: 'movie', thumbnailUrl: 'assets/img/cartelera4.jpeg', description: "A terrifying journey into deep space." },
+            { id: 'ser2', title: "Historical Drama Chronicles", type: 'series', thumbnailUrl: 'assets/img/cartelera5.jpg', category: "Drama, History" },
+        ];
+
+        function renderSearchResults(results, searchTerm) {
+            resultsGrid.innerHTML = ''; // Clear previous results
+
+            if (searchTerm && results.length === 0) {
+                searchResultsTitle.textContent = `No results found for "${searchTerm}"`;
+                resultsGrid.innerHTML = '<p style="color: var(--text-muted); text-align: center;">Try a different search term or browse categories.</p>';
+            } else if (searchTerm && results.length > 0) {
+                searchResultsTitle.textContent = `Results for "${searchTerm}"`;
+                results.forEach(item => {
+                    let detailUrl = '#';
+                    if (item.type === 'movie') {
+                        detailUrl = `movie_detail.html?id=${item.id}`;
+                    } else if (item.type === 'series') {
+                        detailUrl = `series_detail.html?id=${item.id}`;
+                    } else if (item.type === 'channel') {
+                        detailUrl = `user_channel_template.html?id=${item.id}`; // Conceptual
+                    }
+
+                    const card = `
+                        <a href="${detailUrl}" class="content-card-link">
+                            <div class="movie-card"> <!-- Reusing movie-card styling for simplicity -->
+                                <img src="${item.thumbnailUrl}" alt="${item.title}" class="thumbnail"> <!-- Ensure class 'thumbnail' is styled if not using general img -->
+                                <h3>${item.title}</h3>
+                                <p>${item.description || item.category || ''}</p>
+                                <span class="card-type-badge">${item.type.charAt(0).toUpperCase() + item.type.slice(1)}</span>
+                            </div>
+                        </a>
+                    `;
+                    resultsGrid.innerHTML += card;
+                });
+            } else { // No search term, or cleared
+                searchResultsTitle.textContent = 'Search Results'; // Default title
+                resultsGrid.innerHTML = '<p style="color: var(--text-muted); text-align: center;">Enter a term above to search.</p>';
+            }
+        }
+
+        function performSearch() {
+            const searchTerm = searchInputField.value.trim().toLowerCase();
+
             if (searchTerm.length > 0) {
-                categoriesGrid.style.display = 'none';
-                searchResults.classList.add('active');
-                pageTitle.textContent = 'Search Results';
+                if(categoriesGrid) categoriesGrid.style.display = 'none';
+                if(searchResultsArea) searchResultsArea.style.display = 'block';
+                if(pageTitleHeader) pageTitleHeader.style.display = 'none'; // Hide "Explore" title
+
+                const filteredResults = mockSearchableContent.filter(item => {
+                    return (item.title.toLowerCase().includes(searchTerm) ||
+                           (item.description && item.description.toLowerCase().includes(searchTerm)) ||
+                           (item.category && item.category.toLowerCase().includes(searchTerm)));
+                });
+                renderSearchResults(filteredResults, searchInputField.value.trim());
             } else {
-                categoriesGrid.style.display = 'grid';
-                searchResults.classList.remove('active');
-                pageTitle.textContent = 'Explore';
+                if(categoriesGrid) categoriesGrid.style.display = 'grid';
+                if(searchResultsArea) searchResultsArea.style.display = 'none';
+                if(pageTitleHeader) pageTitleHeader.style.display = 'block'; // Show "Explore" title
+                if(pageTitleHeader) pageTitleHeader.textContent = 'Explore';
+                renderSearchResults([], ""); // Clear results or show initial message
+            }
+        }
+
+        searchSubmitBtn.addEventListener('click', performSearch);
+        searchInputField.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent default form submission if it were in a form
+                performSearch();
             }
         });
-    </script>
-</body>
-</html>
 
+        // Initial state: hide search results area, show categories
+        if(categoriesGrid) categoriesGrid.style.display = 'grid';
+        if(searchResultsArea) searchResultsArea.style.display = 'none';
+        if(pageTitleHeader) pageTitleHeader.textContent = 'Explore';
+        renderSearchResults([], ""); // Show initial message in results area
+
+    </script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
-
 </html>

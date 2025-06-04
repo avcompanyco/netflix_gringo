@@ -1,0 +1,221 @@
+/* Inherits from brand_styles.css (linked in HTML) */
+
+body {
+    padding-top: 1rem; /* Space from top, adjust as needed */
+    padding-bottom: 100px; /* Space for bottom nav */
+}
+
+.detail-page-wrapper {
+    /* General wrapper if needed for full-page background control beyond body */
+}
+
+.player-area-wrapper {
+    background-color: #000; /* Black background for the player top section */
+    width: 100%;
+    padding-top: 1rem; /* Space above player */
+    padding-bottom: 1rem; /* Space below player */
+}
+
+.video-player-container {
+    max-width: 1100px; /* Max width of the player area */
+    margin: 0 auto;
+    background-color: #000000; /* Fallback or specific player bg */
+    aspect-ratio: 16 / 9;
+    border-radius: var(--border-radius-md);
+    overflow: hidden; /* If using actual video/iframe */
+    border: 1px solid var(--border-color-darkbg); /* Subtle border */
+}
+
+.video-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; /* To stack icon and text */
+    background-color: #111; /* Darker placeholder bg */
+}
+
+.video-placeholder .play-icon {
+    font-size: 4rem; /* Adjust size as needed */
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+.video-placeholder p {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+
+.movie-content-wrapper { /* Renaming to .detail-content-wrapper for generic use might be better later */
+    max-width: 900px; /* Max width for text content below player */
+    margin: 0 auto;
+    padding: var(--container-padding, 1.5rem);
+}
+
+.movie-header { /* Renaming to .detail-header for generic use might be better later */
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border-color-darkbg);
+}
+
+.movie-title-detail { /* Renaming to .item-title-detail for generic use might be better later */
+    font-size: 2.5rem; /* Corresponds to h1 in brand_styles */
+    font-weight: var(--font-weight-bold);
+    color: var(--text-headings);
+    margin-bottom: 0.75rem;
+}
+
+.action-buttons-group {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+/* Ensure buttons use .btn-lg or similar for prominence if desired */
+.action-buttons-group .btn {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    min-width: 150px; /* Ensure buttons have some minimum width */
+}
+
+
+.synopsis {
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+}
+
+.metadata-section h3 { /* For a potential "Details" subheading */
+    font-size: 1.5rem; /* h2 size */
+    color: var(--text-headings);
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color-darkbg);
+    padding-bottom: 0.5rem;
+}
+
+.meta-item {
+    display: flex;
+    margin-bottom: 0.6rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.meta-label {
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-muted);
+    width: 120px; /* Adjust as needed */
+    flex-shrink: 0;
+}
+
+.meta-value {
+    color: var(--text-light);
+    flex-grow: 1;
+}
+
+.related-movies-section { /* Renaming to .related-content-section for generic use */
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color-darkbg);
+}
+
+.related-movies-section h3 { /* Renaming to .related-content-title */
+    font-size: 1.75rem; /* h2 size */
+    color: var(--text-headings);
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.related-movies-grid { /* Renaming to .related-content-grid */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Smaller cards for related items */
+    gap: 1rem;
+}
+
+.related-movie-card-placeholder { /* Renaming to .related-item-card-placeholder */
+    background-color: var(--card-bg-dark);
+    border-radius: var(--border-radius-sm);
+    padding: 0.75rem;
+    text-align: center;
+    min-height: 180px; /* Placeholder height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.related-movie-card-placeholder .thumbnail-placeholder {
+    background-color: rgba(255,255,255,0.1);
+    height: 100px; /* Placeholder thumbnail height */
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 0.5rem;
+}
+.related-movie-card-placeholder p {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-bottom: 0;
+}
+
+
+/* Back button specific styling if needed, already in HTML */
+.back-button-container-top { /* If placed at top */
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 10; /* Ensure it's above player area if overlapping */
+}
+.back-button-container-top .btn {
+    background-color: rgba(0,0,0,0.4);
+    border-color: rgba(255,255,255,0.2);
+}
+.back-button-container-top .btn:hover {
+    background-color: rgba(0,0,0,0.6);
+}
+
+
+/* Responsive adjustments for metadata, etc. */
+@media (max-width: 767px) {
+    .movie-title-detail { /* Update if class name changes */
+        font-size: 2rem; /* Adjust for mobile */
+    }
+    .action-buttons-group {
+        flex-direction: column; /* Stack buttons on mobile */
+    }
+    .action-buttons-group .btn {
+        width: 100%; /* Full width buttons on mobile */
+        margin-bottom: 0.5rem; /* Space between stacked buttons */
+    }
+    .action-buttons-group .btn:last-child {
+        margin-bottom: 0;
+    }
+    .meta-item {
+        flex-direction: column; /* Stack label and value on mobile */
+        margin-bottom: 0.75rem;
+    }
+    .meta-label {
+        width: auto; /* Allow label to take full width */
+        margin-bottom: 0.25rem;
+        font-size: 0.85rem;
+    }
+    .meta-value {
+        font-size: 0.9rem;
+    }
+    .related-movies-grid { /* Update if class name changes */
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Smaller cards for related items on mobile */
+    }
+}
+
+/* Episode Page Specific Styles (if any) */
+.series-title-link {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    display: block; /* Ensure it takes its own line */
+}
+.series-title-link a {
+    color: var(--link-color); /* Use brand link color */
+    font-weight: var(--font-weight-medium);
+}
+.series-title-link a:hover {
+    color: var(--link-color-hover);
+}
