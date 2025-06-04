@@ -53,6 +53,9 @@
     /* Transitions */
     --transition-short: all 0.2s ease-in-out;
     --transition-medium: all 0.3s ease-in-out;
+
+    /* RGB versions for box-shadows, etc. */
+    --primary-rgb: 240, 98, 146; /* For #F06292 */
 }
 
 /* Base Body Styles */
@@ -191,4 +194,79 @@ a:hover {
 .content-card-link:hover {
     text-decoration: none; /* Ensure no underline on hover for card links */
     color: inherit; /* Ensure color remains inherited on hover */
+}
+
+/* Generic Form Styling */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    display: block;
+    color: var(--text-muted);
+    font-weight: var(--font-weight-medium);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+    color: var(--text-dark);
+    background-color: var(--input-bg-light);
+    background-clip: padding-box;
+    border: 1px solid var(--border-color-lightbg);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: var(--border-radius-md);
+    transition: var(--transition-short);
+}
+
+.form-control::placeholder {
+    color: #777; /* Slightly darker than text-muted for placeholders */
+    opacity: 1; /* Firefox Fix */
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(var(--primary-rgb, 240, 98, 146), 0.3);
+}
+
+/* Checkbox specific styling (simple for now) */
+.form-check {
+    display: flex; /* Changed from block to flex for better alignment */
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.form-check-input {
+    width: 1.25em;
+    height: 1.25em;
+    margin-top: 0; /* Adjust if needed based on line-height */
+    accent-color: var(--primary-color); /* Modern way to color checkboxes */
+    background-color: var(--input-bg-light); /* For better visibility on dark bg if not checked */
+    border: 1px solid var(--border-color-lightbg);
+}
+.form-check-input:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.form-check-input:focus {
+     box-shadow: 0 0 0 0.25rem rgba(var(--primary-rgb, 240, 98, 146), 0.3);
+     border-color: var(--primary-color);
+     outline: 0;
+}
+
+
+.form-check-label {
+    color: var(--text-light); /* Ensure label is light on dark backgrounds */
+    font-size: 0.9rem;
+    font-weight: var(--font-weight-normal); /* Standard weight for checkbox labels */
 }

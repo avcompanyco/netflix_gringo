@@ -1,0 +1,197 @@
+/* Inherits from brand_styles.css (linked in HTML) */
+
+body {
+    padding-top: 1rem;
+    padding-bottom: 100px; /* Space for bottom nav */
+}
+
+.detail-page-wrapper {
+    /* General wrapper if needed */
+}
+
+/* Back button positioned at top, similar to movie_detail */
+.back-button-container-top {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 10;
+}
+.back-button-container-top .btn { /* Ensure it's visible on potential banner */
+    background-color: rgba(0,0,0,0.4);
+    border-color: rgba(255,255,255,0.2);
+}
+.back-button-container-top .btn:hover {
+    background-color: rgba(0,0,0,0.6);
+}
+
+
+.series-header-area {
+    padding: 2rem var(--container-padding, 1.5rem) 1.5rem;
+    background-color: var(--card-bg-dark); /* Or a gradient, or image placeholder */
+    border-bottom: 1px solid var(--border-color-darkbg);
+    text-align: center; /* Center title and synopsis initially */
+}
+
+.series-banner-placeholder { /* If using a dedicated visual banner div */
+    height: 250px; /* Adjust as needed */
+    background-color: #222; /* Dark placeholder */
+    border-radius: var(--border-radius-md);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: var(--text-muted);
+}
+
+.series-title-detail {
+    font-size: 2.25rem; /* h1 size */
+    font-weight: var(--font-weight-bold);
+    color: var(--text-headings);
+    margin-bottom: 0.75rem;
+}
+
+.series-synopsis {
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    max-width: 700px; /* Constrain synopsis width for readability */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.series-metadata {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1.5rem; /* Row and column gap */
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+.series-metadata .meta-item {
+    /* display: inline-block; margin-right: 1.5rem; */ /* Alternative */
+}
+.series-metadata .meta-item strong {
+    color: var(--text-light);
+    font-weight: var(--font-weight-medium);
+}
+
+#seriesSubscribeBtn { /* Assuming it's a single button here */
+    margin-top: 0.5rem; /* Space from metadata */
+}
+
+.seasons-episodes-section {
+    padding: var(--container-padding, 1.5rem);
+    max-width: 1000px; /* Max width for this content area */
+    margin: 0 auto;
+}
+
+.seasons-episodes-section .section-title { /* For "Seasons & Episodes" */
+    font-size: 1.75rem; /* h2 size */
+    color: var(--text-headings);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color-darkbg);
+    padding-bottom: 0.75rem;
+}
+
+.season-selector-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    justify-content: center; /* Center the tabs/buttons */
+}
+
+.season-selector-tabs .season-tab { /* Applied to buttons/spans acting as tabs */
+    /* Uses .btn .btn-outline-secondary or .btn .btn-secondary for active */
+}
+
+#episodes-list-container {
+    /* Container for episode items */
+}
+
+.episode-item {
+    display: flex;
+    align-items: center;
+    background-color: var(--card-bg-dark);
+    padding: 1rem;
+    border-radius: var(--border-radius-md);
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color-darkbg);
+    text-decoration: none; /* If <a> tag */
+    color: var(--text-light); /* If <a> tag */
+    transition: var(--transition-short);
+}
+.episode-item:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(var(--primary-rgb, 240, 98, 146), 0.05); /* Use primary tint on hover */
+}
+
+.episode-item .thumbnail {
+    width: 120px; /* Adjust as needed */
+    height: 67px; /* 16:9 aspect ratio */
+    object-fit: cover;
+    border-radius: var(--border-radius-sm);
+    margin-right: 1rem;
+    flex-shrink: 0;
+}
+
+.episode-item-info {
+    flex-grow: 1;
+}
+
+.episode-item-info h4 { /* Episode Number & Title */
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-medium);
+    color: var(--text-headings);
+    margin: 0 0 0.25rem 0;
+}
+
+.episode-item-info .duration {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+}
+.episode-item-info .description {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    display: -webkit-box; /* For multi-line ellipsis */
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+
+/* Responsive */
+@media (max-width: 767px) {
+    .series-header-area {
+        padding-top: 4rem; /* More space if back button is absolute */
+    }
+    .series-title-detail {
+        font-size: 1.75rem;
+    }
+    .series-synopsis {
+        font-size: 0.9rem;
+    }
+    .series-metadata {
+        font-size: 0.85rem;
+        flex-direction: column; /* Stack metadata items */
+        align-items: center;
+        gap: 0.25rem;
+    }
+    .episode-item {
+        flex-direction: column; /* Stack thumbnail and info on mobile */
+        align-items: flex-start;
+    }
+    .episode-item .thumbnail {
+        width: 100%; /* Full width thumbnail on mobile */
+        height: auto; /* Adjust height based on aspect ratio */
+        aspect-ratio: 16/9;
+        margin-right: 0;
+        margin-bottom: 0.75rem;
+    }
+}

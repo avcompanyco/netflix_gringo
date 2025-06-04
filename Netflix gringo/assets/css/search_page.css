@@ -1,0 +1,224 @@
+/* Inherits from brand_styles.css (linked in HTML) */
+
+body {
+    /* brand_styles.css handles base body, font, bg color */
+    padding-bottom: 100px; /* Space for bottom nav */
+}
+
+.search-page-wrapper {
+    /* Max width can be controlled by .app-wrapper or a specific max-width here if needed */
+    /* For example: max-width: var(--desktop-container-width, 1200px); */
+    margin: 0 auto;
+    /* Padding is handled by .header and .content sections below */
+}
+
+.header { /* This is the sticky header containing logo and search bar */
+    position: sticky;
+    top: 0;
+    background-color: var(--main-bg);
+    padding: 0.75rem var(--container-padding, 1.5rem); /* Default padding */
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-color-darkbg);
+    display: flex; /* For mobile: stack logo and search */
+    flex-direction: column;
+    align-items: center;
+}
+
+.header .logo-icon {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 0.75rem; /* Space between logo and search bar on mobile */
+}
+
+.search-bar-container {
+    display: flex;
+    gap: 0.75rem;
+    width: 100%;
+    max-width: 700px; /* Max width of search bar itself */
+    align-items: center;
+}
+
+#searchInputField { /* Has .form-control from brand_styles.css */
+    flex-grow: 1;
+    /* Ensure it uses light input on dark bg variables from brand_styles.css */
+    /* (already done in brand_styles.css for .form-control) */
+}
+
+#searchSubmitBtn {
+    /* Styling from .btn and .btn-primary in brand_styles.css */
+    flex-shrink: 0;
+}
+
+.content { /* Main content area below header */
+    padding: var(--container-padding, 1.5rem);
+}
+
+.page-title-main { /* For "Explore" or "Search Results for..." */
+    font-size: var(--h2-font-size, 1.75rem); /* Using brand_styles.css variables */
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-headings);
+    margin-top: 0; /* Header provides top space */
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+#searchResultsTitle { /* Specifically for the "Search Results for..." part */
+    /* Inherits from .page-title-main or can have slight variations */
+}
+
+
+.search-results-area {
+    /* display: none; */ /* Handled by JS */
+    margin-top: 1.5rem; /* Space above results */
+}
+
+.results-grid-container {
+    display: grid;
+    gap: var(--container-padding, 1.5rem);
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); /* Default for smallest screens */
+}
+
+/* Responsive grid columns for results, matching my_content.html pattern */
+@media (min-width: 768px) { /* Medium devices */
+    .results-grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+}
+@media (min-width: 992px) { /* Large devices */
+    .results-grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+@media (min-width: 1200px) { /* Extra large devices */
+    .results-grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+}
+
+/* Card styling for search results (ensure these match my_content.html if using same JS rendering) */
+/* These classes would be added by the JS rendering search results */
+.movie-card, .series-card, .channel-card { /* Assuming a generic .channel-card for channel results */
+    background-color: var(--card-bg-light);
+    color: var(--text-dark);
+    border-radius: var(--border-radius-lg);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none; /* If cards are links */
+}
+.movie-card:hover, .series-card:hover, .channel-card:hover {
+    /* Add hover effect if cards are links e.g. transform: translateY(-2px); box-shadow: ... */
+}
+
+.movie-card img, .series-card img, .channel-card img.thumbnail { /* Adjust .thumbnail if channel card has different img class */
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--border-radius-md);
+    margin-bottom: 0.75rem;
+}
+.movie-card h3, .series-card h3, .channel-card h3 {
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 0.25rem;
+    color: var(--text-dark);
+}
+.movie-card p, .series-card p, .channel-card p {
+    font-size: 0.85rem;
+    color: #555; /* Muted text on light card */
+    margin-bottom: 0.5rem;
+    flex-grow: 1;
+}
+.card-type-badge { /* For displaying "Movie", "Series", "Channel" on card */
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: var(--border-radius-sm);
+    background-color: var(--secondary-color);
+    color: white;
+    margin-top: auto; /* Push to bottom if card is flex-column */
+    align-self: flex-start; /* Align to start if multiple badges or other items */
+}
+
+
+/* Existing styles for categories, ensuring they use brand variables */
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Mobile default */
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+.category-card {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--card-bg-dark);
+    transition: transform 0.2s ease-in-out;
+}
+.category-card:hover {
+    transform: scale(1.03);
+}
+.category-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+.category-card:hover .category-image {
+    opacity: 0.8;
+}
+.category-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.0) 70%);
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+}
+.category-title {
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-semibold);
+    margin: 0;
+    color: var(--text-headings);
+}
+
+/* Responsive adjustments for header and categories */
+@media (min-width: 768px) {
+    .header { /* Make logo and search bar inline on tablet+ */
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 0.75rem var(--container-padding, 1.5rem);
+    }
+    .header .logo-icon {
+        margin: 0;
+        width: 32px;
+        height: 32px;
+    }
+    .search-bar-container {
+        flex-grow: 1;
+        margin-bottom: 0;
+        margin-left: 0;
+    }
+    .categories-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    .category-card { aspect-ratio: 16 / 9; }
+    .category-title { font-size: 1.25rem; }
+}
+
+@media (min-width: 992px) {
+    .categories-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Ensure bottom nav doesn't overlap if content is short */
+.search-page-wrapper {
+    padding-bottom: 100px;
+}
+/* body > .bottom-nav is handled by brand_styles.css if .bottom-nav is globally styled */
+/* If .bottom-nav is specific to pages, its style in those pages is fine */

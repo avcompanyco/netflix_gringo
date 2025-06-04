@@ -9,38 +9,16 @@
     <link rel="stylesheet" href="assets/css/brand_styles.css"> /* Added brand styles */
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Keep page-specific styles, remove redundant variables if they are in brand_styles.css */
-        /* :root { */ /* Assuming most of these are now in brand_styles.css */
-            /* --main-bg: #0A0A23; */
-            /* --primary-color: #F06292; */
-            /* --secondary-color: #2196F3; */
-            /* --card-bg: #E6E6E6; */
-            /* --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1); */
-            /* --container-padding: 1.5rem; */
-        /* } */
-
-        body {
-            /* font-family already set by brand_styles.css */
-            /* background-color already set by brand_styles.css */
-            /* color already set by brand_styles.css */
-            margin: 0; /* Keep if not in brand_styles body */
-            padding: 0; /* Keep if not in brand_styles body */
-            min-height: 100vh; /* Keep if not in brand_styles body */
-        }
-        /* Ensure app-wrapper and other structural styles are specific enough or don't conflict */
-            --secondary-color: #2196F3;
-            --card-bg: #E6E6E6;
-            --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1);
-            --container-padding: 1.5rem;
+        /* Page-specific variables */
+        :root {
+            /* --card-bg: #E6E6E6; */ /* This is now var(--card-bg-light) in brand_styles.css */
+            --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1); /* Specific, keep if not global */
+            --container-padding: 1.5rem; /* Specific or could be global, keep for now */
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--main-bg);
-            color: white;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+            /* font-family, background-color, color from brand_styles.css */
+            /* margin, padding, min-height are typically in brand_styles.css body reset too */
         }
 
         .app-wrapper {
@@ -75,8 +53,8 @@
         }
 
         .info-card {
-            background-color: var(--card-bg);
-            border-radius: 1.25rem;
+            background-color: var(--card-bg-light); /* Use global variable */
+            border-radius: 1.25rem; /* Consider var(--border-radius-lg) or var(--border-radius-xl) if defined */
             padding: 1.5rem;
             color: black;
             position: relative;
@@ -89,28 +67,21 @@
             margin-bottom: 0.5rem;
             line-height: 1.4;
         }
-        .manage-button {
+        .manage-button { /* This class positions the .btn, .btn-outline-primary provides the look */
             position: absolute;
-            bottom: -1.25rem;
+            bottom: -1.25rem; /* Adjust based on new .btn padding if needed */
             right: 1.25rem;
-            background-color: white;
-            border: none;
-            border-radius: 1.5rem;
-            padding: 0.625rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 600;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: all 0.3s var(--transition-bezier);
-            text-decoration: none; /* quitar subrayado de enlaces */
-            /* color: inherit; */ /* Will be handled by .btn class */
-            /* display: inline-block; */ /* Will be handled by .btn class */
-            /* text-align: center; */ /* Will be handled by .btn class */
+            /* background-color, border, border-radius, padding, font-size, font-weight, text-decoration, color, display, text-align are handled by .btn classes */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Keep custom shadow if desired */
+            transition: all 0.3s var(--transition-bezier); /* Keep custom transition if desired */
         }
+        /* Hover effects for .manage-button will largely come from .btn:hover and .btn-outline-primary:hover */
+        /* If custom transform/shadow on hover is still desired: */
+         .manage-button.btn:hover { /* Be more specific if overriding */
+            transform: scale(1.05); /* Example custom hover effect */
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+         }
 
-        .manage-button:hover {
-            /* transform: scale(1.05); */ /* Base .btn hover might handle this or can be added */
-            /* box-shadow: 0 6px 12px rgba(0,0,0,0.15); */ /* Hover state handled by .btn:hover */
-        }
 
         .bottom-nav {
             position: fixed;
@@ -208,9 +179,9 @@
 
         /* Styles for Subscribed Channels Section */
         .subscribed-channel-card {
-            background-color: var(--card-bg); /* Or a slightly different bg: #2a2a45; */
-            color: var(--text-dark); /* Assuming text on card-bg is dark */
-            border-radius: 10px;
+            background-color: var(--card-bg-light); /* Use global variable */
+            color: var(--text-dark);
+            border-radius: var(--border-radius-md); /* Use brand variable */
             padding: 1rem;
             margin-bottom: 1rem;
             display: flex;
@@ -238,12 +209,17 @@
 
         .subscribed-channel-info h4 {
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: var(--font-weight-semibold); /* Use brand variable */
             margin: 0 0 0.25rem 0;
-            color: var(--text-dark); /* Ensure heading color is dark if on light card */
+            color: var(--link-color); /* Apply link color */
+            transition: color 0.2s ease-in-out; /* Add transition */
+        }
+        .subscribed-channel-card:hover .subscribed-channel-info h4 {
+            color: var(--link-color-hover);
+            text-decoration: underline;
         }
 
-        /* .unsubscribe-btn styling will be replaced by .btn .btn-danger or similar */
+        /* .unsubscribe-btn styling is handled by .btn .btn-danger applied in JS */
         /* Removed old .unsubscribe-btn styles */
 
     </style>

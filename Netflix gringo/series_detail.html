@@ -3,34 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Series Detail</title>
+    <title>Series Detail | Movie Platform</title> <!-- Placeholder Title -->
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/brand_styles.css">
+    <link rel="stylesheet" href="assets/css/series_detail_page.css"> <!-- Link new CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            padding-top: 2rem;
-            padding-bottom: 100px; /* Space for bottom nav */
-        }
-        .detail-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 1.5rem;
-            text-align: center;
-        }
-        .back-button-container {
-            margin-bottom: 2rem;
-        }
-    </style>
 </head>
 <body>
-    <div class="detail-container">
-        <div class="back-button-container">
-            <a href="javascript:history.back()" class="btn btn-secondary">&laquo; Go Back</a>
+    <div class="detail-page-wrapper">
+        <div class="back-button-container-top">
+            <a href="javascript:history.back()" class="btn btn-secondary btn-sm">&laquo; Back</a>
         </div>
-        <h1>Series Detail Page</h1>
-        <p>Details for the selected series, including its seasons and episodes, will appear here.</p>
-        <p><em>(This is a placeholder page)</em></p>
+
+        <header class="series-header-area">
+            <div class="series-banner-placeholder">
+                <!-- Conceptual: Could be replaced by an <img> tag if seriesData had a banner image -->
+                <p>Series Banner/Poster Area</p>
+            </div>
+            <div class="series-info-overlay">
+                <h1 id="seriesTitle" class="series-title-detail">Series Title Loading...</h1>
+                <div id="seriesMetadata" class="series-metadata">
+                    <!-- Metadata will be populated by JS -->
+                </div>
+                <p id="seriesSynopsis" class="series-synopsis">Synopsis loading...</p>
+                <button id="seriesSubscribeBtn" class="btn btn-primary">Subscribe to Series</button>
+            </div>
+        </header>
+
+        <section class="seasons-episodes-section">
+            <h2 class="section-title">Seasons & Episodes</h2>
+            <div id="seasonSelectorTabs" class="season-selector-tabs">
+                <!-- Season tabs/buttons will be populated by JS -->
+            </div>
+            <div id="episodesListContainer" class="episodes-list-container">
+                <!-- Episodes will be populated by JS based on selected season -->
+                <p>Select a season to see episodes.</p>
+            </div>
+        </section>
     </div>
 
     <!-- Bottom Navigation -->
@@ -58,5 +67,148 @@
     </nav>
 
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        const seriesData = {
+            id: 'ser001',
+            title: "The Future Chronicles",
+            bannerImageUrl: "assets/img/carrusel1_pc.jpeg", // Example, replace with actual or leave as placeholder style
+            synopsis: "An epic sci-fi saga exploring humanity's destiny across the stars, time travel, and parallel universes. Follow a diverse cast of characters as they navigate complex moral dilemmas and thrilling adventures.",
+            genre: "Sci-Fi, Drama, Adventure",
+            releaseYear: "2023",
+            status: "Ongoing",
+            rating: "TV-14",
+            seasons: [
+                {
+                    seasonNumber: 1,
+                    episodes: [
+                        {id: 's1e1', title: "The Anomaly", thumbnail: "assets/img/cartelera1.png", duration: "48m", description: "A mysterious space-time anomaly appears, setting events in motion."},
+                        {id: 's1e2', title: "First Contact", thumbnail: "assets/img/cartelera2.png", duration: "47m", description: "Humanity makes its first contact with an alien civilization."},
+                        {id: 's1e3', title: "Whispers of Time", thumbnail: "assets/img/cartelera3.jpg", duration: "49m", description: "The crew discovers clues about the anomaly's origin."}
+                    ]
+                },
+                {
+                    seasonNumber: 2,
+                    episodes: [
+                        {id: 's2e1', title: "New Realities", thumbnail: "assets/img/cartelera4.jpeg", duration: "51m", description: "The consequences of past actions ripple through new timelines."},
+                        {id: 's2e2', title: "The Choice", thumbnail: "assets/img/cartelera5.jpg", duration: "46m", description: "A critical decision must be made that will alter the future."},
+                        {id: 's2e3', title: "Echoes", thumbnail: "assets/img/cartelera6.jpg", duration: "50m", description: "Past, present, and future collide."}
+                    ]
+                }
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Populate Series Info
+            document.title = `${seriesData.title} | Series Detail`;
+            document.getElementById('seriesTitle').textContent = seriesData.title;
+            document.getElementById('seriesSynopsis').textContent = seriesData.synopsis;
+
+            const seriesMetadataContainer = document.getElementById('seriesMetadata');
+            seriesMetadataContainer.innerHTML = `
+                <span class="meta-item"><strong>Genre:</strong> ${seriesData.genre}</span>
+                <span class="meta-item"><strong>Released:</strong> ${seriesData.releaseYear}</span>
+                <span class="meta-item"><strong>Status:</strong> ${seriesData.status}</span>
+                <span class="meta-item"><strong>Rating:</strong> ${seriesData.rating}</span>
+            `;
+
+            // Banner image (conceptual)
+            const bannerPlaceholder = document.querySelector('.series-banner-placeholder');
+            if (seriesData.bannerImageUrl && bannerPlaceholder) {
+                bannerPlaceholder.style.backgroundImage = `url(${seriesData.bannerImageUrl})`;
+                bannerPlaceholder.style.backgroundSize = 'cover';
+                bannerPlaceholder.style.backgroundPosition = 'center';
+                bannerPlaceholder.innerHTML = ''; // Clear placeholder text
+            }
+
+
+            const seasonSelectorTabs = document.getElementById('seasonSelectorTabs');
+            const episodesListContainer = document.getElementById('episodesListContainer');
+            const seriesSubscribeBtn = document.getElementById('seriesSubscribeBtn');
+            let isSeriesSubscribed = false;
+
+            function updateSeriesSubscribeButton() {
+                if(isSeriesSubscribed) {
+                    seriesSubscribeBtn.textContent = "Subscribed";
+                    seriesSubscribeBtn.classList.remove('btn-primary');
+                    seriesSubscribeBtn.classList.add('btn-secondary', 'subscribed'); // Assuming 'subscribed' class exists or styles are handled
+                } else {
+                    seriesSubscribeBtn.textContent = "Subscribe to Series";
+                    seriesSubscribeBtn.classList.remove('btn-secondary', 'subscribed');
+                    seriesSubscribeBtn.classList.add('btn-primary');
+                }
+            }
+
+            if(seriesSubscribeBtn) {
+                seriesSubscribeBtn.addEventListener('click', () => {
+                    isSeriesSubscribed = !isSeriesSubscribed;
+                    updateSeriesSubscribeButton();
+                    alert(isSeriesSubscribed ? 'Subscribed to series!' : 'Unsubscribed from series!');
+                });
+                updateSeriesSubscribeButton(); // Initial state
+            }
+
+
+            function renderEpisodes(seasonNumber) {
+                episodesListContainer.innerHTML = ''; // Clear previous episodes
+                const season = seriesData.seasons.find(s => s.seasonNumber === seasonNumber);
+                if (!season) {
+                    episodesListContainer.innerHTML = '<p>No episodes found for this season.</p>';
+                    return;
+                }
+
+                season.episodes.forEach(episode => {
+                    const episodeLink = document.createElement('a');
+                    episodeLink.href = `episode_detail.html?id=${episode.id}`;
+                    episodeLink.className = 'episode-item content-card-link'; // Added content-card-link for consistent no-underline
+
+                    episodeLink.innerHTML = `
+                        <img src="${episode.thumbnail || 'assets/img/default_thumbnail.png'}" alt="${episode.title}" class="thumbnail">
+                        <div class="episode-item-info">
+                            <h4>S${season.seasonNumber} E${episode.id.split('e')[1]}: ${episode.title}</h4>
+                            <p class="duration">${episode.duration}</p>
+                            ${episode.description ? `<p class="description">${episode.description}</p>` : ''}
+                        </div>
+                        <button class="btn btn-primary btn-sm" style="margin-left: auto;">Play</button>
+                    `;
+                     // Play button added inside, event.stopPropagation will be needed if on <a>
+                    episodeLink.querySelector('.btn-primary').addEventListener('click', (e) => {
+                        e.preventDefault(); // Prevent link navigation
+                        e.stopPropagation(); // Stop click from bubbling to parent <a>
+                        alert(`Playing ${episode.title}`);
+                        // Potentially: window.location.href = `player.html?episodeId=${episode.id}`;
+                    });
+                    episodesListContainer.appendChild(episodeLink);
+                });
+
+                // Update active tab
+                document.querySelectorAll('.season-tab').forEach(tab => {
+                    tab.classList.remove('btn-primary');
+                    tab.classList.add('btn-outline-primary');
+                    if (parseInt(tab.dataset.season) === seasonNumber) {
+                        tab.classList.remove('btn-outline-primary');
+                        tab.classList.add('btn-primary');
+                    }
+                });
+            }
+
+            seriesData.seasons.forEach(season => {
+                const seasonTab = document.createElement('button');
+                seasonTab.className = 'btn btn-outline-primary season-tab';
+                seasonTab.textContent = `Season ${season.seasonNumber}`;
+                seasonTab.dataset.season = season.seasonNumber;
+                seasonTab.addEventListener('click', () => {
+                    renderEpisodes(season.seasonNumber);
+                });
+                seasonSelectorTabs.appendChild(seasonTab);
+            });
+
+            // Initial render for the first season
+            if (seriesData.seasons.length > 0) {
+                renderEpisodes(seriesData.seasons[0].seasonNumber);
+            } else {
+                episodesListContainer.innerHTML = '<p>This series currently has no seasons or episodes.</p>';
+            }
+        });
+    </script>
 </body>
 </html>
