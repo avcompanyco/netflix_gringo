@@ -59,7 +59,7 @@ body {
 .video-area {
     width: 100%;
     max-width: 800px; /* Max width for video */
-    background-color: #000;
+    background-color: var(--main-bg); /* Using variable */
     position: relative;
     border-radius: var(--border-radius-md); /* Use brand variable */
     overflow: hidden;
@@ -111,7 +111,7 @@ body {
     gap: 0.75rem;
     padding: 1rem;
     background-color: rgba(0,0,0,0.1);
-    border-radius: 8px;
+    border-radius: var(--border-radius-md); /* Using variable */
     width: 100%;
     max-width: 800px; /* Match video area width */
     margin-bottom: var(--container-padding); /* Space before chat or bottom */
@@ -255,6 +255,6 @@ body {
         margin-bottom: 1rem; /* Ensure spacing between controls and chat on mobile */
     }
     .chat-area {
-         /* max-height: 30vh; /* More constrained height on mobile */
+         /* No specific max-height rule here now, relying on flex behavior or overall page structure */
     }
 }

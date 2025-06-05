@@ -34,7 +34,7 @@ body {
 
 .series-banner-placeholder { /* If using a dedicated visual banner div */
     height: 250px; /* Adjust as needed */
-    background-color: #222; /* Dark placeholder */
+    background-color: var(--card-bg-dark); /* Dark placeholder - Using variable */
     border-radius: var(--border-radius-md);
     margin-bottom: 1.5rem;
     display: flex;

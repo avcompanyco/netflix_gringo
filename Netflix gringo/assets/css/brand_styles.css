@@ -149,15 +149,47 @@ a:hover {
 /* Example: Edit button could use secondary or a specific color if defined */
 .btn-edit {
     background-color: var(--info-color); /* Using info color for edit */
-    color: white;
+    color: var(--text-dark); /* Changed to dark text for better contrast */
     border-color: var(--info-color);
 }
 .btn-edit:hover {
     background-color: var(--info-color-hover);
     border-color: var(--info-color-hover);
+    color: var(--text-dark); /* Changed to dark text for better contrast */
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
+}
+.btn-success:hover {
+    background-color: var(--success-color-hover);
+    border-color: var(--success-color-hover);
     color: white;
 }
 
+.btn-warning {
+    background-color: var(--warning-color);
+    color: var(--text-dark); /* Dark text for contrast */
+    border-color: var(--warning-color);
+}
+.btn-warning:hover {
+    background-color: var(--warning-color-hover);
+    border-color: var(--warning-color-hover);
+    color: var(--text-dark); /* Dark text for contrast */
+}
+
+.btn-info {
+    background-color: var(--info-color);
+    color: var(--text-dark); /* Dark text for contrast, similar to btn-edit */
+    border-color: var(--info-color);
+}
+.btn-info:hover {
+    background-color: var(--info-color-hover);
+    border-color: var(--info-color-hover);
+    color: var(--text-dark); /* Dark text for contrast */
+}
 
 .btn-outline-primary {
     background-color: transparent;
@@ -176,6 +208,16 @@ a:hover {
 }
 .btn-outline-secondary:hover {
     background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-outline-danger {
+    background-color: transparent;
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+}
+.btn-outline-danger:hover {
+    background-color: var(--danger-color);
     color: white;
 }
 

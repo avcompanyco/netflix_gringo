@@ -10,7 +10,7 @@ body {
 }
 
 .player-area-wrapper {
-    background-color: #000; /* Black background for the player top section */
+    background-color: var(--main-bg); /* Black background for the player top section - Using variable */
     width: 100%;
     padding-top: 1rem; /* Space above player */
     padding-bottom: 1rem; /* Space below player */
@@ -19,7 +19,7 @@ body {
 .video-player-container {
     max-width: 1100px; /* Max width of the player area */
     margin: 0 auto;
-    background-color: #000000; /* Fallback or specific player bg */
+    background-color: var(--main-bg); /* Fallback or specific player bg - Using variable */
     aspect-ratio: 16 / 9;
     border-radius: var(--border-radius-md);
     overflow: hidden; /* If using actual video/iframe */
@@ -33,7 +33,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column; /* To stack icon and text */
-    background-color: #111; /* Darker placeholder bg */
+    background-color: var(--main-bg); /* Darker placeholder bg - Using variable (or a new --main-bg-darker) */
 }
 
 .video-placeholder .play-icon {

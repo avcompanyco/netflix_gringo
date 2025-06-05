@@ -144,30 +144,29 @@
         .admin-main-content { flex-grow: 1; padding: 2rem; overflow-y: auto; } 
         .content-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; } 
         .content-header .page-module-title { font-size: 2rem; font-weight: 600; color: var(--text-headings); margin: 0; } 
+        /* .action-button is a base for static buttons in content-headers and modal actions. */
+        /* It should rely on .btn and its variants (.btn-primary, .btn-secondary, etc.) for colors. */
         .action-button { 
-            background-color: var(--primary-color); color: white; padding: 0.7rem 1.4rem; 
-            border-radius: var(--border-radius-sm); text-decoration: none; font-weight: 500;
-            font-size: 0.95rem; transition: background-color 0.2s ease, transform 0.2s ease; border: none; cursor: pointer;
-        }
-        .action-button:hover { background-color: var(--primary-color-hover); /* transform: translateY(-1px); */ } /* Base .btn handles transform */
-        .action-button.secondary { background-color: var(--secondary-color); }
-        .action-button.secondary:hover { background-color: var(--secondary-color-hover); }
-
-        /* Applying .btn base styles to .action-button */
-        .action-button {
+            /* background-color, color, border are handled by .btn-* variants */
+            padding: 0.7rem 1.4rem;
+            border-radius: var(--border-radius-sm);
+            text-decoration: none;
+            font-weight: 500; /* Corresponds to --font-weight-medium from brand_styles .btn */
+            font-size: 0.95rem;
+            transition: background-color 0.2s ease, transform 0.2s ease; /* Existing transition */
+            /* ensure it behaves like a .btn by default */
             display: inline-block;
-            font-weight: 500; /* Corresponds to --font-weight-medium */
             text-align: center;
             vertical-align: middle;
             cursor: pointer;
             user-select: none;
-            border: 1px solid transparent; /* Base .btn has this */
-            /* padding already defined: 0.7rem 1.4rem; */
-            /* font-size already defined: 0.95rem; */
-            /* border-radius already defined: var(--border-radius-sm); */
-            /* transition already defined: background-color 0.2s ease, transform 0.2s ease; */
-            text-decoration: none;
         }
+        /* Hover and specific color states will be handled by .btn-* variant classes applied in HTML */
+        /* e.g., .action-button.btn-primary:hover will use .btn-primary:hover from brand_styles.css */
+        /* .action-button.secondary and its hover are removed as .btn-secondary will be used. */
+
+        /* Applying .btn base styles to .action-button - some of this is now redundant if .btn is always used with it */
+        /* This simplified .action-button assumes .btn is always co-applied in the HTML for base structure */
         .action-button:active {
             transform: translateY(1px);
             filter: brightness(95%);
@@ -864,7 +863,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if(cancelUserFormBtn) cancelUserFormBtn.addEventListener('click', closeUserModal);
     if(userModal) userModal.addEventListener('click', (e) => { if (e.target === userModal) closeUserModal(); });
 
-    // --- Content Module Functions (Skeletons) ---
+    // --- Content Module Functions ---
     function renderContentTable() {
         const contentTableBody = document.getElementById('contentTable')?.getElementsByTagName('tbody')[0];
         if (!contentTableBody) {
@@ -911,18 +910,16 @@ document.addEventListener('DOMContentLoaded', function () {
             actionsCell.appendChild(deleteBtn);
 
             const archiveBtn = document.createElement('button');
-            archiveBtn.classList.add('btn', 'btn-warning');
+            archiveBtn.classList.add('btn', 'btn-warning'); // Ensure .btn-warning is defined in brand_styles.css with good contrast
             archiveBtn.textContent = 'Archive';
-            // archiveBtn.style.minWidth = '80px'; // Can be handled by .btn padding or specific utility class if needed
             archiveBtn.onclick = () => changeContentStatus(item.id, 'Archived');
             if(item.status === 'Archived') archiveBtn.disabled = true;
             actionsCell.appendChild(archiveBtn);
 
             if(item.status !== 'Published') {
                 const publishBtn = document.createElement('button');
-                publishBtn.classList.add('btn', 'btn-success');
+                publishBtn.classList.add('btn', 'btn-success'); // Ensure .btn-success is defined in brand_styles.css
                 publishBtn.textContent = 'Publish';
-                // publishBtn.style.minWidth = '80px';
                 publishBtn.onclick = () => changeContentStatus(item.id, 'Published');
                 actionsCell.appendChild(publishBtn);
             }
@@ -1030,7 +1027,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if(cancelContentFormBtn) cancelContentFormBtn.addEventListener('click', closeContentModal);
     if(contentModal) contentModal.addEventListener('click', (e) => { if (e.target === contentModal) closeContentModal(); });
 
-    // --- Live Streams Module Functions (Skeletons) ---
+    // --- Live Streams Module Functions ---
     function renderLiveStreamsTable() {
         const liveStreamsTableBody = document.getElementById('liveStreamsTable')?.getElementsByTagName('tbody')[0];
         if (!liveStreamsTableBody) {

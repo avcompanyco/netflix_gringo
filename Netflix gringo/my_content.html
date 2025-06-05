@@ -6,21 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>My Content</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/brand_styles.css"> /* Added brand styles */
+    <link rel="stylesheet" href="assets/css/brand_styles.css"> <!-- Added brand styles -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* :root { */ /* Variables moved to brand_styles.css */
-            /* --main-bg: #0A0A23; */
-            /* --header-banner-height: 200px; */ /* Page specific, keep */
-            /* --profile-pic-size: 100px; */ /* Page specific, keep */
-            /* --primary-color: #F06292; */
-            /* --secondary-color: #2196F3; */
-            /* --card-bg: #E6E6E6; */
-            /* --delete-color: #DC3545; */
-            /* --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1); */ /* Page specific or move to brand */
-            /* --container-padding: 1.5rem; */ /* Page specific, keep */
-        /* } */
-        /* Re-declare page-specific variables or ensure they are not needed if covered by brand */
+        /* Page-specific variables */
         :root {
             --header-banner-height: 200px;
             --profile-pic-size: 100px;
@@ -28,21 +17,401 @@
             --container-padding: 1.5rem; /* Common, but can be page-specific */
         }
 
-
+        /* Styles for body are largely covered by brand_styles.css */
+        /* Additional body rules specific to this page can go here if necessary. */
         body {
-            /* font-family, background-color, color, margin, padding, min-height from brand_styles.css */
-        }
-            --profile-pic-size: 100px;
-            --primary-color: #F06292;
-            --secondary-color: #2196F3;
-            --card-bg: #E6E6E6;
-            --delete-color: #DC3545;
-            --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1);
-            --container-padding: 1.5rem;
+            /* Example: font-family: 'Poppins', sans-serif; */ /* Covered by brand_styles.css */
+            /* background-color: var(--main-bg); */ /* Covered by brand_styles.css */
+            /* color: white; */ /* Covered by brand_styles.css */
+            margin: 0; /* Resetting margin/padding if not fully covered or for override */
+            padding: 0;
+            min-height: 100vh;
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
+
+        .app-wrapper {
+            padding-bottom: 80px; /* For bottom nav */
+            /* max-width: 480px; */ /* Allow full width for banner */
+            margin: 0 auto;
+            /* padding-left: 1.5rem; */ /* Handled by inner containers */
+            /* padding-right: 1.5rem; */
+        }
+        .main-content-area { /* New class for padding below header */
+            padding-left: var(--container-padding);
+            padding-right: var(--container-padding);
+            max-width: 600px; /* Default for mobile */
+            margin: 0 auto;
+        }
+
+        /* Desktop Layout Enhancements */
+        @media (min-width: 768px) { /* Medium devices (tablets, landscape phones) */
+            .main-content-area {
+                max-width: 960px; /* Wider for tablets */
+            }
+            #movies-container, #series-container, #streams-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr); /* 2 columns */
+                gap: var(--container-padding, 1.5rem);
+            }
+        }
+
+        @media (min-width: 992px) { /* Large devices (desktops) */
+            .main-content-area {
+                max-width: 1200px; /* Even wider for desktops */
+            }
+             #movies-container, #series-container, #streams-container {
+                grid-template-columns: repeat(3, 1fr); /* 3 columns */
+            }
+        }
+
+        @media (min-width: 1200px) { /* Extra large devices */
+             #movies-container, #series-container, #streams-container {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Flexible columns, aiming for ~300px per card */
+            }
+        }
+
+        /* Ensure cards take full width of their grid cell */
+        .movie-card, .series-card, .stream-card {
+            width: 100%;
+            display: flex; /* Added for better internal alignment if needed */
+            flex-direction: column; /* Stack content vertically */
+        }
+        .movie-card img, .series-card img, .stream-card img {
+            aspect-ratio: 16 / 9; /* Maintain aspect ratio */
+            height: auto; /* Allow height to adjust based on aspect ratio and width */
+            /* max-height: 180px; */ /* Removed max-height in favor of aspect-ratio for better responsiveness */
+        }
+        .movie-card h3, .series-card h3, .stream-card h3 {
+             flex-shrink: 0; /* Prevent titles from shrinking if card content is constrained */
+        }
+        .movie-card p, .series-card p, .stream-card p {
+             flex-shrink: 0;
+        }
+        .movie-card div:last-child, .series-card div:last-child, .stream-card div:last-child { /* Assuming buttons are wrapped */
+            margin-top: auto; /* Push buttons to the bottom if cards have varying text height */
+        }
+
+
+        /* New Header Styles */
+        .profile-header {
+            position: relative;
+            height: var(--header-banner-height);
+            background-size: cover;
+            background-position: center;
+            margin-bottom: calc(var(--profile-pic-size) / 2 + 1rem); /* Space for profile pic overlap and below */
+        }
+
+        .profile-header-content {
+            position: absolute;
+            bottom: calc(-1 * var(--profile-pic-size) / 2); /* Overlap bottom */
+            left: var(--container-padding);
+            right: var(--container-padding);
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+            /* background: rgba(0,0,0,0.3); To make text more readable on busy banners */
+            /* padding-bottom: 10px; */
+        }
+
+        .profile-header-main {
+            display: flex;
+            align-items: flex-end;
+            gap: 1rem;
+            flex-grow: 1;
+        }
+
+
+        #profile-picture {
+            width: var(--profile-pic-size);
+            height: var(--profile-pic-size);
+            border-radius: 50%;
+            border: 3px solid var(--text-headings); /* Changed to text-headings for better visibility */
+            object-fit: cover;
+        }
+
+        #user-name {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-headings); /* Ensure visibility - Using variable */
+            margin-bottom: calc(var(--profile-pic-size) / 10); /* Align with bottom of pic */
+        }
+
+        .profile-header-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: calc(var(--profile-pic-size) / 10); /* Align with user name */
+        }
+
+        /* .profile-header-actions button styling will be replaced by .btn classes */
+        /* Removed old .profile-header-actions button styles */
+
+        /* Specific style for subscribe button if it's different from standard .btn-primary */
+        /* For now, assume .btn .btn-primary is sufficient or a custom class like .btn-subscribe will be used */
+        /* #subscribe-btn-header { } */
+
+
+        /* Tab Navigation Styles */
+        .tabs-nav {
+            display: flex;
+            justify-content: space-around; /* Or 'flex-start' if you prefer */
+            background-color: transparent; /* Or a subtle bg */
+            padding: 0.5rem 0;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .tab-link {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            color: var(--text-muted); /* Inactive tab color - Using variable */
+            font-weight: 500;
+            transition: color 0.3s, border-bottom 0.3s;
+            border-bottom: 2px solid transparent;
+            text-align: center;
+        }
+
+        .tab-link.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .tab-content {
+            display: none; /* Hidden by default */
+        }
+
+        .tab-content.active {
+            display: block; /* Shown when active */
+        }
+
+        /* Card Styles for dynamic content */
+        /* Reusing .content-card idea, but with specific classes for each type */
+        .movie-card, .series-card, .stream-card {
+            background-color: var(--card-bg);
+            border-radius: 1rem; /* Slightly less than original .content-card */
+            padding: 1rem;
+            color: var(--text-dark); /* Using variable */
+            margin-bottom: 1.5rem;
+            /* display: flex; align-items: center; gap: 1rem; */ /* Removed for more flexible inner layout */
+        }
+
+        .movie-card img, .series-card img, .stream-card img {
+            width: 100%; /* Full width for card */
+            max-height: 180px; /* Or desired height */
+            object-fit: cover;
+            border-radius: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .movie-card h3, .series-card h3, .stream-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        .movie-card p, .series-card p, .stream-card p {
+            font-size: 0.9rem;
+            color: var(--text-dark); /* Using variable */
+            opacity: 0.75; /* Muted effect for paragraph text on cards */
+            margin-bottom: 0.25rem;
+        }
+        .live-badge {
+            background-color: var(--danger-color); /* Using variable */
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-left: 0.5rem;
+        }
+
+        /* Buttons within dynamic cards will use .btn and specific .btn-* classes */
+        /* Removed old .movie-card button, .series-card button, .stream-card button styles */
+        /* The .delete-btn specific background color will be handled by .btn-danger */
+
+
+        /* Original .content-card styles might need adjustment or removal if fully replaced */
+        .page-title { /* No longer used for "My content", but kept if other pages use it */
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title { /* Kept if used in "About" or other static sections */
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        /* End of new/modified styles */
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--main-bg);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            font-size: 0.8rem;
+            gap: 4px;
+            transition: all 0.3s var(--transition-bezier);
+        }
+
+        .nav-item.active {
+            color: var(--primary-color);
+        }
+
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+        }
+
+        .nav-icon.profile {
+            border-radius: 50%;
+        }
+
+        @media (min-width: 768px) {
+            /* Desktop specific adjustments for .section-title if not globally handled */
+            .section-title {
+                /* text-align: center; */ /* Example: Keep if headings are not globally centered by brand_styles.css */
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        @media (max-width: 375px) {
+            /* Mobile specific adjustments, e.g. for smaller padding if needed */
+            /* .main-content-area { padding-left: 1rem; padding-right: 1rem; } */
+        }
+    </style>
+</head>
+</head>
+<body>
+    <div class="app-wrapper">
+        <!-- New Profile Header -->
+        <header class="profile-header" id="header-banner">
+            <div class="profile-header-content">
+                <div class="profile-header-main">
+                    <img src="assets/img/Jhon.webp" alt="Profile Picture" id="profile-picture">
+                    <h1 id="user-name">Jhon Doe</h1>
+                </div>
+                <div class="profile-header-actions">
+                    <button id="view-mode-toggle" class="btn btn-outline-primary">View as Others</button>
+                    <button id="edit-profile-btn" class="btn btn-secondary">Edit Profile</button>
+                    <button id="subscribe-btn-header" class="btn btn-primary" style="display: none;">Subscribe</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content-area">
+            <!-- Tab Navigation -->
+            <nav class="tabs-nav">
+                <span class="tab-link active" data-tab="movies">Movies</span>
+                <span class="tab-link" data-tab="series">Series</span>
+                <span class="tab-link" data-tab="streams">Streams</span>
+                <span class="tab-link" data-tab="about">About</span>
+            </nav>
+
+            <!-- Tab Content -->
+            <section id="movies-content" class="tab-content active">
+                <h2 class="section-title">My Movies</h2>
+                <div id="movies-container">
+                    <!-- Movies will be rendered here by JavaScript -->
+                </div>
+            </section>
+
+            <section id="series-content" class="tab-content">
+                <h2 class="section-title">My Series</h2>
+                <div id="series-container">
+                    <!-- Series will be rendered here by JavaScript -->
+                </div>
+            </section>
+
+            <section id="streams-content" class="tab-content">
+                <h2 class="section-title">My Streams</h2>
+                <div id="streams-container">
+                    <!-- Streams will be rendered here by JavaScript -->
+                </div>
+            </section>
+
+            <section id="about-content" class="tab-content">
+                <h2 class="section-title">About Me</h2>
+                <p>This is the about section. Information about the user can go here.</p>
+                <!-- Placeholder content -->
+            </section>
+        </div>
+
+        <!-- Bottom Navigation (remains the same) -->
+        <nav class="bottom-nav">
+            <a href="dashboard.html" class="nav-item">
+                <img src="assets/img/home.svg" alt="Home" class="nav-icon">
+                <span>Home</span>
+            </a>
+            <a href="search.html" class="nav-item">
+                <img src="assets/img/search.svg" alt="Explore" class="nav-icon">
+                <span>Explore</span>
+            </a>
+            <a href="my_content.html" class="nav-item active">
+                <img src="assets/img/clip.svg" alt="Clips" class="nav-icon">
+                <span>Channel</span>
+            </a>
+            <a href="upload.html" class="nav-item">
+                <img src="assets/img/upload.svg" alt="Upload" class="nav-icon">
+                <span>Upload</span>
+            </a>
+            <a href="my_account.html" class="nav-item">
+                <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon" style="border-radius: 50%;">
+                <span>Profile</span>
+            </a>
+        </nav>
+    </div>
+
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/my_content.js" defer></script>
+    <script>
+        // Tab switching logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabLinks = document.querySelectorAll('.tab-link');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const viewModeToggle = document.getElementById('view-mode-toggle');
+
+            tabLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const tabName = link.getAttribute('data-tab');
+
+                    tabLinks.forEach(item => item.classList.remove('active'));
+                    tabContents.forEach(item => item.classList.remove('active'));
+
+                    link.classList.add('active');
+                    document.getElementById(tabName + '-content').classList.add('active');
+                });
+            });
+
+            if(viewModeToggle) {
+                let isPublicView = false; // Initial state: Owner's view
+                viewModeToggle.addEventListener('click', () => {
+                    isPublicView = !isPublicView;
+                    toggleViewMode(isPublicView);
+                    viewModeToggle.textContent = isPublicView ? "View as Owner" : "View as Others";
+                });
+                // Set initial button text
+                viewModeToggle.textContent = "View as Others";
+            }
+
+            // Initialize page (already called by my_content.js, but if needed here for other things)
+            // initMyContentPage();
+        });
+    </script>
+</body>
+</html>
             background-color: var(--main-bg);
             color: white;
             margin: 0;

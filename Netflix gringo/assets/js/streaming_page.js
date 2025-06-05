@@ -41,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
             videoPlaceholder.innerHTML = `<p>Error accessing camera/microphone: ${error.name}</p><p>Please ensure permissions are granted and try again.</p>`;
             videoPlaceholder.style.display = 'flex';
             localVideoStreamElement.style.display = 'none';
-            // alert('Could not access camera/microphone: ' + error.message);
         }
     }
 
