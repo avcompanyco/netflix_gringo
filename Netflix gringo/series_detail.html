@@ -61,7 +61,7 @@
             <span>Upload</span>
         </a>
         <a href="my_account.html" class="nav-item">
-            <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon" style="border-radius: 50%;">
+            <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon nav-profile-img"> <!-- Replaced inline style with class -->
             <span>Profile</span>
         </a>
     </nav>
@@ -168,10 +168,10 @@
                             <p class="duration">${episode.duration}</p>
                             ${episode.description ? `<p class="description">${episode.description}</p>` : ''}
                         </div>
-                        <button class="btn btn-primary btn-sm" style="margin-left: auto;">Play</button>
+                        <button class="btn btn-primary btn-sm episode-play-btn">Play</button> <!-- Replaced inline style with class -->
                     `;
                      // Play button added inside, event.stopPropagation will be needed if on <a>
-                    episodeLink.querySelector('.btn-primary').addEventListener('click', (e) => {
+                    episodeLink.querySelector('.episode-play-btn').addEventListener('click', (e) => {
                         e.preventDefault(); // Prevent link navigation
                         e.stopPropagation(); // Stop click from bubbling to parent <a>
                         alert(`Playing ${episode.title}`);

@@ -24,19 +24,19 @@
             </div>
         </div>
 
-        <div class="movie-content-wrapper"> <!-- Reusing class from movie_detail for now -->
-            <div class="movie-header"> <!-- Reusing class from movie_detail for now -->
-                <h1 class="movie-title-detail">S1 E1: The Pilot Episode</h1> <!-- Episode Title -->
+        <div class="detail-content-wrapper"> <!-- Was movie-content-wrapper -->
+            <div class="detail-header"> <!-- Was movie-header -->
+                <h1 class="item-title-detail">S1 E1: The Pilot Episode</h1> <!-- Was movie-title-detail -->
                 <p class="series-title-link">Part of: <a href="series_detail.html?id=seriesXYZ">The Future Chronicles</a></p>
                 <div class="action-buttons-group">
                     <button class="btn btn-primary btn-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16" style="margin-right: 0.5rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-play-fill btn-icon" viewBox="0 0 16 16">
                             <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
                         </svg>
                         Play Episode
                     </button>
                     <button id="markWatchedBtn" class="btn btn-outline-secondary btn-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check2-square" viewBox="0 0 16 16" style="margin-right: 0.5rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check2-square btn-icon" viewBox="0 0 16 16">
                            <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3z"/>
                            <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z"/>
                         </svg>
@@ -74,12 +74,12 @@
                 </div>
             </div>
 
-            <div class="related-movies-section"> <!-- Renaming to .related-episodes-section might be good in CSS -->
+            <div class="related-content-section"> <!-- Was related-movies-section -->
                 <h3>Next Episodes</h3>
-                <div class="related-movies-grid"> <!-- Renaming to .related-episodes-grid might be good in CSS -->
-                    <div class="related-movie-card-placeholder"><div class="thumbnail-placeholder"></div><p>S1 E2: First Contact</p></div>
-                    <div class="related-movie-card-placeholder"><div class="thumbnail-placeholder"></div><p>S1 E3: Whispers of Time</p></div>
-                    <div class="related-movie-card-placeholder"><div class="thumbnail-placeholder"></div><p>S1 E4: The Alliance</p></div>
+                <div class="related-content-grid"> <!-- Was related-movies-grid -->
+                    <div class="related-item-card-placeholder"><div class="thumbnail-placeholder"></div><p>S1 E2: First Contact</p></div> <!-- Was related-movie-card-placeholder -->
+                    <div class="related-item-card-placeholder"><div class="thumbnail-placeholder"></div><p>S1 E3: Whispers of Time</p></div> <!-- Was related-movie-card-placeholder -->
+                    <div class="related-item-card-placeholder"><div class="thumbnail-placeholder"></div><p>S1 E4: The Alliance</p></div> <!-- Was related-movie-card-placeholder -->
                 </div>
             </div>
         </div>
@@ -104,7 +104,7 @@
             <span>Upload</span>
         </a>
         <a href="my_account.html" class="nav-item">
-            <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon" style="border-radius: 50%;">
+            <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon nav-profile-img"> <!-- Replaced inline style with class -->
             <span>Profile</span>
         </a>
     </nav>
@@ -116,27 +116,42 @@
             if (markWatchedBtn) {
                 let isWatched = false; // Initial conceptual state
 
-                // Store original HTML content (icon + text)
-                const originalButtonHTML = markWatchedBtn.innerHTML;
+                const originalButtonSVGClass = "bi bi-check2-square btn-icon";
+                const originalButtonText = "Mark as Watched";
 
-                const watchedButtonHTML = `
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16" style="margin-right: 0.5rem;">
-                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                const watchedButtonSVGClass = "bi bi-check-circle-fill btn-icon";
+                const watchedButtonText = "Watched";
+
+                // Function to set button content
+                function setButtonContent(isCurrentlyWatched) {
+                    const svgClass = isCurrentlyWatched ? watchedButtonSVGClass : originalButtonSVGClass;
+                    const text = isCurrentlyWatched ? watchedButtonText : originalButtonText;
+                    const svgPath = isCurrentlyWatched ?
+                        "M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" :
+                        "M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5H3zM8.354 10.354l7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0z";
+
+                    markWatchedBtn.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="${svgClass}" viewBox="0 0 16 16">
+                            <path d="${svgPath}"/>
                         </svg>
-                        Watched`;
+                        ${text}`;
+                }
+
+                // Set initial button state
+                setButtonContent(isWatched);
 
                 markWatchedBtn.addEventListener('click', () => {
                     isWatched = !isWatched;
+                    setButtonContent(isWatched); // Update button content based on new state
+
                     if (isWatched) {
-                        markWatchedBtn.innerHTML = watchedButtonHTML;
                         markWatchedBtn.classList.remove('btn-outline-secondary');
                         markWatchedBtn.classList.add('btn-success');
-                        alert('Marked as watched! (Conceptual)');
+                        // alert('Marked as watched! (Conceptual)'); // Alerts removed for cleaner testing
                     } else {
-                        markWatchedBtn.innerHTML = originalButtonHTML;
                         markWatchedBtn.classList.remove('btn-success');
                         markWatchedBtn.classList.add('btn-outline-secondary');
-                        alert('Marked as unwatched! (Conceptual)');
+                        // alert('Marked as unwatched! (Conceptual)'); // Alerts removed for cleaner testing
                     }
                 });
             }

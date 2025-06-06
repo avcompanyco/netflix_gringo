@@ -312,3 +312,62 @@ a:hover {
     font-size: 0.9rem;
     font-weight: var(--font-weight-normal); /* Standard weight for checkbox labels */
 }
+
+/* ==========================================================================
+   Common UI Components
+   ========================================================================== */
+
+/* Bottom Navigation Bar */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--main-bg);
+    padding: 1rem; /* Standardized padding */
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid var(--border-color-darkbg);
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.8rem; /* Standardized font size */
+    gap: 4px; /* Standardized gap */
+    transition: var(--transition-medium); /* Using brand transition */
+}
+
+.nav-item.active {
+    color: var(--primary-color);
+}
+
+.nav-icon {
+    width: 24px; /* Standardized icon size */
+    height: 24px; /* Standardized icon size */
+}
+
+.nav-profile-img { /* For the profile image in bottom nav */
+    border-radius: 50%; /* Or var(--border-radius-pill) if a fixed size is desired and matches */
+}
+
+/* Top Back Button Container */
+.back-button-container-top {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 10; /* Ensure it's above player area if overlapping, adjust as needed per page context */
+}
+.back-button-container-top .btn { /* Specific styling for the back button in this context */
+    background-color: rgba(0,0,0,0.4);
+    border-color: rgba(255,255,255,0.2); /* Assuming text-light for border */
+    color: var(--text-light); /* Ensure text is light */
+}
+.back-button-container-top .btn:hover {
+    background-color: rgba(0,0,0,0.6);
+    border-color: rgba(255,255,255,0.3); /* Slightly more opaque on hover */
+}

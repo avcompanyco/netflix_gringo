@@ -4,36 +4,32 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>netflixd</title>
+    <title>Movies Dashboard</title> <!-- Changed title to be more descriptive -->
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-</head>
-
-<body><!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Movies Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts Poppins -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Swiper JS CSS (CDN as per instruction) -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
         
 <style>
+/* Custom page styles for dashboard */
 :root {
-    --gradient-start: #F06292;
-    --gradient-end: #2196F3;
-    --main-bg: #0A0A23;
-    --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1);
+    /* Aliasing brand colors for local use where semantic names are preferred for gradient */
+    --gradient-start: var(--primary-color);
+    --gradient-end: var(--secondary-color);
+    /* --main-bg is inherited from brand_styles.css */
+    --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1); /* Custom transition, kept local */
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: var(--main-bg);
-    color: white;
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
-    overflow-x: hidden;
+    /* font-family, background-color, color, margin, padding, min-height are inherited from brand_styles.css */
+    /* brand_styles.css provides:
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--main-bg);
+        color: var(--text-light);
+        margin: 0; padding: 0; min-height: 100vh;
+    */
+    overflow-x: hidden; /* Specific to this page to prevent horizontal scroll from carousels */
 }
 
 .app-wrapper {
@@ -59,17 +55,17 @@ body {
 
 .carousel-wrapper {
     position: relative;
-    border-radius: 24px;
+    border-radius: 24px; /* Custom, keep */
     padding: 2px;
-    background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+    background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end)); /* Uses aliased brand variables */
     overflow: hidden;
 }
 
 .carousel-content {
     position: relative;
-    border-radius: 22px;
+    border-radius: 22px; /* Custom, keep */
     overflow: hidden;
-    background: var(--main-bg);
+    background: var(--main-bg); /* Inherits from brand_styles.css */
     aspect-ratio: 1/1;
 }
 
@@ -112,16 +108,16 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255,255,255,0.7);
-    font-weight: 500;
-    border-radius: 50%;
+    color: var(--text-muted); /* Changed from rgba(255,255,255,0.7) */
+    font-weight: var(--font-weight-medium); /* Was 500 */
+    border-radius: 50%; /* Keep custom, or var(--border-radius-pill) */
     cursor: pointer;
     transition: all 0.3s var(--transition-bezier);
 }
 
 .indicator-number.active {
-    background: var(--gradient-start);
-    color: white;
+    background: var(--primary-color); /* Was var(--gradient-start) */
+    color: var(--text-light); /* Was white */
     font-size: 1.2rem;
 }
 
@@ -132,26 +128,26 @@ body {
 }
 
 .channel-tag {
-    color: var(--gradient-start);
+    color: var(--primary-color); /* Was var(--gradient-start) */
     font-size: 0.875rem;
-    font-weight: 500;
+    font-weight: var(--font-weight-medium); /* Was 500 */
     margin-bottom: 0.5rem;
 }
 
 .movie-title {
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 2rem; /* Custom size, h1 is 2.25rem */
+    font-weight: var(--font-weight-semibold); /* Was 600 */
     margin-bottom: 1rem;
     line-height: 1.2;
 }
 
 .list-button {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.2); /* Custom background */
     border: none;
-    border-radius: 20px;
-    color: white;
-    padding: 0.75rem 2rem;
-    font-size: 0.9rem;
+    border-radius: var(--border-radius-pill); /* Was 20px */
+    color: var(--text-light); /* Was white */
+    padding: 0.75rem 2rem; /* Custom padding */
+    font-size: 0.9rem; /* Custom font size */
     transition: all 0.3s var(--transition-bezier);
 }
 
@@ -169,9 +165,9 @@ body {
 }
 
 .section-title {
-    font-size: 1.75rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
+    /* font-size and font-weight removed to inherit from h2 via brand_styles.css */
+    /* h2 is font-size: 1.75rem; font-weight: var(--font-weight-semibold); (600) */
+    margin-bottom: 1rem; /* Custom margin */
 }
 
 .movies-row {
@@ -202,7 +198,7 @@ body {
     flex: 0 0 auto;
     width: 110px;
     aspect-ratio: 2/3;
-    border-radius: 12px;
+    border-radius: var(--border-radius-lg); /* Was 12px */
     overflow: hidden;
     transition: all 0.3s var(--transition-bezier);
     scroll-snap-align: start;
@@ -230,15 +226,15 @@ body {
     transform: translateY(-50%);
     width: 40px;
     height: 40px;
-    background: rgba(128, 128, 128, 0.3);
-    border-radius: 50%;
+    background: rgba(128, 128, 128, 0.3); /* Custom background */
+    border-radius: 50%; /* Or var(--border-radius-pill) */
     display: none; /* Se muestra por JS en desktop */
     align-items: center;
     justify-content: center;
     cursor: pointer;
     z-index: 100;
     border: none;
-    color: white;
+    color: var(--text-light); /* Was white */
     transition: all 0.2s ease;
     opacity: 0; /* Inicia oculto, se muestra con JS */
 }
@@ -263,38 +259,11 @@ body {
     right: -50px; /* Ajustado */
 }
 
-/* Bottom Navigation */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--main-bg);
-    padding: 1rem;
-    display: flex;
-    justify-content: space-around;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    z-index: 1000;
-}
+/* Bottom Navigation styles are now in brand_styles.css */
 
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: white;
-    text-decoration: none;
-    font-size: 0.8rem;
-    gap: 4px;
-    transition: all 0.3s var(--transition-bezier);
-}
-
-.nav-item.active {
-    color: var(--gradient-start);
-}
-
-.nav-icon {
-    width: 24px;
-    height: 24px;
+/* Specific styling for the first movies section (Channels) */
+.movies-section-channels {
+    padding-top: 1.875rem; /* 30px */
 }
 
 /* Desktop Styles */
@@ -418,7 +387,7 @@ body {
             <button class="list-button">Follow</button>
         </div>
 
-        <div style="padding-top: 30px;" class="movies-section">
+        <div class="movies-section movies-section-channels"> <!-- Removed inline style, added class -->
             <h2 class="section-title">Channels</h2>
             <div class="movies-row" data-slider="featured">
                 </div>
@@ -460,14 +429,17 @@ body {
                 <span>Upload</span>
             </a>
             <a href="my_account.html" class="nav-item">
-                <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon" style="border-radius: 50%;">
+                <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon nav-profile-img"> <!-- Removed inline style, added class -->
                 <span>Profile</span>
             </a>
         </nav>
     </div>
-        
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Swiper JS (CDN as per instruction) -->
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <!-- Local Bootstrap JS -->
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Custom Page Script -->
     <script>
         // Datos de películas para el slider principal
         const movies = [
@@ -699,7 +671,6 @@ body {
     </script>
 </body>
 </html>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
 
 </html>

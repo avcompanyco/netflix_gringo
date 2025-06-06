@@ -2,8 +2,6 @@
 <html data-bs-theme="light" lang="en">
 
 <head>
-<html lang="en">
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Log In - Movie Platform</title>
@@ -33,23 +31,16 @@
             margin-bottom: 1.5rem; /* Consistent spacing */
         }
 
-        .auth-title { /* Consistent title for auth pages */
-            font-size: 2rem; /* Using h2 size from brand_styles.css as base */
-            font-weight: var(--font-weight-bold);
-            color: var(--text-headings);
-            margin-bottom: 2.5rem; /* Consistent spacing */
+        .auth-title { /* Consistent title for auth pages, inherits from h1 */
+            /* font-size, font-weight, color removed to inherit from h1 in brand_styles.css */
+            /* h1 provides: font-size: 2.25rem, font-weight: var(--font-weight-semibold), color: var(--text-headings) */
+            margin-bottom: 2.5rem; /* Specific larger margin for this context */
         }
 
         /* Form specific styles will use .form-group, .form-label, .form-control from brand_styles.css */
         /* Removed custom .form-container, .form-label, .form-control styles */
 
-        /* Specific button styling for this page if needed, otherwise .btn classes handle it */
-        .login-submit-btn { /* To ensure it's full width and has top margin */
-            width: 100%;
-            margin-top: 1.5rem; /* Space above button */
-            padding-top: 0.75rem; /* Slightly larger padding for main action */
-            padding-bottom: 0.75rem;
-        }
+        /* .login-submit-btn class is removed, replaced by utility classes on the button itself */
 
         .create-account-link-container {
             margin-top: 2rem;
@@ -92,7 +83,7 @@
                     <input type="password" class="form-control" id="password" placeholder="Enter your password">
                 </div>
                 
-                <button type="button" class="btn btn-primary login-submit-btn" onclick="window.location.href='dashboard.html';">LOG IN</button>
+                <button type="button" class="btn btn-primary w-100 mt-4" onclick="window.location.href='dashboard.html';">LOG IN</button>
             </form>
             <div class="create-account-link-container">
                 <p>Don't have an account? <a href="create_account.html">Sign Up</a></p>

@@ -2,8 +2,6 @@
 <html data-bs-theme="light" lang="en">
 
 <head>
-<html lang="en"> <!-- Changed lang to en for consistency -->
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Welcome - Movie Platform</title> <!-- More descriptive title -->
@@ -14,7 +12,7 @@
         /* body styles will come from brand_styles.css */
 
         .welcome-page-wrapper { /* Renamed from app-container for clarity */
-            min-height: 100vh;
+            /* min-height: 100vh; Covered by body style */
             padding: 2rem;
             display: flex;
             flex-direction: column;
@@ -37,20 +35,15 @@
             margin-bottom: 2.5rem;
         }
 
-        .welcome-title { /* Retaining specific styles for this page's headings */
-            font-size: 2rem; /* Base size */
-            font-weight: var(--font-weight-semibold); /* Use brand variable */
-            color: var(--text-headings); /* Use brand variable */
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.5px;
+        .welcome-title { /* Styles primarily from h1 in brand_styles.css */
+            /* font-size, font-weight, color, margin-bottom removed to inherit from h1 */
+            letter-spacing: -0.5px; /* Specific to this page's design */
         }
 
-        .welcome-subtitle {
-            font-size: 1.75rem; /* Base size */
-            font-weight: var(--font-weight-semibold); /* Use brand variable */
-            color: var(--text-headings); /* Use brand variable */
-            margin-bottom: 3rem;
-            letter-spacing: -0.5px;
+        .welcome-subtitle { /* Styles primarily from h2 in brand_styles.css */
+            /* font-size, font-weight, color, margin-bottom removed to inherit from h2 */
+            /* Consider if the original large margin-bottom: 3rem was essential or if h2's default is fine */
+            letter-spacing: -0.5px; /* Specific to this page's design */
         }
 
         /* Responsive adjustments for typography and logo */

@@ -29,13 +29,13 @@
                 <h1 class="movie-title-detail">Movie Title Placeholder</h1>
                 <div class="action-buttons-group">
                     <button class="btn btn-primary btn-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16" style="margin-right: 0.5rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-play-fill btn-icon" viewBox="0 0 16 16">
                             <path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
                         </svg>
                         Play
                     </button>
                     <button id="watchlistBtn" class="btn btn-outline-secondary btn-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16" style="margin-right: 0.5rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus-lg btn-icon" viewBox="0 0 16 16">
                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
                         </svg>
                         Add to Watchlist
@@ -107,7 +107,7 @@
             <span>Upload</span>
         </a>
         <a href="my_account.html" class="nav-item">
-            <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon" style="border-radius: 50%;">
+            <img src="assets/img/Jhon.webp" alt="Profile" class="nav-icon nav-profile-img"> <!-- Removed inline style, added class -->
             <span>Profile</span>
         </a>
     </nav>
@@ -118,25 +118,39 @@
             const watchlistBtn = document.getElementById('watchlistBtn');
             if (watchlistBtn) {
                 let isAdded = false; // Initial conceptual state
-                const originalText = watchlistBtn.innerHTML; // Save original content (icon + text)
-                const addedText = `
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16" style="margin-right: 0.5rem;">
-                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+
+                // It's better to reconstruct the innerHTML with the new class for the icon
+                const playIconClass = "bi bi-play-fill btn-icon"; // Assuming this is the default state icon if needed elsewhere
+                const plusIconPath = "M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z";
+                const checkIconPath = "M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z";
+
+                const originalButtonContent = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-plus-lg btn-icon" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="${plusIconPath}"/>
+                        </svg>
+                        Add to Watchlist`;
+                const addedButtonContent = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check-lg btn-icon" viewBox="0 0 16 16">
+                            <path d="${checkIconPath}"/>
                         </svg>
                         Added to Watchlist`;
+
+                // Initialize button state if needed from backend/localStorage in a real app
+                watchlistBtn.innerHTML = originalButtonContent;
+
 
                 watchlistBtn.addEventListener('click', () => {
                     isAdded = !isAdded;
                     if (isAdded) {
-                        watchlistBtn.innerHTML = addedText;
+                        watchlistBtn.innerHTML = addedButtonContent;
                         watchlistBtn.classList.remove('btn-outline-secondary');
-                        watchlistBtn.classList.add('btn-success'); // Use success style when added
-                        alert('Added to watchlist! (Conceptual)');
+                        watchlistBtn.classList.add('btn-success');
+                        // alert('Added to watchlist! (Conceptual)'); // Alert removed for cleaner demo
                     } else {
                         watchlistBtn.innerHTML = originalText;
                         watchlistBtn.classList.remove('btn-success');
                         watchlistBtn.classList.add('btn-outline-secondary');
-                        alert('Removed from watchlist! (Conceptual)');
+                        // alert('Removed from watchlist! (Conceptual)'); // Alert removed for cleaner demo
                     }
                 });
             }

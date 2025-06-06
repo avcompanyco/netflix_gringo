@@ -9,20 +9,7 @@ body {
     /* General wrapper if needed */
 }
 
-/* Back button positioned at top, similar to movie_detail */
-.back-button-container-top {
-    position: absolute;
-    top: 1.5rem;
-    left: 1.5rem;
-    z-index: 10;
-}
-.back-button-container-top .btn { /* Ensure it's visible on potential banner */
-    background-color: rgba(0,0,0,0.4);
-    border-color: rgba(255,255,255,0.2);
-}
-.back-button-container-top .btn:hover {
-    background-color: rgba(0,0,0,0.6);
-}
+/* Back button styles are now in brand_styles.css */
 
 
 .series-header-area {
@@ -165,6 +152,10 @@ body {
     margin-bottom: 0.5rem;
 }
 
+.episode-play-btn { /* For dynamically added play buttons on episode items */
+    margin-left: auto;
+}
+
 
 /* Responsive */
 @media (max-width: 767px) {
@@ -195,3 +186,5 @@ body {
         margin-bottom: 0.75rem;
     }
 }
+
+/* .nav-profile-img style is now in brand_styles.css */
