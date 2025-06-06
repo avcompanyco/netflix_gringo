@@ -96,29 +96,11 @@
             margin-bottom: 1.5rem;
         }
 
-        .plan-btn {
+        /* .plan-btn styles are now handled by .btn and variants from brand_styles.css */
+        /* Ensure .btn, .btn-outline-secondary, .btn-primary provide desired appearance */
+        /* Additional layout styles for .plan-btn if needed (e.g., flex-grow) can remain or be utility classes. */
+        .plan-btn { /* Keeping flex-grow for layout */
             flex-grow: 1;
-            background: var(--input-bg);
-            border: 2px solid var(--input-bg);
-            color: var(--text-dark);
-            padding: 0.85rem 1rem;
-            border-radius: 15px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .plan-btn.active {
-            background: var(--primary-color);
-            border-color: var(--primary-color);
-            color: white;
-            box-shadow: 0 0 10px rgba(240, 98, 146, 0.3);
-        }
-        .plan-btn:not(.active):hover {
-            background-color: #d8d8d8; /* Un poco más oscuro al pasar el ratón */
-            border-color: #d8d8d8;
         }
 
 
@@ -172,37 +154,9 @@
             line-height: 1.5;
         }
 
-        /* Botones de Acción (reusados y con variantes) */
-        .action-btn {
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 0.85rem;
-            border-radius: 15px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: block;
-            text-align: center;
-            margin-bottom: 1rem; /* Margen base entre botones */
-        }
-        .action-btn:hover {
-            opacity: 0.9;
-            transform: scale(1.01);
-        }
-
-        .save-btn-custom {
-            background: var(--primary-color);
-        }
-
-        .destructive-btn-custom {
-            background: var(--destructive-action-bg);
-        }
-        .destructive-btn-custom:hover {
-            background: #c82333; /* Rojo más oscuro */
-        }
+        /* Custom button classes like .action-btn, .save-btn-custom, .destructive-btn-custom are removed. */
+        /* Styling is now handled by .btn and its variants from brand_styles.css */
+        /* Layout like width:100% or margins can be handled by utility classes (e.g. w-100, mb-3) or specific wrapper styles */
         
         /* Ajuste para el último botón en la página */
         .app-wrapper > section:last-of-type .action-btn:last-of-type,
@@ -257,10 +211,10 @@
             <p class="current-info-display">Current Plan: <strong id="currentPlanNameDisplay">Golden</strong></p>
             
             <div class="plan-selector-container">
-                <button class="plan-btn active" data-plan="golden" id="btnPlanGolden">Golden Plan</button>
-                <button class="plan-btn" data-plan="silver" id="btnPlanSilver">Silver Plan</button>
+                <button class="btn btn-primary plan-btn" data-plan="golden" id="btnPlanGolden">Golden Plan</button> <!-- Assuming active is primary -->
+                <button class="btn btn-outline-secondary plan-btn" data-plan="silver" id="btnPlanSilver">Silver Plan</button>
             </div>
-            <button type="button" id="updatePlanButton" class="action-btn save-btn-custom">Update Plan</button>
+            <button type="button" id="updatePlanButton" class="btn btn-primary w-100 mb-3">Update Plan</button>
         </section>
 
         <section class="subscription-page-section">
@@ -289,7 +243,7 @@
                         <input type="text" class="form-control-custom" id="cardCVV" placeholder="•••">
                     </div>
                 </div>
-                <button type="submit" class="action-btn save-btn-custom">Update Payment Method</button>
+                <button type="submit" class="btn btn-primary w-100 mb-3">Update Payment Method</button>
             </form>
         </section>
 
@@ -299,7 +253,7 @@
                 If you cancel, you'll retain access to your current plan's benefits until the end of your billing period. 
                 Your subscription will not auto-renew.
             </p>
-            <button type="button" id="cancelSubscriptionButton" class="action-btn destructive-btn-custom">Cancel Subscription</button>
+            <button type="button" id="cancelSubscriptionButton" class="btn btn-danger w-100">Cancel Subscription</button> <!-- Removed mb-3 as it's the last in section -->
         </section>
 
 
@@ -329,21 +283,27 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Lógica para selección de plan
-            const planButtons = document.querySelectorAll('.plan-btn');
-            const currentPlanNameDisplay = document.getElementById('currentPlanNameDisplay'); // Asume que tienes un plan actual
-            let selectedPlan = currentPlanNameDisplay ? currentPlanNameDisplay.textContent.toLowerCase() : 'golden'; // o leer de data-*
+            const planButtons = document.querySelectorAll('.plan-selector-container .btn'); // Updated selector
+            const currentPlanNameDisplay = document.getElementById('currentPlanNameDisplay');
+            let selectedPlan = currentPlanNameDisplay ? currentPlanNameDisplay.textContent.toLowerCase() : 'golden';
+
+            function updatePlanButtonStates() {
+                planButtons.forEach(button => {
+                    if (button.dataset.plan === selectedPlan) {
+                        button.classList.add('btn-primary');
+                        button.classList.remove('btn-outline-secondary');
+                    } else {
+                        button.classList.remove('btn-primary');
+                        button.classList.add('btn-outline-secondary');
+                    }
+                });
+            }
+            updatePlanButtonStates(); // Initial state
 
             planButtons.forEach(button => {
-                if (button.dataset.plan === selectedPlan) {
-                    button.classList.add('active');
-                } else {
-                    button.classList.remove('active');
-                }
-
                 button.addEventListener('click', function () {
-                    planButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
                     selectedPlan = this.dataset.plan;
+                    updatePlanButtonStates();
                     console.log('Selected plan:', selectedPlan);
                 });
             });
@@ -388,13 +348,8 @@
                 if (currentPlanNameDisplay) {
                     currentPlanNameDisplay.textContent = userPlan;
                 }
-                planButtons.forEach(button => {
-                    if (button.dataset.plan.toLowerCase() === userPlan.toLowerCase()) {
-                        button.classList.add('active');
-                    } else {
-                        button.classList.remove('active');
-                    }
-                });
+                selectedPlan = userPlan.toLowerCase(); // Update selectedPlan based on loaded data
+                updatePlanButtonStates(); // Update button styles based on loaded plan
 
                 const paymentDisplay = document.getElementById('currentPaymentMethodDisplay');
                 if (paymentDisplay) {

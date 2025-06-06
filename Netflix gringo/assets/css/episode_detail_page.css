@@ -10,7 +10,7 @@ body {
 }
 
 .player-area-wrapper {
-    background-color: #000; /* Black background for the player top section */
+    background-color: var(--main-bg); /* Black background for the player top section - Using variable */
     width: 100%;
     padding-top: 1rem; /* Space above player */
     padding-bottom: 1rem; /* Space below player */
@@ -19,7 +19,7 @@ body {
 .video-player-container {
     max-width: 1100px; /* Max width of the player area */
     margin: 0 auto;
-    background-color: #000000; /* Fallback or specific player bg */
+    background-color: var(--main-bg); /* Fallback or specific player bg - Using variable */
     aspect-ratio: 16 / 9;
     border-radius: var(--border-radius-md);
     overflow: hidden; /* If using actual video/iframe */
@@ -33,7 +33,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column; /* To stack icon and text */
-    background-color: #111; /* Darker placeholder bg */
+    background-color: var(--main-bg); /* Darker placeholder bg - Using variable (or a new --main-bg-darker) */
 }
 
 .video-placeholder .play-icon {
@@ -48,19 +48,19 @@ body {
 }
 
 
-.movie-content-wrapper { /* Renaming to .detail-content-wrapper for generic use might be better later */
+.detail-content-wrapper { /* Was .movie-content-wrapper */
     max-width: 900px; /* Max width for text content below player */
     margin: 0 auto;
     padding: var(--container-padding, 1.5rem);
 }
 
-.movie-header { /* Renaming to .detail-header for generic use might be better later */
+.detail-header { /* Was .movie-header */
     margin-bottom: 1.5rem;
     padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--border-color-darkbg);
 }
 
-.movie-title-detail { /* Renaming to .item-title-detail for generic use might be better later */
+.item-title-detail { /* Was .movie-title-detail */
     font-size: 2.5rem; /* Corresponds to h1 in brand_styles */
     font-weight: var(--font-weight-bold);
     color: var(--text-headings);
@@ -79,6 +79,11 @@ body {
     padding-bottom: 0.75rem;
     min-width: 150px; /* Ensure buttons have some minimum width */
 }
+.btn-icon { /* Class for icons within buttons, ensuring it's here */
+    margin-right: 0.5rem;
+    width: 18px;
+    height: 18px;
+}
 
 
 .synopsis {
@@ -89,7 +94,8 @@ body {
 }
 
 .metadata-section h3 { /* For a potential "Details" subheading */
-    font-size: 1.5rem; /* h2 size */
+    font-size: 1.75rem; /* Aligned to h2 size from brand_styles.css */
+    font-weight: var(--font-weight-semibold); /* Consistent with h2/h3 */
     color: var(--text-headings);
     margin-bottom: 1rem;
     border-bottom: 1px solid var(--border-color-darkbg);
@@ -115,26 +121,26 @@ body {
     flex-grow: 1;
 }
 
-.related-movies-section { /* Renaming to .related-content-section for generic use */
+.related-content-section { /* Was .related-movies-section */
     margin-top: 2.5rem;
     padding-top: 1.5rem;
     border-top: 1px solid var(--border-color-darkbg);
 }
 
-.related-movies-section h3 { /* Renaming to .related-content-title */
+.related-content-section h3 { /* Was .related-movies-section h3 */
     font-size: 1.75rem; /* h2 size */
     color: var(--text-headings);
     margin-bottom: 1.5rem;
     text-align: center;
 }
 
-.related-movies-grid { /* Renaming to .related-content-grid */
+.related-content-grid { /* Was .related-movies-grid */
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Smaller cards for related items */
     gap: 1rem;
 }
 
-.related-movie-card-placeholder { /* Renaming to .related-item-card-placeholder */
+.related-item-card-placeholder { /* Was .related-movie-card-placeholder */
     background-color: var(--card-bg-dark);
     border-radius: var(--border-radius-sm);
     padding: 0.75rem;
@@ -157,25 +163,12 @@ body {
 }
 
 
-/* Back button specific styling if needed, already in HTML */
-.back-button-container-top { /* If placed at top */
-    position: absolute;
-    top: 1.5rem;
-    left: 1.5rem;
-    z-index: 10; /* Ensure it's above player area if overlapping */
-}
-.back-button-container-top .btn {
-    background-color: rgba(0,0,0,0.4);
-    border-color: rgba(255,255,255,0.2);
-}
-.back-button-container-top .btn:hover {
-    background-color: rgba(0,0,0,0.6);
-}
+/* Back button styles are now in brand_styles.css */
 
 
 /* Responsive adjustments for metadata, etc. */
 @media (max-width: 767px) {
-    .movie-title-detail { /* Update if class name changes */
+    .item-title-detail { /* Was .movie-title-detail */
         font-size: 2rem; /* Adjust for mobile */
     }
     .action-buttons-group {
@@ -200,7 +193,7 @@ body {
     .meta-value {
         font-size: 0.9rem;
     }
-    .related-movies-grid { /* Update if class name changes */
+    .related-content-grid { /* Was .related-movies-grid */
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Smaller cards for related items on mobile */
     }
 }
@@ -219,3 +212,5 @@ body {
 .series-title-link a:hover {
     color: var(--link-color-hover);
 }
+
+/* .nav-profile-img style is now in brand_styles.css */

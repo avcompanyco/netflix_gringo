@@ -149,15 +149,47 @@ a:hover {
 /* Example: Edit button could use secondary or a specific color if defined */
 .btn-edit {
     background-color: var(--info-color); /* Using info color for edit */
-    color: white;
+    color: var(--text-dark); /* Changed to dark text for better contrast */
     border-color: var(--info-color);
 }
 .btn-edit:hover {
     background-color: var(--info-color-hover);
     border-color: var(--info-color-hover);
+    color: var(--text-dark); /* Changed to dark text for better contrast */
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
+}
+.btn-success:hover {
+    background-color: var(--success-color-hover);
+    border-color: var(--success-color-hover);
     color: white;
 }
 
+.btn-warning {
+    background-color: var(--warning-color);
+    color: var(--text-dark); /* Dark text for contrast */
+    border-color: var(--warning-color);
+}
+.btn-warning:hover {
+    background-color: var(--warning-color-hover);
+    border-color: var(--warning-color-hover);
+    color: var(--text-dark); /* Dark text for contrast */
+}
+
+.btn-info {
+    background-color: var(--info-color);
+    color: var(--text-dark); /* Dark text for contrast, similar to btn-edit */
+    border-color: var(--info-color);
+}
+.btn-info:hover {
+    background-color: var(--info-color-hover);
+    border-color: var(--info-color-hover);
+    color: var(--text-dark); /* Dark text for contrast */
+}
 
 .btn-outline-primary {
     background-color: transparent;
@@ -176,6 +208,16 @@ a:hover {
 }
 .btn-outline-secondary:hover {
     background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-outline-danger {
+    background-color: transparent;
+    border-color: var(--danger-color);
+    color: var(--danger-color);
+}
+.btn-outline-danger:hover {
+    background-color: var(--danger-color);
     color: white;
 }
 
@@ -269,4 +311,63 @@ a:hover {
     color: var(--text-light); /* Ensure label is light on dark backgrounds */
     font-size: 0.9rem;
     font-weight: var(--font-weight-normal); /* Standard weight for checkbox labels */
+}
+
+/* ==========================================================================
+   Common UI Components
+   ========================================================================== */
+
+/* Bottom Navigation Bar */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--main-bg);
+    padding: 1rem; /* Standardized padding */
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid var(--border-color-darkbg);
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-light);
+    text-decoration: none;
+    font-size: 0.8rem; /* Standardized font size */
+    gap: 4px; /* Standardized gap */
+    transition: var(--transition-medium); /* Using brand transition */
+}
+
+.nav-item.active {
+    color: var(--primary-color);
+}
+
+.nav-icon {
+    width: 24px; /* Standardized icon size */
+    height: 24px; /* Standardized icon size */
+}
+
+.nav-profile-img { /* For the profile image in bottom nav */
+    border-radius: 50%; /* Or var(--border-radius-pill) if a fixed size is desired and matches */
+}
+
+/* Top Back Button Container */
+.back-button-container-top {
+    position: absolute;
+    top: 1.5rem;
+    left: 1.5rem;
+    z-index: 10; /* Ensure it's above player area if overlapping, adjust as needed per page context */
+}
+.back-button-container-top .btn { /* Specific styling for the back button in this context */
+    background-color: rgba(0,0,0,0.4);
+    border-color: rgba(255,255,255,0.2); /* Assuming text-light for border */
+    color: var(--text-light); /* Ensure text is light */
+}
+.back-button-container-top .btn:hover {
+    background-color: rgba(0,0,0,0.6);
+    border-color: rgba(255,255,255,0.3); /* Slightly more opaque on hover */
 }

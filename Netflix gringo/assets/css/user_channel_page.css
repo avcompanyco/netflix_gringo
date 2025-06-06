@@ -1,15 +1,4 @@
-/* :root { */ /* Variables moved to brand_styles.css */
-    /* --main-bg: #0A0A23; */
-    /* --header-banner-height: 200px; */ /* Page specific, keep */
-    /* --profile-pic-size: 100px; */ /* Page specific, keep */
-    /* --primary-color: #F06292; */
-    /* --secondary-color: #2196F3; */
-    /* --card-bg: #E6E6E6; */
-    /* --delete-color: #DC3545; */
-    /* --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1); */ /* Potentially move to brand */
-    /* --container-padding: 1.5rem; */ /* Page specific, keep */
-/* } */
-:root { /* Keep page-specific ones */
+:root { /* Page-specific variables */
     --header-banner-height: 200px;
     --profile-pic-size: 100px;
     --transition-bezier: cubic-bezier(0.4, 0, 0.2, 1);
@@ -91,14 +80,14 @@ body {
     width: var(--profile-pic-size);
     height: var(--profile-pic-size);
     border-radius: 50%;
-    border: 3px solid var(--main-bg);
+    border: 3px solid var(--text-headings); /* Consistent with my_content.html polish */
     object-fit: cover;
 }
 
 #channel-user-name {
     font-size: 1.75rem;
     font-weight: 700;
-    color: white;
+    color: var(--text-headings); /* Using variable */
     margin-bottom: calc(var(--profile-pic-size) / 10);
 }
 
@@ -136,7 +125,7 @@ body {
 .tab-link {
     padding: 0.75rem 1rem;
     cursor: pointer;
-    color: #aaa;
+    color: var(--text-muted); /* Using variable for inactive tab color */
     font-weight: 500;
     transition: color 0.3s, border-bottom 0.3s;
     border-bottom: 2px solid transparent;
@@ -189,7 +178,8 @@ body {
 .channel-content-card p,
 .movie-card p, .series-card p, .stream-card p {
     font-size: 0.9rem;
-    color: #555; /* Using a specific gray for less emphasis on card paragraph text */
+    color: var(--text-dark); /* Using variable, consistent with my_content.html polish */
+    opacity: 0.75; /* Muted effect for paragraph text on cards */
     margin-bottom: 0.25rem;
     flex-grow: 1;
 }
@@ -208,7 +198,7 @@ body {
     font-size: 1.75rem;
     font-weight: 600;
     margin-bottom: 1rem;
-    color: white; /* Ensure visibility */
+    color: var(--text-headings); /* Using variable */
 }
 
 /* Bottom Navigation identical to my_content.html */

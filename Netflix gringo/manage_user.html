@@ -102,37 +102,9 @@
             font-weight: 400;
         }
 
-        /* Botones de acción */
-        .action-btn {
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 0.85rem; /* Padding consistente */
-            border-radius: 15px; /* Mismo border-radius que inputs */
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none; /* Para si se usa <a> */
-            display: block; /* Para que <a> ocupe el ancho */
-            text-align: center;
-        }
-        .action-btn:hover {
-            opacity: 0.9;
-            transform: scale(1.01); /* Sutil hover effect */
-        }
-
-        .save-btn-custom {
-            background: var(--primary-color);
-            margin-top: 2.5rem; /* Espacio antes del botón de guardar */
-            margin-bottom: 1rem; /* Espacio entre guardar y cancelar */
-        }
-
-        .cancel-btn-custom {
-            background: var(--secondary-action-bg);
-            margin-bottom: 7rem; /* Gran margen inferior como en upload.html para el último botón */
-        }
-
+        /* Custom button classes .action-btn, .save-btn-custom, .cancel-btn-custom are removed. */
+        /* Styling is now handled by .btn and its variants from brand_styles.css. */
+        /* Layout (width, margins) will be handled by Bootstrap utilities or specific form styling. */
 
         /* Bottom Navigation - Exactamente igual que en upload.html */
         .bottom-nav {
@@ -204,8 +176,8 @@
                 <input type="password" class="form-control-custom" id="confirmPassword" name="confirmPassword" placeholder="Confirm new password">
             </div>
 
-            <button type="submit" class="action-btn save-btn-custom">Save Changes</button>
-            <a href="my_account.html" class="action-btn cancel-btn-custom">Cancel</a>
+            <button type="submit" class="btn btn-primary w-100 mt-4 mb-3">Save Changes</button>
+            <a href="my_account.html" class="btn btn-secondary w-100 mb-5">Cancel</a> <!-- mb-5 for bottom spacing, or adjust as needed -->
         </form>
 
         <nav class="bottom-nav">
